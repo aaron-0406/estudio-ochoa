@@ -9,7 +9,8 @@ import Equipo from "../pages/Equipo";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import LayoutUsuario from "../partials/LayoutUsuario";
-import Servicios from "../components/Home/Servicios";
+import Servicios from "../pages/Servicios";
+import ServicioCorporativa from "../pages/Servicios/ServicioCorporativa";
 import Clientes from "../pages/Clientes";
 import Contacto from "../pages/Contacto";
 
@@ -24,6 +25,11 @@ function App() {
       <Switch>
         <LayoutUsuario exact path="/" component={Home} />
         <LayoutUsuario exact path="/Servicios" component={Servicios} />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Corporativa"
+          component={ServicioCorporativa}
+        />
         <LayoutUsuario exact path="/Equipo" component={Equipo} />
         <LayoutUsuario exact path="/Clientes" component={Clientes} />
         <LayoutUsuario exact path="/Contacto" component={Contacto} />
