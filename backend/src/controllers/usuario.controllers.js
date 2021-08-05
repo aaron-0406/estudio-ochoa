@@ -65,8 +65,14 @@ ctrlUsuario.createUsuario = async (req, res) => {
     const rows = await pool.query("INSERT INTO usuario set ?", [newUsuario]);
     if (rows.affectedRows === 1) return res.json({ success: "Usuario Creado." });
   } catch (error) {
+    console.log(error);
+
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
-    if (error.code === "ER_DUP_ENTRY") return res.json({ error: "Ese correo ya está registrado" });
+    if (error.code === "ER_DUP_ENTRY") {
+      let fila;
+      error.sqlMessage.indexOf("dni") === -1 ? (fila = "Correo") : (fila = "DNI");
+      return res.json({ error: `Ese ${fila} ya está registrado` });
+    }
   }
   return res.json({ error: "Ocurrió un error." });
 };
@@ -84,7 +90,11 @@ ctrlUsuario.updateUsuario = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Usuario Actualizado" });
   } catch (error) {
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
-    if (error.code === "ER_DUP_ENTRY") return res.json({ error: "Ese correo ya está registrado" });
+    if (error.code === "ER_DUP_ENTRY") {
+      let fila;
+      error.sqlMessage.indexOf("dni") === -1 ? (fila = "Correo") : (fila = "DNI");
+      return res.json({ error: `Ese ${fila} ya está registrado` });
+    }
   }
   return res.json({ error: "Ocurrió un error." });
 };

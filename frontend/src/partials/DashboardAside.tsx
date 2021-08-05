@@ -34,8 +34,8 @@ const DashboardAside: React.FC = () => {
             {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
             <li className="nav-header">Dashboard</li>
-            <li className="nav-item menu-open">
-              <a href="/" className="nav-link active">
+            <li className="nav-item">
+              <a href="/" className="nav-link">
                 <i className="nav-icon fas fa-copy" />
                 <p>
                   Expedientes
