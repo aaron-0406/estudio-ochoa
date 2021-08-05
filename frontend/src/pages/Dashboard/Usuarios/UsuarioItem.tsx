@@ -1,12 +1,25 @@
 import React from "react";
 import { Usuario } from "../../../interfaces/Usuario";
+import * as usuarioServices from "../../../services/UsuarioServices";
+import { toast } from "react-toastify";
+
 interface Props {
   i: number;
   usuario: Usuario;
   getUsuarios: () => void;
   setUsuarioModal: (usuario: Usuario) => void;
 }
+
 const UsuarioItem: React.FC<Props> = (props) => {
+  const eliminarUsuario = async (id?: number) => {
+    const res = await usuarioServices.eliminarUsuario(id + "");
+    if (res.data.success) {
+      props.getUsuarios();
+      return toast.success(res.data.success);
+    }
+    if (res.data.error) return toast.error(res.data.error);
+  };
+
   return (
     <tr>
       <td>{props.i}</td>
@@ -28,7 +41,12 @@ const UsuarioItem: React.FC<Props> = (props) => {
         </button>
       </td>
       <td>
-        <button className="btn btn-danger">
+        <button
+          onClick={() => {
+            eliminarUsuario(props.usuario.id_usuario);
+          }}
+          className="btn btn-danger"
+        >
           <i className="nav-icon fas fa-trash-alt" />
         </button>
       </td>

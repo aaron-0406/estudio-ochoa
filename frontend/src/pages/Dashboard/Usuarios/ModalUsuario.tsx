@@ -52,7 +52,14 @@ const ModalUsuario: React.FC<Props> = (props) => {
     }
     // Editar
     const res = await usuarioServices.editarUsuario(usuario.id_usuario + "", usuario);
-    console.log(res);
+    if (res.data.success) {
+        toast.success(res.data.success);
+        props.render();
+        props.setTrigguer(props.trigguer + 1);
+        if (refButton.current) refButton.current.click();
+        return;
+      }
+      if (res.data.error) return toast.error(res.data.error);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
