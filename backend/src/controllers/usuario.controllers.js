@@ -65,8 +65,6 @@ ctrlUsuario.createUsuario = async (req, res) => {
     const rows = await pool.query("INSERT INTO usuario set ?", [newUsuario]);
     if (rows.affectedRows === 1) return res.json({ success: "Usuario Creado." });
   } catch (error) {
-    console.log(error);
-
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
     if (error.code === "ER_DUP_ENTRY") {
       let fila;
@@ -79,12 +77,7 @@ ctrlUsuario.createUsuario = async (req, res) => {
 //put("/:id")
 ctrlUsuario.updateUsuario = async (req, res) => {
   const { apellidos_usuario, nombres_usuario, email_usuario, telefono_usuario } = req.body;
-  const newUsuario = {
-    nombres_usuario,
-    apellidos_usuario,
-    email_usuario,
-    telefono_usuario,
-  };
+  const newUsuario = { nombres_usuario, apellidos_usuario, email_usuario, telefono_usuario };
   try {
     const rows = await pool.query("UPDATE usuario set ? WHERE id_usuario = ?", [newUsuario, req.params.id]);
     if (rows.affectedRows === 1) return res.json({ success: "Usuario Actualizado" });

@@ -44,9 +44,9 @@ const DashboardAside: React.FC = () => {
               </a>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link to="/Dashboard" className="nav-link">
+                  <Link to="/Dashboard/Solicitudes" className="nav-link">
                     <i className="far fa-circle nav-icon" />
-                    <p>Control</p>
+                    <p>Solicitudes</p>
                   </Link>
                 </li>
                 <li className="nav-item">

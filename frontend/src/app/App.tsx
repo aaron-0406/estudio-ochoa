@@ -17,6 +17,7 @@ import LayoutDash from "../partials/LayoutDash";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Usuarios from "../pages/Dashboard/Usuarios/Usuarios";
 import Inventario from "../pages/Inventario/Inventario";
+import Solicitudes from "../pages/Dashboard/Solicitudes/Solicitudes";
 
 function App() {
   return (
@@ -30,19 +31,17 @@ function App() {
         <Route exact path="/Iniciar" component={Login} />
 
         <LayoutDash exact path="/Dashboard" component={Dashboard} />
-
         <LayoutDash exact path="/Dashboard/Usuarios" component={Usuarios} />
-        <LayoutDash exact path="/Dashboard/Inventario" component={Dashboard} />
-
+        <LayoutDash exact path="/Dashboard/Inventario" component={Inventario} />
+        <LayoutDash exact path="/Dashboard/Solicitudes" component={Solicitudes} />
         <LayoutDash exact path="/Dashboard/Historial" component={Dashboard} />
-        <LayoutDash exact path="/Dashboard/Solicitudes" component={Dashboard} />
 
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
   );
 }
-const AuthProviderContext = () => {
+const AuthProviderContext:React.FC = () => {
   return (
     <UsuarioProvider>
       <App />
