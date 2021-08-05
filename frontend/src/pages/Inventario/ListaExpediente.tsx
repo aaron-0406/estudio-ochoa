@@ -1,32 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import { Usuario } from "../../../interfaces/Usuario";
-import ModalUsuario from "./ModalUsuario";
-import * as usuarioServices from "../../../services/UsuarioServices";
-import UsuarioItem from "./UsuarioItem";
+import React from "react";
+import { useState, useEffect } from "react";
+
+//Toast
+//Services
+
+import * as expedienteServices from "../../services/ExpedienteServices";
+import Expediente from "../../interfaces/Expediente";
+import ExpedienteItem from "./ExpedienteItem";
+import ModalExpediente from "./ModalExpediente";
 
 interface Props {
-  setUsuarioModal: (usuario: Usuario) => void;
-  usuarioModal: Usuario;
+  setTrigguer: (trigguer: number) => void;
+  trigguer: number;
+  expedienteModal: Expediente;
+  setExpedienteModal: (expediente: Expediente) => void;
   filtro: string;
 }
-
-const ListaUsuarios: React.FC<Props> = (props) => {
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const [loadUsuarios, setLoadUsuarios] = useState<boolean>(false);
-  const [trigguer, setTrigguer] = useState<number>(0);
+const ListaExpediente: React.FC<Props> = (props) => {
+  //Cargar datos
+  const [expedientes, setExpedientes] = useState<Expediente[]>([]);
+  const [loadExpedientes, setLoadExpedientes] = useState<boolean>(false);
 
   const [cantidad, setCantidad] = useState<number>(0);
   const [cantidadPaginas, setCantidadPaginas] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
 
-  const getUsuarios = async () => {
-    const res = await usuarioServices.getAll(page, props.filtro);
-    setUsuarios(res.data);
-    setLoadUsuarios(true);
+  const getExpedientes = async () => {
+    const res = await expedienteServices.getAll(page, props.filtro);
+    setExpedientes(res.data);
+    setLoadExpedientes(true);
   };
+
   const getCantidad = async () => {
-    const res = await usuarioServices.getCount(props.filtro);
+    const res = await expedienteServices.getCount(props.filtro);
     setCantidad(res.data);
     setCantidadPaginas(Math.ceil(res.data / 12));
   };
@@ -40,11 +47,12 @@ const ListaUsuarios: React.FC<Props> = (props) => {
     setPage(page - 1);
   };
   const limpieza = () => {
-    setUsuarios([]);
-    setLoadUsuarios(false);
+    setExpedientes([]);
+    setLoadExpedientes(false);
   };
+
   useEffect(() => {
-    getUsuarios();
+    getExpedientes();
     return () => limpieza();
   }, [page, props.filtro]);
 
@@ -57,23 +65,28 @@ const ListaUsuarios: React.FC<Props> = (props) => {
       setCantidadPaginas(0);
       setPage(1);
     };
-  }, [props.filtro, trigguer]);
+  }, [props.filtro,props.trigguer]);
+
   return (
     <>
       <table className="table table-bordered table-hover table-striped">
-        <caption>Cantidad de usuarios: {cantidad}</caption>
+        <caption>Cantidad de expedientes: {cantidad}</caption>
         <thead>
           <tr>
-            <th className="border-0">#</th>
-            <th className="border-0">DNI</th>
-            <th className="border-0">USUARIO</th>
-            <th className="border-0">CORREO</th>
+            <th className="border-0" style={{ width: 10 }}>
+              #
+            </th>
+            <th className="border-0">Expediente</th>
+            <th className="border-0">Nombre del Cliente</th>
+            <th className="border-0">Estado</th>
+            <th className="border-0">Materia</th>
+            <th className="border-0">Banco</th>
             <th className="border-0" style={{ width: 40 }}></th>
             <th className="border-0" style={{ width: 40 }}></th>
           </tr>
         </thead>
         <tbody>
-          {!loadUsuarios ? (
+          {!loadExpedientes ? (
             <>
               <tr className="m-3">
                 <td>Cargando datos...</td>
@@ -81,16 +94,16 @@ const ListaUsuarios: React.FC<Props> = (props) => {
             </>
           ) : (
             <>
-              {usuarios.length === 0 ? (
+              {expedientes.length === 0 ? (
                 <>
                   <tr className="m-3">
-                    <td> No hay usuarios registrados aún</td>
+                    <td> No hay expedientes registrados aún</td>
                   </tr>
                 </>
               ) : (
                 <>
-                  {usuarios.map((usuario, i) => {
-                    return <UsuarioItem i={i + 1} getUsuarios={getUsuarios} setUsuarioModal={props.setUsuarioModal} usuario={usuario} key={usuario.id_usuario} />;
+                  {expedientes.map((expediente, i) => {
+                    return <ExpedienteItem i={i + 1} getExpedientes={getExpedientes} setExpedienteModal={props.setExpedienteModal} expediente={expediente} key={expediente.id_expediente} />;
                   })}
                 </>
               )}
@@ -128,9 +141,9 @@ const ListaUsuarios: React.FC<Props> = (props) => {
           </>
         )}
       </div>
-      <ModalUsuario setTrigguer={setTrigguer} trigguer={trigguer} render={getUsuarios} usuario={props.usuarioModal} />
+      <ModalExpediente setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getExpedientes} expediente={props.expedienteModal} />
     </>
   );
 };
 
-export default ListaUsuarios;
+export default ListaExpediente;
