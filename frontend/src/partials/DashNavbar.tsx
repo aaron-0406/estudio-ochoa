@@ -5,13 +5,13 @@ import { API } from "../config/config";
 import auth from "../auth/auth";
 import { useUsuario } from "../auth/UsuarioProvider";
 import { Usuario } from "../interfaces/Usuario";
-
+import { ToastContainer } from "react-toastify";
 const initialState: Usuario = {
   id_usuario: 0,
   apellidos_usuario: "",
   dni: "",
   email_usuario: "",
-  estado_usuario: 1,
+  estado_usuario: "1",
   rango_usuario: 2,
   nombres_usuario: "",
   telefono_usuario: "",
@@ -57,6 +57,7 @@ const DashNavbar: React.FC = () => {
           </li>
         </ul>
       </nav>
+      <ToastContainer />
     </>
   );
 };

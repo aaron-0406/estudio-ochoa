@@ -5,14 +5,14 @@ const helpers = require("../lib/helpers");
 //get("/")
 ctrlUsuario.getUsuarios = async (req, res) => {
   if (req.query.keyword && req.query.page) {
-    const data = await pool.query(`SELECT * FROM usuario AND (nombres_usuario LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR correo LIKE '%${req.query.keyword}%') ORDER BY id_usuario DESC`);
+    const data = await pool.query(`SELECT * FROM usuario WHERE (nombres_usuario LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR email_usuario LIKE '%${req.query.keyword}%') ORDER BY id_usuario DESC`);
     const cantidadDatos = 12;
     const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
     return res.json(data.splice(pagina, cantidadDatos));
   }
 
   if (req.query.keyword) {
-    const data = await pool.query(`SELECT * FROM usuario AND (nombres_usuario LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR correo LIKE '%${req.query.keyword}%') ORDER BY id_usuario DESC`);
+    const data = await pool.query(`SELECT * FROM usuario WHERE (nombres_usuario LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR email_usuario LIKE '%${req.query.keyword}%') ORDER BY id_usuario DESC`);
     return res.json(data);
   }
 
@@ -25,6 +25,20 @@ ctrlUsuario.getUsuarios = async (req, res) => {
   const datos = await pool.query("SELECT * FROM usuario");
   res.json({ datos });
 };
+//get("/count")
+ctrlUsuario.count = async (req, res) => {
+  if (req.query.keyword) {
+    const data = await pool.query(`SELECT COUNT(*) FROM usuario WHERE (nombres_usuario LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR email_usuario LIKE '%${req.query.keyword}%')`);
+    if (data[0]["COUNT(*)"]) return res.json(data[0]["COUNT(*)"]);
+    return res.json(0);
+  }
+
+  const rows = await pool.query("SELECT COUNT(*) FROM usuario");
+
+  if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
+
+  return res.json(0);
+};
 //get("/whoami")
 ctrlUsuario.whoami = async (req, res) => {
   if (!req.user) return res.json({ error: "No autentificado" }); //No autentificado
@@ -34,9 +48,32 @@ ctrlUsuario.whoami = async (req, res) => {
   return res.json({ user: newUser });
 };
 //post("/")
-ctrlUsuario.createUsuario = (req, res) => {};
+ctrlUsuario.createUsuario = async (req, res) => {
+  const { apellidos_usuario, nombres_usuario, email_usuario, telefono_usuario, dni } = req.body;
+  const password = await helpers.encryptPassword(nombres_usuario + dni);
+  const newUsuario = {
+    nombres_usuario,
+    apellidos_usuario,
+    email_usuario,
+    telefono_usuario,
+    dni,
+    estado_usuario: 1, // 1 habilidadto // 0 deshabilitado
+    rango_usuario: 2,
+    password,
+  };
+  try {
+    const rows = await pool.query("INSERT INTO usuario set ?", [newUsuario]);
+    if (rows.affectedRows === 1) return res.json({ success: "Usuario Creado." });
+  } catch (error) {
+    if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
+    if (error.code === "ER_DUP_ENTRY") return res.json({ error: "Ese correo ya está registrado" });
+  }
+  return res.json({ error: "Ocurrió un error." });
+};
 //put("/:id")
-ctrlUsuario.updateUsuario = (req, res) => {};
+ctrlUsuario.updateUsuario = (req, res) => {
+  const { apellidos_usuario, nombres_usuario, email_usuario, telefono_usuario } = req.body;
+};
 //delete("/:id")
 ctrlUsuario.deleteUsuario = (req, res) => {};
 

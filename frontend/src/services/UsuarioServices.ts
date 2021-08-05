@@ -12,6 +12,9 @@ export const getCount = async (keyword: string) => {
   if (keyword.trim() === "") return await axios.get(`${api}/count`);
   return await axios.get(`${api}/count?keyword=${keyword}`);
 };
+export const crearUsuario = async (usuario: Usuario) => {
+    return await axios.post(`${api}`, usuario);
+  };
 export const editarUsuario = async (id: string | undefined, usuario: Usuario) => {
   return await axios.put(`${api}/${id}`, usuario);
 };
