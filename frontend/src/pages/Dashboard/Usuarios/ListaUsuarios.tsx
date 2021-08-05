@@ -6,24 +6,15 @@ import * as usuarioServices from "../../../services/UsuarioServices";
 import UsuarioItem from "./UsuarioItem";
 
 interface Props {
+  setUsuarioModal: (usuario: Usuario) => void;
+  usuarioModal: Usuario;
   filtro: string;
 }
 
-const initialState: Usuario = {
-  id_usuario: 0,
-  apellidos_usuario: "",
-  dni: "",
-  email_usuario: "",
-  estado_usuario: 1,
-  rango_usuario: 2,
-  nombres_usuario: "",
-  telefono_usuario: "",
-  authenticate: false,
-};
 const ListaUsuarios: React.FC<Props> = (props) => {
-  const [usuarioModal, setUsuarioModal] = useState<Usuario>(initialState);
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [loadUsuarios, setLoadUsuarios] = useState<boolean>(false);
+  const [trigguer, setTrigguer] = useState<number>(0);
 
   const [cantidad, setCantidad] = useState<number>(0);
   const [cantidadPaginas, setCantidadPaginas] = useState<number>(0);
@@ -38,6 +29,15 @@ const ListaUsuarios: React.FC<Props> = (props) => {
     const res = await usuarioServices.getCount(props.filtro);
     setCantidad(res.data);
     setCantidadPaginas(Math.ceil(res.data / 12));
+  };
+  const paginaSiguiente = () => {
+    if (page === cantidadPaginas) return;
+    setPage(page + 1);
+  };
+
+  const paginaAnterior = () => {
+    if (page === 1) return;
+    setPage(page - 1);
   };
   const limpieza = () => {
     setUsuarios([]);
@@ -57,41 +57,36 @@ const ListaUsuarios: React.FC<Props> = (props) => {
       setCantidadPaginas(0);
       setPage(1);
     };
-  }, [props.filtro]);
+  }, [props.filtro, trigguer]);
   return (
     <>
-    <table className="table table-bordered table-hover">
-        <caption>Cantidad de estudiantes: {cantidad}</caption>
+      <table className="table table-bordered table-hover">
+        <caption>Cantidad de usuarios: {cantidad}</caption>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>APELLIDOS</th>
-            <th>CORREO</th>
-            <th>PROFESION</th>
-            <th className="text-center">VER MÁS</th>
-            <th className="text-center">DESHABILITAR</th>
+            <th>#</th>
+            <th>DNI</th>
+            <th>USUARIO</th>
+            <th>ESTADO</th>
+            <th style={{ width: 40 }}></th>
+            <th style={{ width: 40 }}></th>
           </tr>
         </thead>
         <tbody>
           {!loadUsuarios ? (
             <>
-              <tr>
-                <td>Cargando datos...</td>
-              </tr>
+              <p className="m-3">Cargando datos...</p>
             </>
           ) : (
             <>
               {usuarios.length === 0 ? (
                 <>
-                  <tr>
-                    <td>No hay profesores registrados aún</td>
-                  </tr>
+                  <p className="m-3">No hay usuarios registrados aún</p>
                 </>
               ) : (
                 <>
-                  {usuarios.map((usuario) => {
-                    return <UsuarioItem getUsuarios={getUsuarios} setUsuarioModal={setUsuarioModal} usuario={usuario} key={usuario.id_usuario} />;
+                  {usuarios.map((usuario, i) => {
+                    return <UsuarioItem i={i + 1} getUsuarios={getUsuarios} setUsuarioModal={props.setUsuarioModal} usuario={usuario} key={usuario.id_usuario} />;
                   })}
                 </>
               )}
@@ -99,7 +94,37 @@ const ListaUsuarios: React.FC<Props> = (props) => {
           )}
         </tbody>
       </table>
-      <ModalUsuario render={getUsuarios} usuario={usuarioModal} />
+      <div className="d-flex justify-content-between">
+        {page === 1 ? (
+          <></>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                paginaAnterior();
+              }}
+              className="btn btn__blue"
+            >
+              <span aria-hidden="true">&laquo; Página Anterior</span>
+            </button>
+          </>
+        )}
+        {page === cantidadPaginas ? (
+          <></>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                paginaSiguiente();
+              }}
+              className="btn btn__blue ms-auto"
+            >
+              <span aria-hidden="true">Página Siguiente &raquo;</span>
+            </button>
+          </>
+        )}
+      </div>
+      <ModalUsuario setTrigguer={setTrigguer} trigguer={trigguer} render={getUsuarios} usuario={props.usuarioModal} />
     </>
   );
 };

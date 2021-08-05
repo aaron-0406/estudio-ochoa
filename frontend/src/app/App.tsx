@@ -27,14 +27,16 @@ function App() {
         <LayoutUsuario exact path="/Equipo" component={Equipo} />
         <LayoutUsuario exact path="/Clientes" component={Clientes} />
         <LayoutUsuario exact path="/Contacto" component={Contacto} />
-        <LayoutDash exact path="/Dashboard" component={Dashboard} />
-        <LayoutDash exact path="/Dashboard/Usuarios" component={Usuarios} />
+        <Route exact path="/Iniciar" component={Login} />
 
-        <LayoutDash exact path="/Dashboard/Inventario" component={Inventario} />
+        <LayoutDash exact path="/Dashboard" component={Dashboard} />
+
+        <LayoutDash exact path="/Dashboard/Usuarios" component={Usuarios} />
+        <LayoutDash exact path="/Dashboard/Inventario" component={Dashboard} />
+
         <LayoutDash exact path="/Dashboard/Historial" component={Dashboard} />
         <LayoutDash exact path="/Dashboard/Solicitudes" component={Dashboard} />
-        
-        <Route exact path="/Iniciar" component={Login} />
+
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
