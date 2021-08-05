@@ -16,6 +16,7 @@ import Contacto from "../pages/Contacto";
 import LayoutDash from "../partials/LayoutDash";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Usuarios from "../pages/Dashboard/Usuarios/Usuarios";
+import Inventario from "../pages/Inventario/Inventario";
 
 function App() {
   return (
