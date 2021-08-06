@@ -37,6 +37,7 @@ import Inventario from "../pages/Inventario/Inventario";
 import Solicitudes from "../pages/Dashboard/Solicitudes/Solicitudes";
 
 function App() {
+
   return (
     <BrowserRouter>
       <Switch>

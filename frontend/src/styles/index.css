@@ -37,6 +37,7 @@ GLOBAL
 :root {
   --first-color-web: #553620;
   --second-color-web: #222222;
+  --marron-claro: #c17743;
 }
 body {
   font-family: "Open Sans", sans-serif !important;
@@ -577,4 +578,65 @@ body {
   /* 5.2.- CONTACT - SECTION - CONTACT - MAP */
 
   /*/// 6.- LOGIN ///*/
+}
+
+/* Loader */
+.load-content {
+  width: 100vw;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.load-icon {
+  color: #ffffff;
+  display: flex;
+  animation: bounce1 .8s alternate infinite ease-in;
+}
+
+.load-icon > div {
+  width: 5rem;
+  height: 5rem;
+}
+
+.icon-o {
+  border: 1rem solid var(--marron-claro);
+  margin-right: 1rem;
+}
+
+.icon-m {
+  border-left: 1rem solid var(--marron-claro);
+  border-right: 1rem solid var(--marron-claro);
+  position: relative;
+  overflow: hidden;
+}
+
+.top-left, .top-right {
+  position: absolute;
+  width: 100%;
+  height: 1.25rem;
+  background: var(--marron-claro);
+}
+
+.top-left {
+  top: 0.5rem;
+  left: -0.625rem;
+  transform: rotate(45deg);
+}
+
+.top-right {
+  top: 0.5rem;
+  right: -0.625rem;
+  transform: rotate(-45deg);
+}
+
+@keyframes bounce1 {
+  0% {
+    transform: translateX(-40%);
+  }
+  100% {
+    transform: translateX(40%);
+  }
 }

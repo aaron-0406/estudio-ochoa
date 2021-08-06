@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ServicesSectionRoad from "../components/Equipo/ServicesSectionRoad";
 
 import logobbva from "../images/images-customers/logobbva.png";
@@ -8,6 +8,11 @@ import logomibanco from "../images/images-customers/logomibanco.png";
 import logobcp from "../images/images-customers/logobcp.png";
 
 const Clientes:React.FC = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <ServicesSectionRoad nameOption="Nuestros Clientes" numberRoad={2} nameRoadOne="Clientes" />
