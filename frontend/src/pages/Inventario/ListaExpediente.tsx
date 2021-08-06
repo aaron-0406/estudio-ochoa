@@ -65,7 +65,7 @@ const ListaExpediente: React.FC<Props> = (props) => {
       setCantidadPaginas(0);
       setPage(1);
     };
-  }, [props.filtro,props.trigguer]);
+  }, [props.filtro, props.trigguer]);
 
   return (
     <>
@@ -112,32 +112,38 @@ const ListaExpediente: React.FC<Props> = (props) => {
         </tbody>
       </table>
       <div className="d-flex justify-content-between">
-        {page === 1 ? (
+        {cantidadPaginas === 0 ? (
           <></>
         ) : (
           <>
-            <button
-              onClick={() => {
-                paginaAnterior();
-              }}
-              className="btn btn__blue"
-            >
-              <span aria-hidden="true">&laquo; Página Anterior</span>
-            </button>
-          </>
-        )}
-        {page === cantidadPaginas ? (
-          <></>
-        ) : (
-          <>
-            <button
-              onClick={() => {
-                paginaSiguiente();
-              }}
-              className="btn btn__blue ms-auto"
-            >
-              <span aria-hidden="true">Página Siguiente &raquo;</span>
-            </button>
+            {page === 1 ? (
+              <></>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    paginaAnterior();
+                  }}
+                  className="btn btn__blue"
+                >
+                  <span aria-hidden="true">&laquo; Página Anterior</span>
+                </button>
+              </>
+            )}
+            {page === cantidadPaginas ? (
+              <></>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    paginaSiguiente();
+                  }}
+                  className="btn btn__blue ms-auto"
+                >
+                  <span aria-hidden="true">Página Siguiente &raquo;</span>
+                </button>
+              </>
+            )}
           </>
         )}
       </div>

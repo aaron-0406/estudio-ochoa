@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import Solicitud from "../../../interfaces/Solicitud";
 import * as solicitudesServices from "../../../services/SolicitudesServices";
 interface Props {
+  setTrigguer: (trigguer: number) => void;
+  trigguer: number;
   solicitud: Solicitud;
   render: () => void;
 }
@@ -38,6 +40,7 @@ const ModalRechazar: React.FC<Props> = (props) => {
     e.preventDefault();
     const res = await solicitudesServices.editarSolicitud(solicitud.id_solicitud + "", solicitud, "DENEGADO");
     if (res.data.success) {
+      props.setTrigguer(props.trigguer + 1);
       props.render();
       setSolicitud(initialState);
       if (refButton.current) refButton.current.click();

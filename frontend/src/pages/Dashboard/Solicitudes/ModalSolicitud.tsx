@@ -35,6 +35,7 @@ const ModalSolicitud: React.FC<Props> = (props) => {
     e.preventDefault();
     const res = await solicitudesServices.editarSolicitud(solicitud.id_solicitud + "", solicitud, "EN INVENTARIO");
     if (res.data.success) {
+      props.setTrigguer(props.trigguer + 1);
       setSolicitud(initialState);
       if (refButton.current) refButton.current.click();
       props.render();
@@ -76,7 +77,7 @@ const ModalSolicitud: React.FC<Props> = (props) => {
                   <dd>{solicitud.motivo_usuario}</dd>
                   <dt>Estado:</dt>
                   <dd>{solicitud.estado_solicitud}</dd>
-                  {(solicitud.estado_solicitud === "EN USO" || solicitud.estado_solicitud === "EN INVENTARIO") ? (
+                  {solicitud.estado_solicitud === "EN USO" || solicitud.estado_solicitud === "EN INVENTARIO" ? (
                     <>
                       <dt>Fecha Entregado:</dt>
                       <input required onChange={handleChange} type="date" name="fecha_entrega_inventario" value={solicitud.fecha_entrega_inventario} className="form-control" />
@@ -91,7 +92,7 @@ const ModalSolicitud: React.FC<Props> = (props) => {
               <button ref={(node) => (refButton.current = node)} type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                 Cerrar
               </button>
-              {(solicitud.estado_solicitud === "EN USO" || solicitud.estado_solicitud === "EN INVENTARIO")? (
+              {solicitud.estado_solicitud === "EN USO" || solicitud.estado_solicitud === "EN INVENTARIO" ? (
                 <>
                   <button type="submit" className="btn btn-primary">
                     Guardar Fecha de Entrega
