@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookOpen,
@@ -29,9 +28,12 @@ const Footer: React.FC = () => {
         <div className="row">
           <div className="footer-content py-4 col-12 col-md-6 col-lg-3">
             <div className="d-flex justify-content-center">
-              <a href="/" className="footer-content__logo text-decoration-none">
+              <Link
+                to="/"
+                className="footer-content__logo text-decoration-none"
+              >
                 <span className="d-inline-block"></span>M
-              </a>
+              </Link>
             </div>
             <p>
               Nuestro Estudio Jurídico ofrece servicios de asesoría legal

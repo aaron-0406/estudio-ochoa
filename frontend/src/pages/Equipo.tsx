@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ServicesSectionRoad from "../components/Equipo/ServicesSectionRoad";
 import TeamSectionTeam from "../components/Equipo/TeamSectionTeam";
 
@@ -8,7 +8,13 @@ import imagen5 from "../images/images-team/Equipo5.png";
 import imagen6 from "../images/images-team/Equipo6.png";
 import imagen7 from "../images/images-team/Equipo7.png";
 import imagen8 from "../images/images-team/Equipo8.png";
+
 const Equipo: React.FC = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <ServicesSectionRoad

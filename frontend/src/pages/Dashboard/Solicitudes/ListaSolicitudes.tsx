@@ -1,39 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from "react";
-import { useState, useEffect } from "react";
-
-//Toast
-//Services
-
-import * as expedienteServices from "../../services/ExpedienteServices";
-import Expediente from "../../interfaces/Expediente";
-import ExpedienteItem from "./ExpedienteItem";
-import ModalExpediente from "./ModalExpediente";
+import React, { useEffect, useState } from "react";
+import Solicitud from "../../../interfaces/Solicitud";
+import * as solicitudesServices from "../../../services/SolicitudesServices";
+import ModalRechazar from "./ModalRechazar";
+import ModalSolicitud from "./ModalSolicitud";
+import SolicitudItem from "./SolicitudItem";
 
 interface Props {
+  estado: string;
   setTrigguer: (trigguer: number) => void;
   trigguer: number;
-  expedienteModal: Expediente;
-  setExpedienteModal: (expediente: Expediente) => void;
+  setSolicitudModal: (solicitud: Solicitud) => void;
+  solicitudModal: Solicitud;
   filtro: string;
 }
-const ListaExpediente: React.FC<Props> = (props) => {
-  //Cargar datos
-  const [expedientes, setExpedientes] = useState<Expediente[]>([]);
-  const [loadExpedientes, setLoadExpedientes] = useState<boolean>(false);
+
+const ListaSolicitudes: React.FC<Props> = (props) => {
+  const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
+  const [loadUsuarios, setLoadUsuarios] = useState<boolean>(false);
 
   const [cantidad, setCantidad] = useState<number>(0);
   const [cantidadPaginas, setCantidadPaginas] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
 
-  const getExpedientes = async () => {
-    const res = await expedienteServices.getAll(page, props.filtro);
-    setExpedientes(res.data);
-    setLoadExpedientes(true);
+  const getSolicitudes = async () => {
+    const res = await solicitudesServices.getAll(page, props.filtro, props.estado);
+    setSolicitudes(res.data);
+    console.log(res.data);
+    setLoadUsuarios(true);
   };
-
   const getCantidad = async () => {
-    const res = await expedienteServices.getCount(props.filtro);
+    const res = await solicitudesServices.getCount(props.filtro, props.estado);
     setCantidad(res.data);
     setCantidadPaginas(Math.ceil(res.data / 12));
   };
@@ -47,14 +44,13 @@ const ListaExpediente: React.FC<Props> = (props) => {
     setPage(page - 1);
   };
   const limpieza = () => {
-    setExpedientes([]);
-    setLoadExpedientes(false);
+    setSolicitudes([]);
+    setLoadUsuarios(false);
   };
-
   useEffect(() => {
-    getExpedientes();
+    getSolicitudes();
     return () => limpieza();
-  }, [page, props.filtro]);
+  }, [page, props.filtro, props.estado]);
 
   useEffect(() => {
     setPage(1);
@@ -65,28 +61,26 @@ const ListaExpediente: React.FC<Props> = (props) => {
       setCantidadPaginas(0);
       setPage(1);
     };
-  }, [props.filtro, props.trigguer]);
+  }, [props.filtro, props.trigguer, props.estado]);
 
   return (
     <>
       <table className="table table-bordered table-hover table-striped">
-        <caption>Cantidad de expedientes: {cantidad}</caption>
+        <caption>Cantidad de Solicitudes: {cantidad}</caption>
         <thead>
           <tr>
-            <th className="border-0" style={{ width: 10 }}>
-              #
-            </th>
-            <th className="border-0">Expediente</th>
-            <th className="border-0">Nombre del Cliente</th>
-            <th className="border-0">Estado</th>
-            <th className="border-0">Materia</th>
-            <th className="border-0">Banco</th>
+            <th className="border-0">#</th>
+            <th className="border-0">EXPEDIENTE</th>
+            <th className="border-0">USUARIO</th>
+            <th className="border-0">FECHA DE SOLICITUD</th>
+            <th className="border-0">FECHA DE ENTREGA</th>
+            <th className="border-0">ESTADO</th>
             <th className="border-0" style={{ width: 40 }}></th>
             <th className="border-0" style={{ width: 40 }}></th>
           </tr>
         </thead>
         <tbody>
-          {!loadExpedientes ? (
+          {!loadUsuarios ? (
             <>
               <tr className="m-3">
                 <td>Cargando datos...</td>
@@ -94,16 +88,16 @@ const ListaExpediente: React.FC<Props> = (props) => {
             </>
           ) : (
             <>
-              {expedientes.length === 0 ? (
+              {solicitudes.length === 0 ? (
                 <>
                   <tr className="m-3">
-                    <td> No hay expedientes registrados aún</td>
+                    <td> No hay solictudes registrados aún</td>
                   </tr>
                 </>
               ) : (
                 <>
-                  {expedientes.map((expediente, i) => {
-                    return <ExpedienteItem i={i + 1} getExpedientes={getExpedientes} setExpedienteModal={props.setExpedienteModal} expediente={expediente} key={expediente.id_expediente} />;
+                  {solicitudes.map((solicitud, i) => {
+                    return <SolicitudItem trigguer={props.trigguer} setTrigguer={props.setTrigguer} i={i + 1} getSolicitudes={getSolicitudes} setSolicitudModal={props.setSolicitudModal} solicitud={solicitud} key={solicitud.id_solicitud} />;
                   })}
                 </>
               )}
@@ -147,9 +141,10 @@ const ListaExpediente: React.FC<Props> = (props) => {
           </>
         )}
       </div>
-      <ModalExpediente setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getExpedientes} expediente={props.expedienteModal} />
+      <ModalSolicitud setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getSolicitudes} solicitud={props.solicitudModal} />
+      <ModalRechazar setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getSolicitudes} solicitud={props.solicitudModal} />
     </>
   );
 };
 
-export default ListaExpediente;
+export default ListaSolicitudes;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import ServicesSectionRoad from "../components/Equipo/ServicesSectionRoad";
 import ServicesSectionService from "../components/Servicios/ServicesSectionService";
@@ -16,6 +16,11 @@ import img_servicio10 from "../images/images-services/SERVICIO_2.10.png";
 import ServicesSectionPhrase from "../components/Servicios/ServicesSectionPhrase";
 
 const Servicios: React.FC = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <ServicesSectionRoad

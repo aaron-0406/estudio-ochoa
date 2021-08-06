@@ -1,7 +1,9 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
+
+import Loader from "./components/Loader";
+
 import "./styles/index.css";
-import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -12,14 +14,19 @@ import "admin-lte/dist/css/adminlte.min.css";
 import "admin-lte/plugins/fontawesome-free/css/all.min.css";
 import "admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css";
 import "admin-lte/plugins/daterangepicker/daterangepicker.css";
+import "admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css";
 
 import "admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js";
 import "admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js";
 import "admin-lte/dist/js/adminlte.min.js";
 
+const App = lazy(() => import('./app/App'));
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Suspense fallback={<Loader />}>
+      <App />
+    </Suspense>
   </React.StrictMode>,
   document.getElementById("root")
 );

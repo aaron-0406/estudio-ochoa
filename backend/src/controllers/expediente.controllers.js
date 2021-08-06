@@ -81,7 +81,7 @@ ctrlExpediente.updateExpediente = async (req, res) => {
     estado_actual,
     folio,
     id_materia,
-    estado_uso:0,
+    estado_uso: 0,
   };
   try {
     const rows = await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [newExpediente, req.params.id]);

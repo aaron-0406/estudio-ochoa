@@ -19,10 +19,10 @@ const Navbar: React.FC = () => {
       <div className="container">
         <nav className="navbar navbar-expand-md bg-white py-0">
           <div className="container-fluid d-md-block d-lg-flex text-center p-0">
-            <a className="navbar-logo d-block py-0" href="/">
+            <Link className="navbar-logo py-0" to="/">
               <img alt="" className="d-none d-md-inline h-100 py-2" src={logoHome}></img>
               <img alt="" className="float-start d-inline-block d-md-none w-25" src={logo}></img>
-            </a>
+            </Link>
             <button
               className="navbar-toggler navbar-button"
               type="button"
@@ -67,9 +67,9 @@ const Navbar: React.FC = () => {
                 <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
               </li>
               <li className="nav-item">
-                <a href="/" className="d-block d-md-block d-lg-none hello-navbar__session btn fw-bold">
+                <Link to="/Iniciar" className="d-block d-md-block d-lg-none hello-navbar__session btn fw-bold">
                   <FontAwesomeIcon className="mx-2" icon={faSignInAlt} color="#C17743" size="lg" />
-                </a>
+                </Link>
               </li>
             </ul>
 
