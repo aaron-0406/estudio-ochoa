@@ -18,40 +18,94 @@ import ServicesSectionPhrase from "../components/Servicios/ServicesSectionPhrase
 const Servicios: React.FC = () => {
   return (
     <>
-      <ServicesSectionRoad nameOption="Nuestros Servicios" numberRoad={2} nameRoadOne="Servicios" />
+      <ServicesSectionRoad
+        nameOption="Nuestros Servicios"
+        numberRoad={2}
+        nameRoadOne="Servicios"
+      />
       <div className="container my-3">
         <div className="row">
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio1} title="Corporativa y Mercantil" text="Nuestro Estudio ha desarrollado una vasta experiencia en la creación de estructuras corporativas ..." />
+            <ServicesSectionService
+              url="/Servicios/Corporativa"
+              image={img_servicio1}
+              title="Corporativa y Mercantil"
+              text="Nuestro Estudio ha desarrollado una vasta experiencia en la creación de estructuras corporativas ..."
+            />
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio2} title="Finanzas Banca y Seguros" text="Nuestro Estudio se encuentra familiarizado con la implementación de proyectos de financiamiento ..." />
+            <ServicesSectionService
+              url="/Servicios/Finanzas"
+              image={img_servicio2}
+              title="Finanzas Banca y Seguros"
+              text="Nuestro Estudio se encuentra familiarizado con la implementación de proyectos de financiamiento ..."
+            />
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio3} title="Estudio de Tìtulos y Elaboraciòn de Contratos" text="Elaboración de toda clase de contratos civiles y bancarios ..." />
+            <ServicesSectionService
+              url="/Servicios/Contratos"
+              image={img_servicio3}
+              title="Estudio de Tìtulos y Elaboraciòn de Contratos"
+              text="Elaboración de toda clase de contratos civiles y bancarios ..."
+            />
           </div>
 
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio4} title="Laboral" text="Nuestro Estudio ofrece completa asesoría en relación con la legislación laboral vigente en el Perú ..." />
+            <ServicesSectionService
+              url="/Servicios/Laboral"
+              image={img_servicio4}
+              title="Laboral"
+              text="Nuestro Estudio ofrece completa asesoría en relación con la legislación laboral vigente en el Perú ..."
+            />
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio5} title="Concursal" text="El Derecho Concursal tiene una doble óptica; por un lado, la perspectiva del deudor en situación económica ..." />
+            <ServicesSectionService
+              url="/Servicios/Concursal"
+              image={img_servicio5}
+              title="Concursal"
+              text="El Derecho Concursal tiene una doble óptica; por un lado, la perspectiva del deudor en situación económica ..."
+            />
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio6} title="Competencia y Protección al Consumidor" text="Defendemos la vulneración de las marcas, inventos, obras literarias ..." />
+            <ServicesSectionService
+              url="/Servicios/Consumidor"
+              image={img_servicio6}
+              title="Competencia y Protección al Consumidor"
+              text="Defendemos la vulneración de las marcas, inventos, obras literarias ..."
+            />
           </div>
 
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio7} title="Civil" text="Esta área está orientada a brindar asesoría legal en las distintas materias del derecho Civil ..." />
+            <ServicesSectionService
+              url="/Servicios/Civil"
+              image={img_servicio7}
+              title="Civil"
+              text="Esta área está orientada a brindar asesoría legal en las distintas materias del derecho Civil ..."
+            />
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio8} title="Penal" text="El Estudio posee amplia experiencia en la asesoría legal en la defensa de los bienes jurídicos ..." />
+            <ServicesSectionService
+              url="/Servicios/Penal"
+              image={img_servicio8}
+              title="Penal"
+              text="El Estudio posee amplia experiencia en la asesoría legal en la defensa de los bienes jurídicos ..."
+            />
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio9} title="Recuperaciones Judiciales y Extrajudiciales de Deudas" text="Asimismo, nos encargamos de recuperaciones de cartera morosa a través de la cobranza judicial o extrajudicial ..." />
+            <ServicesSectionService
+              url="/Servicios/Recuperaciones"
+              image={img_servicio9}
+              title="Recuperaciones Judiciales y Extrajudiciales de Deudas"
+              text="Asimismo, nos encargamos de recuperaciones de cartera morosa a través de la cobranza judicial o extrajudicial ..."
+            />
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
-            <ServicesSectionService url="/" image={img_servicio10} title="Litigios" text="Nuestro Estudio se encarga de patrocinar a nuestros clientes en sus procesos judiciales ..." />
+            <ServicesSectionService
+              url="/Servicios/Litigios"
+              image={img_servicio10}
+              title="Litigios"
+              text="Nuestro Estudio se encarga de patrocinar a nuestros clientes en sus procesos judiciales ..."
+            />
           </div>
         </div>
       </div>
