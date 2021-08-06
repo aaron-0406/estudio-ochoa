@@ -6,6 +6,7 @@ import { UsuarioProvider } from "../auth/UsuarioProvider";
 //Pages
 import Home from "../pages/Home";
 import Equipo from "../pages/Equipo";
+
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import LayoutUsuario from "../partials/LayoutUsuario";
