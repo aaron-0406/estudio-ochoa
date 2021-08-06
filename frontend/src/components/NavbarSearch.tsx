@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
-  referencia: any;
+  referencia: React.RefObject<HTMLDivElement>;
 }
 
 const NavbarSearch: React.FC<Props> = (props) => {
@@ -62,89 +62,49 @@ const NavbarSearch: React.FC<Props> = (props) => {
       <ul ref={box_search} id="box-search" className="list-unstyled">
         <li>
           <Link to="/Servicios">
-            <FontAwesomeIcon
-              className="ms-3 me-4"
-              icon={faSearch}
-              color="#C17743"
-              size="lg"
-            />
+            <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             SERVICIOS
           </Link>
         </li>
         <li>
           <Link to="/">
-            <FontAwesomeIcon
-              className="ms-3 me-4"
-              icon={faSearch}
-              color="#C17743"
-              size="lg"
-            />
+            <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             CSS
           </Link>
         </li>
         <li>
           <Link to="/">
-            <FontAwesomeIcon
-              className="ms-3 me-4"
-              icon={faSearch}
-              color="#C17743"
-              size="lg"
-            />
+            <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             JAVASCRIPT
           </Link>
         </li>
         <li>
           <Link to="/">
-            <FontAwesomeIcon
-              className="ms-3 me-4"
-              icon={faSearch}
-              color="#C17743"
-              size="lg"
-            />
+            <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             PHP
           </Link>
         </li>
         <li>
           <Link to="/">
-            <FontAwesomeIcon
-              className="ms-3 me-4"
-              icon={faSearch}
-              color="#C17743"
-              size="lg"
-            />
+            <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             PYTHON
           </Link>
         </li>
         <li>
           <a href="#">
-            <FontAwesomeIcon
-              className="ms-3 me-4"
-              icon={faSearch}
-              color="#C17743"
-              size="lg"
-            />
+            <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             JAVA
           </a>
         </li>
         <li>
           <a href="#">
-            <FontAwesomeIcon
-              className="ms-3 me-4"
-              icon={faSearch}
-              color="#C17743"
-              size="lg"
-            />
+            <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             AARON
           </a>
         </li>
         <li>
           <a href="#">
-            <FontAwesomeIcon
-              className="ms-3 me-4"
-              icon={faSearch}
-              color="#C17743"
-              size="lg"
-            />
+            <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             PERU LIBRE
           </a>
         </li>
