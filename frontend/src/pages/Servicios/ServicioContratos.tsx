@@ -2,6 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
+import ServicesSectionRoad from "../../components/Equipo/ServicesSectionRoad";
 import ServicesAccordion from "../../components/Servicios/ServicesAccordion";
 
 import imagen3 from "../../images/images-services/SERVICIO_2.3.png";
@@ -62,50 +63,59 @@ const ServicioContratos = () => {
   ];
 
   return (
-    <div className="container my-5">
-      <div className="row">
-        <div className="col-12 col-md-6">
-          <h5 className="text-center fw-bold my-4">
-            ESTUDIO DE TÍTULOS Y ELABORACIÓN DE CONTRATOS
-          </h5>
-          <p className="text-justify">
-            Nos especializamos en la elaboración de toda clase de contratos
-            civiles y bancarios, tales como, el de constitución de hipoteca del
-            deudor o de terceros garantes, ampliaciones, ratificaciones,
-            modificaciones, créditos hipotecarios en sus distintas modalidades
-            (bancarios o NuevoMivivienda), Arrendamiento financiero mobiliario e
-            inmobiliario, constitución de garantías mobiliarias en sus diversas
-            modalidades, y demás documentos de uso bancario y financieros.
-          </p>
-          <Link
-            to="/Contacto"
-            style={{ background: "#c17743", color: "#fff" }}
-            className="btn my-5 w-50 d-block mx-auto"
-          >
-            Contáctanos
-          </Link>
-        </div>
-        <div className="col-12 col-md-6">
-          <div className="mx-4">
-            <img
-              className="w-100 shadow rounded"
-              src={imagen3}
-              alt="Imagen de servicio"
-            />
+    <>
+      <ServicesSectionRoad
+        nameOption="Nuestros Servicios"
+        numberRoad={3}
+        nameRoadOne="Servicios"
+        nameRoadTwo="Contratos"
+      />
+      <div className="container my-5">
+        <div className="row">
+          <div className="col-12 col-md-6">
+            <h5 className="text-center fw-bold my-4">
+              ESTUDIO DE TÍTULOS Y ELABORACIÓN DE CONTRATOS
+            </h5>
+            <p className="text-justify">
+              Nos especializamos en la elaboración de toda clase de contratos
+              civiles y bancarios, tales como, el de constitución de hipoteca
+              del deudor o de terceros garantes, ampliaciones, ratificaciones,
+              modificaciones, créditos hipotecarios en sus distintas modalidades
+              (bancarios o NuevoMivivienda), Arrendamiento financiero mobiliario
+              e inmobiliario, constitución de garantías mobiliarias en sus
+              diversas modalidades, y demás documentos de uso bancario y
+              financieros.
+            </p>
+            <Link
+              to="/Contacto"
+              style={{ background: "#c17743", color: "#fff" }}
+              className="btn my-5 w-50 d-block mx-auto"
+            >
+              Contáctanos
+            </Link>
+          </div>
+          <div className="col-12 col-md-6">
+            <div className="mx-4">
+              <img
+                className="w-100 shadow rounded"
+                src={imagen3}
+                alt="Imagen de servicio"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row my-5">
-        <div className="col-12 col-md-2"></div>
-        <div className="col-12 col-md-8">
-          <p className="fw-bold text-center">
-            Ofrecemos estos servicios entre otros:
-          </p>
-          <ServicesAccordion id="accordionUno" lista={listaAccordion} />
+        <div className="row my-5">
+          <div className="col-12 col-md-2"></div>
+          <div className="col-12 col-md-8">
+            <p className="fw-bold text-center">
+              Ofrecemos estos servicios entre otros:
+            </p>
+            <ServicesAccordion id="accordionUno" lista={listaAccordion} />
+          </div>
+          <div className="col-12 col-md-2"></div>
         </div>
-        <div className="col-12 col-md-2"></div>
       </div>
-    </div>
+    </>
   );
 };
 

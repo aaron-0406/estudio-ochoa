@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import ServicesSectionRoad from "../../components/Equipo/ServicesSectionRoad";
 import ServicesAccordion from "../../components/Servicios/ServicesAccordion";
 
 import imagen4 from "../../images/images-services/SERVICIO_2.4.png";
@@ -66,54 +67,62 @@ const ServicioLaboral = () => {
   ];
 
   return (
-    <div className="container my-5">
-      <div className="row">
-        <div className="col-12 col-md-6">
-          <h5 className="text-center fw-bold my-4">LABORAL</h5>
-          <p className="text-justify">
-            Nuestro Estudio ofrece completa asesoría en relación con la
-            legislación laboral vigente en el Perú, la cual ha sido objeto de
-            modificaciones sustanciales. En ese sentido, un aspecto importante
-            es el asesoramiento de utilización de la forma de contratación más
-            adecuada, dentro del giro de la propia empresa, lo que implica una
-            correcta elaboración de los contratos laborales pertinentes.
-          </p>
-          <p className="text-justify">
-            Asimismo, el asesoramiento que se brinda tiene el objeto el evaluar
-            el otorgamiento de beneficios sociales de manera tal que se
-            beneficie la empresa con un menor costo y el trabajador.
-          </p>
-          <Link
-            to="/Contacto"
-            style={{ background: "#c17743", color: "#fff" }}
-            className="btn my-5 w-50 d-block mx-auto"
-          >
-            Contáctanos
-          </Link>
-        </div>
-        <div className="col-12 col-md-6">
-          <div className="mx-4">
-            <img
-              className="w-100 shadow rounded"
-              src={imagen4}
-              alt="Imagen de servicio"
-            />
+    <>
+      <ServicesSectionRoad
+        nameOption="Nuestros Servicios"
+        numberRoad={3}
+        nameRoadOne="Servicios"
+        nameRoadTwo="Laboral"
+      />
+      <div className="container my-5">
+        <div className="row">
+          <div className="col-12 col-md-6">
+            <h5 className="text-center fw-bold my-4">LABORAL</h5>
+            <p className="text-justify">
+              Nuestro Estudio ofrece completa asesoría en relación con la
+              legislación laboral vigente en el Perú, la cual ha sido objeto de
+              modificaciones sustanciales. En ese sentido, un aspecto importante
+              es el asesoramiento de utilización de la forma de contratación más
+              adecuada, dentro del giro de la propia empresa, lo que implica una
+              correcta elaboración de los contratos laborales pertinentes.
+            </p>
+            <p className="text-justify">
+              Asimismo, el asesoramiento que se brinda tiene el objeto el
+              evaluar el otorgamiento de beneficios sociales de manera tal que
+              se beneficie la empresa con un menor costo y el trabajador.
+            </p>
+            <Link
+              to="/Contacto"
+              style={{ background: "#c17743", color: "#fff" }}
+              className="btn my-5 w-50 d-block mx-auto"
+            >
+              Contáctanos
+            </Link>
+          </div>
+          <div className="col-12 col-md-6">
+            <div className="mx-4">
+              <img
+                className="w-100 shadow rounded"
+                src={imagen4}
+                alt="Imagen de servicio"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row my-5">
-        <div className="col-12 col-md-2"></div>
-        <div className="col-12 col-md-8">
-          <p>
-            Finalmente, la asesoría comprende la representación en todo tipo de
-            procesos ante las autoridades y juzgados laborales.
-          </p>
-          <p className="fw-bold text-center">Entre otros ofrecemos:</p>
-          <ServicesAccordion id="accordionUno" lista={listaAccordion} />
+        <div className="row my-5">
+          <div className="col-12 col-md-2"></div>
+          <div className="col-12 col-md-8">
+            <p>
+              Finalmente, la asesoría comprende la representación en todo tipo
+              de procesos ante las autoridades y juzgados laborales.
+            </p>
+            <p className="fw-bold text-center">Entre otros ofrecemos:</p>
+            <ServicesAccordion id="accordionUno" lista={listaAccordion} />
+          </div>
+          <div className="col-12 col-md-2"></div>
         </div>
-        <div className="col-12 col-md-2"></div>
       </div>
-    </div>
+    </>
   );
 };
 
