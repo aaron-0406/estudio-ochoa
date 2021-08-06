@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import Expediente from "../../interfaces/Expediente";
-import * as bancoServices from "../../services/BancoServices";
-import * as materiaServices from "../../services/MateriaServices";
-import * as expedienteServices from "../../services/ExpedienteServices";
+import Expediente from "../../../interfaces/Expediente";
+import * as bancoServices from "../../../services/BancoServices";
+import * as materiaServices from "../../../services/MateriaServices";
+import * as expedienteServices from "../../../services/ExpedienteServices";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 

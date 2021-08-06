@@ -33,8 +33,9 @@ import Contacto from "../pages/Contacto";
 import LayoutDash from "../partials/LayoutDash";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Usuarios from "../pages/Dashboard/Usuarios/Usuarios";
-import Inventario from "../pages/Inventario/Inventario";
+import Inventario from "../pages/Dashboard/Inventario/Inventario";
 import Solicitudes from "../pages/Dashboard/Solicitudes/Solicitudes";
+import Historial from "../pages/Dashboard/Historial/Historial";
 
 function App() {
 
@@ -69,7 +70,7 @@ function App() {
         <LayoutDash exact path="/Dashboard/Usuarios" component={Usuarios} />
         <LayoutDash exact path="/Dashboard/Inventario" component={Inventario} />
         <LayoutDash exact path="/Dashboard/Solicitudes" component={Solicitudes} />
-        <LayoutDash exact path="/Dashboard/Historial" component={Dashboard} />
+        <LayoutDash exact path="/Dashboard/Historial" component={Historial} />
 
         <Route component={NotFound} />
       </Switch>

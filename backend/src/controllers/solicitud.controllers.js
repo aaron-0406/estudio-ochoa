@@ -64,19 +64,56 @@ ctrlSolicitud.getResumen = async (req, res) => {
   return res.json({ datos });
 };
 
+//get("/resumen/:id")
+ctrlSolicitud.getResumenByUsuarioId = async (req, res) => {
+  const estado = await pool.query("SELECT estado_solicitud,COUNT(*) as cantidad FROM solicitud WHERE id_usuario = ? GROUP BY estado_solicitud", [req.params.id]);
+  const datos = [{ estado: estado }];
+  return res.json({ datos });
+};
 //get("/:id")
-ctrlSolicitud.getSolicitudesByUsuarioId = async (req, res) => {};
+ctrlSolicitud.getSolicitudesByUsuarioId = async (req, res) => {
+  let datosSQL = `id_solicitud,fecha_solicitud,fecha_entrega_usuario,fecha_entrega_inventario,motivo_usuario,motivo_admin,estado_solicitud, id_usuario,expediente.id_expediente, expediente.codigo_expediente`;
+  let Joins = `JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
+  let estado = `id_usuario = ? AND estado_solicitud = '${req.query.estado}' AND`;
+  if (req.query.estado === "TODO") estado = "usuario.id_usuario = ? AND ";
+
+  if (req.query.keyword && req.query.page) {
+    const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE  ${estado} (codigo_expediente LIKE '%${req.query.keyword}%') ORDER BY estado_solicitud DESC`, [req.params.id]);
+    const cantidadDatos = 12;
+    const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
+    return res.json(data.splice(pagina, cantidadDatos));
+  }
+
+  if (req.query.keyword) {
+    const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE  ${estado} (codigo_expediente LIKE '%${req.query.keyword}%')  ORDER BY estado_solicitud DESC`, [req.params.id]);
+    return res.json(data);
+  }
+
+  if (req.query.page) {
+    const cantidadDatos = 12;
+    const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
+    if (req.query.estado === "TODO") {
+      const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE id_usuario = ? ORDER BY estado_solicitud DESC`, [req.params.id]);
+      return res.json(data.splice(pagina, cantidadDatos));
+    }
+    estado = `id_usuario = ? AND estado_solicitud = '${req.query.estado}'`;
+    const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE ${estado} ORDER BY estado_solicitud DESC`, [req.params.id]);
+    return res.json(data.splice(pagina, cantidadDatos));
+  }
+  const datos = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins}  WHERE id_usuario = ?`, [req.params.id]);
+  res.json({ datos });
+};
 
 //get("/count:id")
 ctrlSolicitud.getCountByUsuarioId = async (req, res) => {
-  let Joins = `JOIN usuario ON usuario.id_usuario = solicitud.id_usuario JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
+  let Joins = `JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
   if (req.query.keyword) {
-    const data = await pool.query(`SELECT COUNT(*) FROM solicitud ${Joins} WHERE (expediente.codigo_expediente LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR nombres_usuario LIKE '%${req.query.keyword}%')`);
+    const data = await pool.query(`SELECT COUNT(*) FROM solicitud ${Joins} WHERE id_usuario = ? AND (expediente.codigo_expediente LIKE '%${req.query.keyword}%')`, [req.params.id]);
     if (data[0]["COUNT(*)"]) return res.json(data[0]["COUNT(*)"]);
     return res.json(0);
   }
 
-  const rows = await pool.query("SELECT COUNT(*) FROM solicitud");
+  const rows = await pool.query("SELECT COUNT(*) FROM solicitud WHERE id_usuario = ?", [req.params.id]);
 
   if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
 
@@ -84,7 +121,10 @@ ctrlSolicitud.getCountByUsuarioId = async (req, res) => {
 };
 
 // post("/:id")
-ctrlSolicitud.crearSolicitud = async (req, res) => {};
+ctrlSolicitud.crearSolicitud = async (req, res) => {
+  console.log(req.body);
+  res.json({ success: "Todo ok" });
+};
 
 // put("/:id")
 ctrlSolicitud.modificarSolicitud = async (req, res) => {

@@ -55,6 +55,12 @@ const DashboardAside: React.FC = () => {
                     <p>Inventario</p>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/Dashboard/Historial" className="nav-link">
+                    <i className="far fa-circle nav-icon" />
+                    <p>Historial</p>
+                  </Link>
+                </li>
               </ul>
             </li>
             <li className="nav-item">

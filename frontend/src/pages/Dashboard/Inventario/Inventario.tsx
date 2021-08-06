@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Expediente from "../../interfaces/Expediente";
-import Buscador from "../../components/Buscador";
+import Expediente from "../../../interfaces/Expediente";
+import Buscador from "../../../components/Buscador";
 import ListaExpediente from "./ListaExpediente";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import ResumenInventario from "./ResumenInventario";

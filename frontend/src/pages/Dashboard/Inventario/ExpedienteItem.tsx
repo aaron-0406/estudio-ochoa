@@ -1,6 +1,6 @@
 import React from "react";
-import Expediente from "../../interfaces/Expediente";
-import * as expedienteServices from "../../services/ExpedienteServices";
+import Expediente from "../../../interfaces/Expediente";
+import * as expedienteServices from "../../../services/ExpedienteServices";
 import { toast } from "react-toastify";
 import { RiFileForbidLine } from "react-icons/ri";
 import { AiOutlineFileDone } from "react-icons/ai";
