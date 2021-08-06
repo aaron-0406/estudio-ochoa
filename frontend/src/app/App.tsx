@@ -5,8 +5,14 @@ import { UsuarioProvider } from "../auth/UsuarioProvider";
 
 //Pages
 import Home from "../pages/Home";
+import Historia from "../pages/Historia";
 import Equipo from "../pages/Equipo";
-
+import EquipoJulio from "../pages/Equipo/EquipoJulio";
+import EquipoMauricio from "../pages/Equipo/EquipoMauricio";
+import EquipoGino from "../pages/Equipo/EquipoGino";
+import EquipoKaterine from "../pages/Equipo/EquipoKaterine";
+import EquipoCarlos from "../pages/Equipo/EquipoCarlos";
+import EquipoRamiro from "../pages/Equipo/EquipoRamiro";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import LayoutUsuario from "../partials/LayoutUsuario";
@@ -35,6 +41,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <LayoutUsuario exact path="/" component={Home} />
+        <LayoutUsuario exact path="/Historia" component={Historia} />
         <LayoutUsuario exact path="/Servicios" component={Servicios} />
         <LayoutUsuario
           exact
@@ -87,6 +94,20 @@ function App() {
           component={ServicioRecuperaciones}
         />
         <LayoutUsuario exact path="/Equipo" component={Equipo} />
+        <LayoutUsuario exact path="/Equipo/Julio" component={EquipoJulio} />
+        <LayoutUsuario
+          exact
+          path="/Equipo/Mauricio"
+          component={EquipoMauricio}
+        />
+        <LayoutUsuario exact path="/Equipo/Gino" component={EquipoGino} />
+        <LayoutUsuario
+          exact
+          path="/Equipo/Katerine"
+          component={EquipoKaterine}
+        />
+        <LayoutUsuario exact path="/Equipo/Carlos" component={EquipoCarlos} />
+        <LayoutUsuario exact path="/Equipo/Ramiro" component={EquipoRamiro} />
         <LayoutUsuario exact path="/Clientes" component={Clientes} />
         <LayoutUsuario exact path="/Contacto" component={Contacto} />
         <Route exact path="/Iniciar" component={Login} />
