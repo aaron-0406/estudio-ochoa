@@ -1,7 +1,24 @@
-import React from "react";
-import { AiOutlineFileAdd } from "react-icons/ai";
-
+import React, { useState } from "react";
+import Buscador from "../../../components/Buscador";
+import Solicitud from "../../../interfaces/Solicitud";
+import ListaSolicitudes from "./ListaSolicitudes";
+const initialState: Solicitud = {
+  estado_solicitud: "",
+  fecha_entrega_inventario: "",
+  fecha_entrega_usuario: "",
+  fecha_solicitud: "",
+  id_expediente: 0,
+  id_usuario: 0,
+  motivo_admin: "",
+  motivo_usuario: "",
+  id_solicitud: 0,
+};
 const Solicitudes: React.FC = () => {
+  const [solicitudModal, setSolicitudModal] = useState<Solicitud>(initialState);
+  const [trigguer, setTrigguer] = useState<number>(0);
+
+  const [filtro, setFiltro] = useState<string>("");
+  const buscar = (text: string) => setFiltro(text);
   return (
     <div className="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
       {/* Content Wrapper. Contains page content */}
@@ -11,25 +28,18 @@ const Solicitudes: React.FC = () => {
           <div className="container-fluid">
             <div className="card mt-4">
               <div className="card-header">
-                <h3 className="card-title"> Gestión de Expedientes</h3>
+                <h3 className="card-title"> Solicitudes de Expedientes</h3>
                 <div className="card-tools">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#createExpediente"
-                    onClick={() => {
-                      //   setExpedienteModal(initialState);
-                    }}
-                  >
-                    <AiOutlineFileAdd className="fs-4" color="#fff" />
-                  </button>
                 </div>
               </div>
               <div className="card-body">
                 <div className="w-100"></div>
-                <div className="w-100 d-flex justify-content-end"></div>
-                <div className="table-responsive mt-4"></div>
+                <div className="w-100 d-flex justify-content-end">
+                  <Buscador placeholder="Buscar Solicitud" funcion={buscar} />
+                </div>
+                <div className="table-responsive mt-4">
+                  <ListaSolicitudes setTrigguer={setTrigguer} trigguer={trigguer} filtro={filtro} solicitudModal={solicitudModal} setSolicitudModal={setSolicitudModal} />
+                </div>
               </div>
             </div>
           </div>
