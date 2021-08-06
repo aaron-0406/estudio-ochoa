@@ -34,8 +34,8 @@ const DashboardAside: React.FC = () => {
             {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
             <li className="nav-header">Dashboard</li>
-            <li className="nav-item menu-open">
-              <a href="/" className="nav-link active">
+            <li className="nav-item">
+              <a href="/" className="nav-link">
                 <i className="nav-icon fas fa-copy" />
                 <p>
                   Expedientes
@@ -44,9 +44,9 @@ const DashboardAside: React.FC = () => {
               </a>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link to="/Dashboard" className="nav-link">
+                  <Link to="/Dashboard/Solicitudes" className="nav-link">
                     <i className="far fa-circle nav-icon" />
-                    <p>Control</p>
+                    <p>Solicitudes</p>
                   </Link>
                 </li>
                 <li className="nav-item">

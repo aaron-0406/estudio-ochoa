@@ -66,25 +66,28 @@ ctrlUsuario.createUsuario = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Usuario Creado." });
   } catch (error) {
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
-    if (error.code === "ER_DUP_ENTRY") return res.json({ error: "Ese correo ya está registrado" });
+    if (error.code === "ER_DUP_ENTRY") {
+      let fila;
+      error.sqlMessage.indexOf("dni") === -1 ? (fila = "Correo") : (fila = "DNI");
+      return res.json({ error: `Ese ${fila} ya está registrado` });
+    }
   }
   return res.json({ error: "Ocurrió un error." });
 };
 //put("/:id")
 ctrlUsuario.updateUsuario = async (req, res) => {
   const { apellidos_usuario, nombres_usuario, email_usuario, telefono_usuario } = req.body;
-  const newUsuario = {
-    nombres_usuario,
-    apellidos_usuario,
-    email_usuario,
-    telefono_usuario,
-  };
+  const newUsuario = { nombres_usuario, apellidos_usuario, email_usuario, telefono_usuario };
   try {
     const rows = await pool.query("UPDATE usuario set ? WHERE id_usuario = ?", [newUsuario, req.params.id]);
     if (rows.affectedRows === 1) return res.json({ success: "Usuario Actualizado" });
   } catch (error) {
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
-    if (error.code === "ER_DUP_ENTRY") return res.json({ error: "Ese correo ya está registrado" });
+    if (error.code === "ER_DUP_ENTRY") {
+      let fila;
+      error.sqlMessage.indexOf("dni") === -1 ? (fila = "Correo") : (fila = "DNI");
+      return res.json({ error: `Ese ${fila} ya está registrado` });
+    }
   }
   return res.json({ error: "Ocurrió un error." });
 };

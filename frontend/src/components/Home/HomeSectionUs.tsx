@@ -14,7 +14,7 @@ const HomeSectionUs: React.FC = () => {
             </h2>
             <p className="px-5">Nuestro Estudio Jurídico ofrece servicios de asesoría legal integral de muy buena calidad, de manera eficaz y eficiente, comprometido con las necesidades particulares de nuestros clientes.</p>
             <p className="px-5">Nuestra obligación de asesoramiento pone gran énfasis en usar los más altos estándares éticos y profesionales bajo enfoque de trabajo en grupo de sus propios colaboradores en beneficio de sus clientes.</p>
-            <Link to="/Historia" className="text-decoration-none d-block w-75 mx-auto mb-5 mt-5 py-3 px-4 text-white">
+            <Link to="/Historia" className="btn text-decoration-none d-block w-75 mx-auto my-5 px-4 text-white">
               Leer Más
             </Link>
           </div>

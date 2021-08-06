@@ -60,28 +60,32 @@ const ListaUsuarios: React.FC<Props> = (props) => {
   }, [props.filtro, trigguer]);
   return (
     <>
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover table-striped">
         <caption>Cantidad de usuarios: {cantidad}</caption>
         <thead>
           <tr>
-            <th>#</th>
-            <th>DNI</th>
-            <th>USUARIO</th>
-            <th>ESTADO</th>
-            <th style={{ width: 40 }}></th>
-            <th style={{ width: 40 }}></th>
+            <th className="border-0">#</th>
+            <th className="border-0">DNI</th>
+            <th className="border-0">USUARIO</th>
+            <th className="border-0">CORREO</th>
+            <th className="border-0" style={{ width: 40 }}></th>
+            <th className="border-0" style={{ width: 40 }}></th>
           </tr>
         </thead>
         <tbody>
           {!loadUsuarios ? (
             <>
-              <p className="m-3">Cargando datos...</p>
+              <tr className="m-3">
+                <td>Cargando datos...</td>
+              </tr>
             </>
           ) : (
             <>
               {usuarios.length === 0 ? (
                 <>
-                  <p className="m-3">No hay usuarios registrados aún</p>
+                  <tr className="m-3">
+                    <td> No hay usuarios registrados aún</td>
+                  </tr>
                 </>
               ) : (
                 <>
@@ -95,32 +99,38 @@ const ListaUsuarios: React.FC<Props> = (props) => {
         </tbody>
       </table>
       <div className="d-flex justify-content-between">
-        {page === 1 ? (
+        {cantidadPaginas === 0 ? (
           <></>
         ) : (
           <>
-            <button
-              onClick={() => {
-                paginaAnterior();
-              }}
-              className="btn btn__blue"
-            >
-              <span aria-hidden="true">&laquo; Página Anterior</span>
-            </button>
-          </>
-        )}
-        {page === cantidadPaginas ? (
-          <></>
-        ) : (
-          <>
-            <button
-              onClick={() => {
-                paginaSiguiente();
-              }}
-              className="btn btn__blue ms-auto"
-            >
-              <span aria-hidden="true">Página Siguiente &raquo;</span>
-            </button>
+            {page === 1 ? (
+              <></>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    paginaAnterior();
+                  }}
+                  className="btn btn__blue"
+                >
+                  <span aria-hidden="true">&laquo; Página Anterior</span>
+                </button>
+              </>
+            )}
+            {page === cantidadPaginas ? (
+              <></>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    paginaSiguiente();
+                  }}
+                  className="btn btn__blue ms-auto"
+                >
+                  <span aria-hidden="true">Página Siguiente &raquo;</span>
+                </button>
+              </>
+            )}
           </>
         )}
       </div>

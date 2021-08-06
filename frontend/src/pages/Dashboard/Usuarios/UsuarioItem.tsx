@@ -27,7 +27,7 @@ const UsuarioItem: React.FC<Props> = (props) => {
       <td>
         {props.usuario.nombres_usuario} {props.usuario.apellidos_usuario}
       </td>
-      <td>{props.usuario.estado_usuario === "1" ? <>Habilitado</> : <>Inhabilitado </>}</td>
+      <td>{props.usuario.email_usuario}</td>
       <td>
         <button
           data-bs-toggle="modal"
@@ -41,14 +41,29 @@ const UsuarioItem: React.FC<Props> = (props) => {
         </button>
       </td>
       <td>
-        <button
-          onClick={() => {
-            eliminarUsuario(props.usuario.id_usuario);
-          }}
-          className="btn btn-danger"
-        >
-          <i className="nav-icon fas fa-trash-alt" />
-        </button>
+        {props.usuario.estado_usuario === "1" ? (
+          <>
+            <button
+              onClick={() => {
+                eliminarUsuario(props.usuario.id_usuario);
+              }}
+              className="btn btn-danger"
+            >
+              <i className="nav-icon fas fa-user-slash"></i>
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                eliminarUsuario(props.usuario.id_usuario);
+              }}
+              className="btn btn-success"
+            >
+              <i className="nav-icon fas fa-user-lock" />
+            </button>
+          </>
+        )}
       </td>
     </tr>
   );

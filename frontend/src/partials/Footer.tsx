@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleRight, faPaperPlane, faPhoneAlt, faTty } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
@@ -18,9 +18,9 @@ const Footer: React.FC = () => {
         <div className="row">
           <div className="footer-content py-4 col-12 col-md-6 col-lg-3">
             <div className="d-flex justify-content-center">
-              <a href="/" className="footer-content__logo text-decoration-none">
+              <Link to="/" className="footer-content__logo text-decoration-none">
                 <span className="d-inline-block"></span>M
-              </a>
+              </Link>
             </div>
             <p>Nuestro Estudio Jurídico ofrece servicios de asesoría legal integral de muy buena calidad, de manera eficaz y eficiente, comprometido con las necesidades particulares de nuestros clientes.</p>
             <ul className="list-unstyled d-flex">
