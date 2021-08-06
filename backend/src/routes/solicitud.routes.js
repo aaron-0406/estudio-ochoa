@@ -8,7 +8,7 @@ router.get("/count", ctrlSolicitud.getCount);
 router.get("/count:id", ctrlSolicitud.getCountByUsuarioId);
 router.get("/:id", ctrlSolicitud.getSolicitudesByUsuarioId);
 router.post("/", ctrlSolicitud.crearSolicitud);
-router.put("/:id", ctrlSolicitud.modificarSolicitud);
+router.put("/:id/:estado", ctrlSolicitud.modificarSolicitud);
 router.delete("/:id", ctrlSolicitud.eliminarSolicitud);
 
 module.exports = router;

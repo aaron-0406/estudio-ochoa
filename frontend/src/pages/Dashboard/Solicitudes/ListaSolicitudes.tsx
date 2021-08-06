@@ -26,6 +26,7 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
   const getSolicitudes = async () => {
     const res = await solicitudesServices.getAll(page, props.filtro, props.estado);
     setSolicitudes(res.data);
+    console.log(res.data);
     setLoadUsuarios(true);
   };
   const getCantidad = async () => {
@@ -61,6 +62,7 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
       setPage(1);
     };
   }, [props.filtro, props.trigguer, props.estado]);
+
   return (
     <>
       <table className="table table-bordered table-hover table-striped">
@@ -95,7 +97,7 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
               ) : (
                 <>
                   {solicitudes.map((solicitud, i) => {
-                    return <SolicitudItem trigguer={props.trigguer} setTrigguer={props.setTrigguer} i={i + 1} getSolicitudes={getSolicitudes} setSolicitudModal={props.setSolicitudModal} solicitud={solicitud} key={solicitud.id_usuario} />;
+                    return <SolicitudItem trigguer={props.trigguer} setTrigguer={props.setTrigguer} i={i + 1} getSolicitudes={getSolicitudes} setSolicitudModal={props.setSolicitudModal} solicitud={solicitud} key={solicitud.id_solicitud} />;
                   })}
                 </>
               )}

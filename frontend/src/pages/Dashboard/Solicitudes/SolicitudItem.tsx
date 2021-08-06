@@ -10,19 +10,19 @@ interface Props {
   getSolicitudes: () => void;
   setSolicitudModal: (solicitud: Solicitud) => void;
 }
-
 const SolicitudItem: React.FC<Props> = (props) => {
   const aceptarSolicitud = async () => {
     const res = await solicitudesServices.editarSolicitud(props.solicitud.id_solicitud + "", props.solicitud, "EN USO");
     if (res.data.success) {
       props.setTrigguer(props.trigguer + 1);
-      toast.success(res.data.success);
       props.getSolicitudes();
+      toast.success(res.data.success);
       return;
     }
-    if (res.data.success) return toast.error(res.data.error);
+    if (res.data.error) {
+      return toast.error(res.data.error);
+    }
   };
-
   return (
     <tr>
       <td>{props.i}</td>
@@ -60,11 +60,11 @@ const SolicitudItem: React.FC<Props> = (props) => {
           </td>
           <td>
             <button
-              data-bs-toggle="modal"
-              data-bs-target="#rechazarSolicitud"
               onClick={() => {
                 props.setSolicitudModal(props.solicitud);
               }}
+              data-bs-toggle="modal"
+              data-bs-target="#rechazarSolicitud"
               className="btn btn-danger"
             >
               <i className="nav-icon fas fa-window-close" />

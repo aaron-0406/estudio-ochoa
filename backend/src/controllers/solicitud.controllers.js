@@ -88,12 +88,24 @@ ctrlSolicitud.crearSolicitud = async (req, res) => {};
 
 // put("/:id")
 ctrlSolicitud.modificarSolicitud = async (req, res) => {
-  const { fecha_solicitud, fecha_entrega_usuario, fecha_entrega_inventario, motivo_usuario, motivo_admin, estado_solicitud } = req.body;
+  const { fecha_solicitud, fecha_entrega_usuario, fecha_entrega_inventario, motivo_usuario, motivo_admin, estado_solicitud, id_expediente } = req.body;
   const newSolicitud = { fecha_solicitud, fecha_entrega_usuario, fecha_entrega_inventario, motivo_usuario, motivo_admin, estado_solicitud };
+  newSolicitud.estado_solicitud = req.params.estado;
+  if (req.params.estado === "EN USO") {
+    const expediente = await pool.query("SELECT * FROM expediente WHERE id_expediente = ?", [id_expediente]);
+    if (expediente[0].estado_uso == 1) return res.json({ error: "El expediente está en uso." });
+  }
+
   try {
-    const rows = await pool.query("UPDATE solicitud set ? WHERE id_solicitud = ?", [newSolicitud, req.params.id]);
-    if (rows.affectedRows === 1) return res.json({ success: `Solicitud ${estado_solicitud}` });
+    await pool.query("UPDATE solicitud set ? WHERE id_solicitud = ?", [newSolicitud, req.params.id]);
+    if (req.params.estado === "EN INVENTARIO" || req.params.estado === "EN USO") {
+      let estado_uso;
+      req.params.estado === "EN INVENTARIO" ? (estado_uso = 0) : (estado_uso = 1);
+      await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [{ estado_uso }, id_expediente]);
+    }
+    return res.json({ success: `Solicitud ${estado_solicitud}` });
   } catch (error) {
+    console.log(error);
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
   }
   return res.json({ error: "Ocurrió un error." });

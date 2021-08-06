@@ -26,9 +26,7 @@ const ModalSolicitud: React.FC<Props> = (props) => {
 
   useEffect(() => {
     setSolicitud(props.solicitud);
-    return () => {
-      setSolicitud(initialState);
-    };
+    return () => setSolicitud(initialState);
   }, [props.solicitud]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -77,6 +75,14 @@ const ModalSolicitud: React.FC<Props> = (props) => {
                   <dd>{solicitud.motivo_usuario}</dd>
                   <dt>Estado:</dt>
                   <dd>{solicitud.estado_solicitud}</dd>
+                  {solicitud.estado_solicitud === "DENEGADO" ? (
+                    <>
+                      <dt>Motivo de rechazo</dt>
+                      <dd>{solicitud.motivo_admin}</dd>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                   {solicitud.estado_solicitud === "EN USO" || solicitud.estado_solicitud === "EN INVENTARIO" ? (
                     <>
                       <dt>Fecha Entregado:</dt>
