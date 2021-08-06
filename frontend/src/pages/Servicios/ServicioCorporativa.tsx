@@ -1,9 +1,78 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import ServicesAccordion from "../../components/Servicios/ServicesAccordion";
+
 import imagen1 from "../../images/images-services/SERVICIO_2.1.jpg";
 
+interface listaXD {
+  titulo: string;
+  texto: any;
+}
+
 const ServicioCorporativa = () => {
+  const listaAccordion: listaXD[] = [
+    {
+      titulo: "Contitución de sociedades peruanas",
+      texto: (
+        <p>
+          Sociedad anónimas abiertas, sociedades anónimas por oferta pública,
+          sociedades anónimas.
+          <br /> Sociedad comercial de responsabilidad limitada.
+          <br />
+          Sociedades colectivas.
+          <br /> Sociedades civiles: Ordinarias y de responsabilidad limitada.
+          <br /> Sociedades en comandita: simple y por acciones.
+        </p>
+      ),
+    },
+    {
+      titulo: "Creación de sucursales",
+      texto: <p>En el Perú y en el extranjero.</p>,
+    },
+    {
+      titulo: "Contratos participativos",
+      texto: <p>En asociación, consorcio.</p>,
+    },
+    {
+      titulo: "Fusiones",
+      texto: (
+        <p>
+          Unir dos o más empresas con un solo capital y accionariado ya sea por
+          integración o por absorción.
+        </p>
+      ),
+    },
+    {
+      titulo: "Escisiones",
+      texto: <p>Dividir una sociedad en dos o más grupos societarios.</p>,
+    },
+    {
+      titulo: "Aumento de capital",
+      texto: (
+        <p>
+          Por aportes nuevos, por aporte de bienes y por distribución de
+          utilidades.
+        </p>
+      ),
+    },
+    {
+      titulo:
+        "Elaboración de actas de junta general de accionistas y seguimiento de acuerdos",
+      texto: "",
+    },
+    {
+      titulo: "Impugnación de acuerdos",
+      texto: (
+        <p>
+          Los socios pueden disentir de los acuerdos tomados en la Junta de
+          Accionistas, asesoramos la oposición de estos de acuerdo con las
+          normas legales vigentes.
+        </p>
+      ),
+    },
+  ];
+
   return (
     <div className="container my-5">
       <div className="row">
@@ -32,7 +101,11 @@ const ServicioCorporativa = () => {
         </div>
         <div className="col-12 col-md-6">
           <div className="mx-4">
-            <img className="w-100 shadow rounded" src={imagen1} alt="Imagen de servicio" />
+            <img
+              className="w-100 shadow rounded"
+              src={imagen1}
+              alt="Imagen de servicio"
+            />
           </div>
         </div>
       </div>
@@ -42,7 +115,7 @@ const ServicioCorporativa = () => {
           <p className="fw-bold text-center">
             Algunos ejemplos de nuestra asesoría:
           </p>
-          
+          <ServicesAccordion id="accordionUno" lista={listaAccordion} />
         </div>
         <div className="col-12 col-md-2"></div>
       </div>

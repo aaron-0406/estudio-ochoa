@@ -35,7 +35,7 @@ const Servicios: React.FC = () => {
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Finanzas"
               image={img_servicio2}
               title="Finanzas Banca y Seguros"
               text="Nuestro Estudio se encuentra familiarizado con la implementación de proyectos de financiamiento ..."
@@ -43,7 +43,7 @@ const Servicios: React.FC = () => {
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Contratos"
               image={img_servicio3}
               title="Estudio de Tìtulos y Elaboraciòn de Contratos"
               text="Elaboración de toda clase de contratos civiles y bancarios ..."
@@ -52,7 +52,7 @@ const Servicios: React.FC = () => {
 
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Laboral"
               image={img_servicio4}
               title="Laboral"
               text="Nuestro Estudio ofrece completa asesoría en relación con la legislación laboral vigente en el Perú ..."
@@ -60,7 +60,7 @@ const Servicios: React.FC = () => {
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Concursal"
               image={img_servicio5}
               title="Concursal"
               text="El Derecho Concursal tiene una doble óptica; por un lado, la perspectiva del deudor en situación económica ..."
@@ -68,7 +68,7 @@ const Servicios: React.FC = () => {
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Consumidor"
               image={img_servicio6}
               title="Competencia y Protección al Consumidor"
               text="Defendemos la vulneración de las marcas, inventos, obras literarias ..."
@@ -77,7 +77,7 @@ const Servicios: React.FC = () => {
 
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Civil"
               image={img_servicio7}
               title="Civil"
               text="Esta área está orientada a brindar asesoría legal en las distintas materias del derecho Civil ..."
@@ -85,7 +85,7 @@ const Servicios: React.FC = () => {
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Penal"
               image={img_servicio8}
               title="Penal"
               text="El Estudio posee amplia experiencia en la asesoría legal en la defensa de los bienes jurídicos ..."
@@ -93,7 +93,7 @@ const Servicios: React.FC = () => {
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Recuperaciones"
               image={img_servicio9}
               title="Recuperaciones Judiciales y Extrajudiciales de Deudas"
               text="Asimismo, nos encargamos de recuperaciones de cartera morosa a través de la cobranza judicial o extrajudicial ..."
@@ -101,7 +101,7 @@ const Servicios: React.FC = () => {
           </div>
           <div className="col-12 col-md-6 col-lg-4 my-3">
             <ServicesSectionService
-              url="/"
+              url="/Servicios/Litigios"
               image={img_servicio10}
               title="Litigios"
               text="Nuestro Estudio se encarga de patrocinar a nuestros clientes en sus procesos judiciales ..."
