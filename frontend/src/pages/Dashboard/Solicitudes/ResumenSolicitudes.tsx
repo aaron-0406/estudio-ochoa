@@ -12,7 +12,6 @@ const ResumenSolicitudes: React.FC<Props> = (props) => {
 
   const getResumen = async () => {
     const res = await solicitudesServices.getResumen();
-    console.log(res);
     setEstados(res.data.datos[0].estado);
   };
 
