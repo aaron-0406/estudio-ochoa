@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Carousel from "../components/Home/Carousel";
 import HomeSectionUs from "../components/Home/HomeSectionUs";
@@ -10,6 +10,11 @@ import imagen1 from "../images/images-team/Equipo1.png";
 import imagen4 from "../images/images-team/Equipo4.png";
 
 const Home: React.FC = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Carousel />

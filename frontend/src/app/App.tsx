@@ -19,6 +19,7 @@ import Usuarios from "../pages/Dashboard/Usuarios/Usuarios";
 import Inventario from "../pages/Inventario/Inventario";
 
 function App() {
+
   return (
     <BrowserRouter>
       <Switch>
@@ -32,7 +33,7 @@ function App() {
         <LayoutDash exact path="/Dashboard" component={Dashboard} />
 
         <LayoutDash exact path="/Dashboard/Usuarios" component={Usuarios} />
-        <LayoutDash exact path="/Dashboard/Inventario" component={Dashboard} />
+        <LayoutDash exact path="/Dashboard/Inventario" component={Inventario} />
 
         <LayoutDash exact path="/Dashboard/Historial" component={Dashboard} />
         <LayoutDash exact path="/Dashboard/Solicitudes" component={Dashboard} />

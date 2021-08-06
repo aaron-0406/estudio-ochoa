@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ContactSectionContactForm from "../components/Contacto/ContactSectionContactForm";
 import ContactSectionContactMap from "../components/Contacto/ContactSectionContactMap";
 import ServicesSectionRoad from "../components/Equipo/ServicesSectionRoad";
@@ -10,6 +10,11 @@ interface Map {
 }
 
 const Contacto: React.FC = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const arrayLocal: Map[] = [
     {
       id: 0,
