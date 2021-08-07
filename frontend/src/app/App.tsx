@@ -29,12 +29,14 @@ import ServicioPenal from "../pages/Servicios/ServicioPenal";
 import ServicioRecuperaciones from "../pages/Servicios/ServicioRecuperaciones";
 import Clientes from "../pages/Clientes";
 import Contacto from "../pages/Contacto";
+import LibroDeReclamaciones from "../pages/LibroDeReclamaciones";
 
 import LayoutDash from "../partials/LayoutDash";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Usuarios from "../pages/Dashboard/Usuarios/Usuarios";
-import Inventario from "../pages/Inventario/Inventario";
+import Inventario from "../pages/Dashboard/Inventario/Inventario";
 import Solicitudes from "../pages/Dashboard/Solicitudes/Solicitudes";
+import Historial from "../pages/Dashboard/Historial/Historial";
 
 function App() {
 
@@ -63,13 +65,18 @@ function App() {
         <LayoutUsuario exact path="/Equipo/Ramiro" component={EquipoRamiro} />
         <LayoutUsuario exact path="/Clientes" component={Clientes} />
         <LayoutUsuario exact path="/Contacto" component={Contacto} />
+        <LayoutUsuario
+          exact
+          path="/LibroDeReclamaciones"
+          component={LibroDeReclamaciones}
+        />
         <Route exact path="/Iniciar" component={Login} />
 
         <LayoutDash exact path="/Dashboard" component={Dashboard} />
         <LayoutDash exact path="/Dashboard/Usuarios" component={Usuarios} />
         <LayoutDash exact path="/Dashboard/Inventario" component={Inventario} />
         <LayoutDash exact path="/Dashboard/Solicitudes" component={Solicitudes} />
-        <LayoutDash exact path="/Dashboard/Historial" component={Dashboard} />
+        <LayoutDash exact path="/Dashboard/Historial" component={Historial} />
 
         <Route component={NotFound} />
       </Switch>

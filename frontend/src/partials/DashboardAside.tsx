@@ -43,18 +43,37 @@ const DashboardAside: React.FC = () => {
                 </p>
               </a>
               <ul className="nav nav-treeview">
-                <li className="nav-item">
-                  <Link to="/Dashboard/Solicitudes" className="nav-link">
-                    <i className="far fa-circle nav-icon" />
-                    <p>Solicitudes</p>
-                  </Link>
-                </li>
+                {usuario.rango_usuario === "1" ? (
+                  <>
+                    <li className="nav-item">
+                      <Link to="/Dashboard/Solicitudes" className="nav-link">
+                        <i className="far fa-circle nav-icon" />
+                        <p>Solicitudes</p>
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <></>
+                )}
+
                 <li className="nav-item">
                   <Link to="/Dashboard/Inventario" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Inventario</p>
                   </Link>
                 </li>
+                {usuario.rango_usuario === "2" ? (
+                  <>
+                    <li className="nav-item">
+                      <Link to="/Dashboard/Historial" className="nav-link">
+                        <i className="far fa-circle nav-icon" />
+                        <p>Historial</p>
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <></>
+                )}
               </ul>
             </li>
             <li className="nav-item">

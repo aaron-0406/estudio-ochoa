@@ -16,7 +16,7 @@ const initialState: Usuario = {
   dni: "",
   email_usuario: "",
   estado_usuario: "1",
-  rango_usuario: 2,
+  rango_usuario: "2",
   nombres_usuario: "",
   telefono_usuario: "",
   authenticate: false,

@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import { useUsuario } from "../../../auth/UsuarioProvider";
 import Solicitud from "../../../interfaces/Solicitud";
 import * as solicitudesServices from "../../../services/SolicitudesServices";
-import ModalRechazar from "./ModalRechazar";
-import ModalSolicitud from "./ModalSolicitud";
-import SolicitudItem from "./SolicitudItem";
+import HistorialItem from "./HistorialItem";
+import ModalHistorial from "./ModalHistorial";
 
 interface Props {
   estado: string;
@@ -14,8 +14,9 @@ interface Props {
   solicitudModal: Solicitud;
   filtro: string;
 }
+const ListaHistorial: React.FC<Props> = (props) => {
+  const { usuario } = useUsuario();
 
-const ListaSolicitudes: React.FC<Props> = (props) => {
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
   const [loadUsuarios, setLoadUsuarios] = useState<boolean>(false);
 
@@ -24,12 +25,12 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
   const [page, setPage] = useState<number>(1);
 
   const getSolicitudes = async () => {
-    const res = await solicitudesServices.getAll(page, props.filtro, props.estado);
+    const res = await solicitudesServices.getAllByUsuarioId(usuario.id_usuario + "", page, props.filtro, props.estado);
     setSolicitudes(res.data);
     setLoadUsuarios(true);
   };
   const getCantidad = async () => {
-    const res = await solicitudesServices.getCount(props.filtro, props.estado);
+    const res = await solicitudesServices.getCountByUsuarioÏd(usuario.id_usuario + "", props.filtro, props.estado);
     setCantidad(res.data);
     setCantidadPaginas(Math.ceil(res.data / 12));
   };
@@ -61,7 +62,6 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
       setPage(1);
     };
   }, [props.filtro, props.trigguer, props.estado]);
-
   return (
     <>
       <table className="table table-bordered table-hover table-striped">
@@ -70,7 +70,6 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
           <tr>
             <th className="border-0">#</th>
             <th className="border-0">EXPEDIENTE</th>
-            <th className="border-0">USUARIO</th>
             <th className="border-0">FECHA DE SOLICITUD</th>
             <th className="border-0">FECHA DE ENTREGA</th>
             <th className="border-0">ESTADO</th>
@@ -96,7 +95,7 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
               ) : (
                 <>
                   {solicitudes.map((solicitud, i) => {
-                    return <SolicitudItem trigguer={props.trigguer} setTrigguer={props.setTrigguer} i={i + 1} getSolicitudes={getSolicitudes} setSolicitudModal={props.setSolicitudModal} solicitud={solicitud} key={solicitud.id_solicitud} />;
+                    return <HistorialItem trigguer={props.trigguer} setTrigguer={props.setTrigguer} i={i + 1} getSolicitudes={getSolicitudes} setSolicitudModal={props.setSolicitudModal} solicitud={solicitud} key={solicitud.id_solicitud} />;
                   })}
                 </>
               )}
@@ -140,10 +139,9 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
           </>
         )}
       </div>
-      <ModalSolicitud setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getSolicitudes} solicitud={props.solicitudModal} />
-      <ModalRechazar setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getSolicitudes} solicitud={props.solicitudModal} />
+      <ModalHistorial setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getSolicitudes} solicitud={props.solicitudModal} />
     </>
   );
 };
 
-export default ListaSolicitudes;
+export default ListaHistorial;

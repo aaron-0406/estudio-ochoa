@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import { useUsuario } from "../../../auth/UsuarioProvider";
 import * as solicitudesServices from "../../../services/SolicitudesServices";
+
 interface Estado {
   estado_solicitud: string;
   cantidad: number;
@@ -7,11 +10,11 @@ interface Estado {
 interface Props {
   trigguer: number;
 }
-const ResumenSolicitudes: React.FC<Props> = (props) => {
+const ResumenHistorial: React.FC<Props> = (props) => {
   const [estados, setEstados] = useState<Estado[]>([]);
-
+  const { usuario } = useUsuario();
   const getResumen = async () => {
-    const res = await solicitudesServices.getResumen();
+    const res = await solicitudesServices.getResumenByUsuarioId(usuario.id_usuario + "");
     setEstados(res.data.datos[0].estado);
   };
 
@@ -62,4 +65,4 @@ const ResumenSolicitudes: React.FC<Props> = (props) => {
   );
 };
 
-export default ResumenSolicitudes;
+export default ResumenHistorial;

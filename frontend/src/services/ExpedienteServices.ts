@@ -7,7 +7,9 @@ export const getAll = async (page: number, keyword: string) => {
   if (keyword.trim() !== "") return await axios.get(`${api}?keyword=${keyword}&page=${page}`);
   return await axios.get(`${api}?page=${page}`);
 };
-
+export const getByCodigoExpediente = async (id: string) => {
+  return await axios.get(`${api}/${id}`);
+};
 export const getCount = async (keyword: string) => {
   if (keyword.trim() === "") return await axios.get(`${api}/count`);
   return await axios.get(`${api}/count?keyword=${keyword}`);

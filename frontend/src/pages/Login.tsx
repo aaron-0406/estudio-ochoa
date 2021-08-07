@@ -6,7 +6,7 @@ import axios from "axios";
 import auth from "../auth/auth";
 import expr from '../encrypt/exprRegular';
 
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 import imgLogo from "../images/logo-home.png";
 import imgLogo2 from "../images/logo.png";
@@ -62,7 +62,6 @@ const Login: React.FC = () => {
         //history.push() -> nos permite navegar a otra pàgina
         history.push("/Dashboard");
       }
-      if (res.data.error) return toast.error(res.data.error);
     }
   };
 
@@ -90,7 +89,7 @@ const Login: React.FC = () => {
           </form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -26,9 +26,7 @@ const ModalSolicitud: React.FC<Props> = (props) => {
 
   useEffect(() => {
     setSolicitud(props.solicitud);
-    return () => {
-      setSolicitud(initialState);
-    };
+    return () => setSolicitud(initialState);
   }, [props.solicitud]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,33 +48,54 @@ const ModalSolicitud: React.FC<Props> = (props) => {
 
   return (
     <div className="modal fade" id="verSolicitud" tabIndex={-1} aria-labelledby="verSolicitud" aria-hidden="true">
-      <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div className="modal-content">
-          <div className="modal-header bg-dark">
-            <h5 className="modal-title" id="verSolicitud">
-              <i className="fas fa-eye me-2"></i>
-              Solicitud
-            </h5>
-            <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <form onSubmit={handleSubmit}>
+      <div className="modal-dialog modal-lg modal-dialog-scrollable">
+        <form onSubmit={handleSubmit}>
+          <div className="modal-content">
+            <div className="modal-header bg-dark">
+              <h5 className="modal-title" id="verSolicitud">
+                <i className="fas fa-eye me-2"></i>
+                Solicitud
+              </h5>
+              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div className="modal-body">
               <div className="card-body">
                 <dl>
-                  <dt>Usuario Solicitante:</dt>
-                  <dd>
-                    {solicitud.nombres_usuario} {solicitud.apellidos_usuario}
-                  </dd>
-                  <dt>Código del Expediente:</dt>
-                  <dd>{solicitud.codigo_expediente}</dd>
-                  <dt>Fecha de Solicitud:</dt>
-                  <dd>{solicitud.fecha_solicitud}</dd>
-                  <dt>Fecha de Entrega:</dt>
-                  <dd>{solicitud.fecha_entrega_usuario}</dd>
-                  <dt>Motivo de la Solicitud:</dt>
-                  <dd>{solicitud.motivo_usuario}</dd>
+                  <div className="row">
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                      <dt>Usuario Solicitante:</dt>
+                      <dd>
+                        {solicitud.nombres_usuario} {solicitud.apellidos_usuario}
+                      </dd>
+                    </div>
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                      <dt>Código del Expediente:</dt>
+                      <dd>{solicitud.codigo_expediente}</dd>
+                    </div>
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                      <dt>Fecha de Solicitud:</dt>
+                      <dd>{solicitud.fecha_solicitud}</dd>
+                    </div>
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                      <dt>Fecha de Entrega:</dt>
+                      <dd>{solicitud.fecha_entrega_usuario}</dd>
+                    </div>
+                    <div className="col-12 col-sm-12 col-md-12 col-lg-12">
+                      <dt>Motivo de la Solicitud:</dt>
+                      <dd>{solicitud.motivo_usuario}</dd>
+                    </div>
+                  </div>
+
                   <dt>Estado:</dt>
                   <dd>{solicitud.estado_solicitud}</dd>
+                  {solicitud.estado_solicitud === "DENEGADO" ? (
+                    <>
+                      <dt>Motivo de rechazo</dt>
+                      <dd>{solicitud.motivo_admin}</dd>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                   {solicitud.estado_solicitud === "EN USO" || solicitud.estado_solicitud === "EN INVENTARIO" ? (
                     <>
                       <dt>Fecha Entregado:</dt>
@@ -102,8 +121,8 @@ const ModalSolicitud: React.FC<Props> = (props) => {
                 <></>
               )}
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );

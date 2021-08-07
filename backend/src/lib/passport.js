@@ -16,7 +16,6 @@ passport.use(
     },
     async (req, email, password, done) => {
       const rows = await pool.query(`SELECT * FROM usuario WHERE email_usuario = ?`, [email]);
-
       if (!rows.length > 0) return done("Ese correo no está registrado", false, { message: "Ese correo no está registrado" }); //El usuario no existe
 
       const validPassword = await helpers.matchPassword(password, rows[0].password); //<- Verificando la contraseña

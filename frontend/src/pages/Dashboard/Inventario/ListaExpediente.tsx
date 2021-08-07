@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 //Toast
 //Services
 
-import * as expedienteServices from "../../services/ExpedienteServices";
-import Expediente from "../../interfaces/Expediente";
+import * as expedienteServices from "../../../services/ExpedienteServices";
+import Expediente from "../../../interfaces/Expediente";
 import ExpedienteItem from "./ExpedienteItem";
 import ModalExpediente from "./ModalExpediente";
 

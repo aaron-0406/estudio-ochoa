@@ -6,7 +6,7 @@ export default interface Solicitud {
   motivo_admin: string;
   motivo_usuario: string;
   estado_solicitud: string;
-  id_usuario: number;
+  id_usuario?: number;
   id_expediente: number;
   nombres_usuario?:string;
   apellidos_usuario?:string;
