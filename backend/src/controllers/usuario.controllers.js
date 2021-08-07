@@ -42,15 +42,12 @@ ctrlUsuario.count = async (req, res) => {
 //get("/whoami")
 ctrlUsuario.whoami = async (req, res) => {
   if (!req.user) return res.json({ error: "No autentificado" }); //No autentificado
-  const usuario = await pool.query(`SELECT * FROM usuario  WHERE id_usuario = ? `, [req.user.id_usuario]);
-  const newUser = usuario;
-  newUser.authenticate = true;
-  return res.json({ user: newUser });
+  return res.json({ user: req.user });
 };
 //post("/")
 ctrlUsuario.createUsuario = async (req, res) => {
   const { apellidos_usuario, nombres_usuario, email_usuario, telefono_usuario, dni } = req.body;
-  const password = await helpers.encryptPassword(nombres_usuario + dni);
+  const password = await helpers.encryptPassword(nombres_usuario.toLowerCase() + dni);
   const newUsuario = {
     nombres_usuario,
     apellidos_usuario,

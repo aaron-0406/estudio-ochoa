@@ -122,8 +122,11 @@ ctrlSolicitud.getCountByUsuarioId = async (req, res) => {
 
 // post("/:id")
 ctrlSolicitud.crearSolicitud = async (req, res) => {
-  console.log(req.body);
-  res.json({ success: "Todo ok" });
+  const newSolicitud = ({ fecha_solicitud, fecha_entrega_usuario, fecha_entrega_inventario, motivo_usuario, motivo_admin, estado_solicitud, id_usuario, id_expediente } = req.body);
+  newSolicitud.fecha_solicitud = new Date(newSolicitud.fecha_solicitud);
+  const rows = await pool.query("INSERT INTO solicitud set ? ", [newSolicitud]);
+  if (rows.affectedRows === 1) return res.json({ success: "Solicitud enviada" });
+  res.json({ error: "Ocurrió un error" });
 };
 
 // put("/:id")
@@ -133,6 +136,7 @@ ctrlSolicitud.modificarSolicitud = async (req, res) => {
   newSolicitud.estado_solicitud = req.params.estado;
   if (req.params.estado === "EN USO") {
     const expediente = await pool.query("SELECT * FROM expediente WHERE id_expediente = ?", [id_expediente]);
+    if (expediente[0].habilitado != 1) return res.json({ error: "El expediente está inhabilitado." });
     if (expediente[0].estado_uso == 1) return res.json({ error: "El expediente está en uso." });
   }
 
@@ -143,7 +147,7 @@ ctrlSolicitud.modificarSolicitud = async (req, res) => {
       req.params.estado === "EN INVENTARIO" ? (estado_uso = 0) : (estado_uso = 1);
       await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [{ estado_uso }, id_expediente]);
     }
-    return res.json({ success: `Solicitud ${estado_solicitud}` });
+    return res.json({ success: `Estado de solicitud cambiada a ${estado_solicitud}` });
   } catch (error) {
     console.log(error);
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
@@ -152,6 +156,10 @@ ctrlSolicitud.modificarSolicitud = async (req, res) => {
 };
 
 //delete("/:id")
-ctrlSolicitud.eliminarSolicitud = async (req, res) => {};
+ctrlSolicitud.eliminarSolicitud = async (req, res) => {
+  const rows = await pool.query("DELETE FROM solicitud WHERE id_solicitud = ?", [req.params.id]);
+  if (rows.affectedRows === 1) return res.json({ success: "Solicitud Eliminada" });
+  return res.json({ error: "Ocurrió un error" });
+};
 
 module.exports = ctrlSolicitud;

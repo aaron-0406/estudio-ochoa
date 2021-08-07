@@ -12,18 +12,18 @@ interface Props {
   setSolicitudModal: (solicitud: Solicitud) => void;
 }
 const HistorialItem: React.FC<Props> = (props) => {
-  const aceptarSolicitud = async () => {
-    const res = await solicitudesServices.editarSolicitud(props.solicitud.id_solicitud + "", props.solicitud, "EN USO");
+  const eliminarSolicitud = async () => {
+    if (!window.confirm("¿Seguro que desea eliminar su solicitud?")) return;
+    const res = await solicitudesServices.eliminarSolicitud(props.solicitud.id_solicitud + "");
     if (res.data.success) {
-      props.setTrigguer(props.trigguer + 1);
       props.getSolicitudes();
+      props.setTrigguer(props.trigguer + 1);
       toast.success(res.data.success);
       return;
     }
-    if (res.data.error) {
-      return toast.error(res.data.error);
-    }
+    if (res.data.error) return toast.error(res.data.error);
   };
+
   return (
     <tr>
       <td>{props.i}</td>
@@ -43,38 +43,22 @@ const HistorialItem: React.FC<Props> = (props) => {
           <i className="nav-icon fas fa-eye" />
         </button>
       </td>
-      {props.solicitud.estado_solicitud === "SOLICITADO" ? (
-        <>
-          <td>
+      <td>
+        {props.solicitud.estado_solicitud === "DENEGADO" ? (
+          <>
             <button
               onClick={() => {
-                props.setSolicitudModal(props.solicitud);
-                aceptarSolicitud();
+                eliminarSolicitud();
               }}
-              className="btn btn-success"
-            >
-              <i className="nav-icon fas fa-check" />
-            </button>
-          </td>
-          <td>
-            <button
-              onClick={() => {
-                props.setSolicitudModal(props.solicitud);
-              }}
-              data-bs-toggle="modal"
-              data-bs-target="#createSolicitud"
               className="btn btn-danger"
             >
-              <i className="nav-icon fas fa-window-close" />
+              <i className="nav-icon fas fa-trash-alt" />
             </button>
-          </td>
-        </>
-      ) : (
-        <>
-          <td></td>
-          <td></td>
-        </>
-      )}
+          </>
+        ) : (
+          <></>
+        )}
+      </td>
     </tr>
   );
 };

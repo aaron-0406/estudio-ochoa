@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Buscador from "../../../components/Buscador";
 import Solicitud from "../../../interfaces/Solicitud";
 import ListaHistorial from "./ListaHistorial";
 import ResumenHistorial from "./ResumenHistorial";
+import { AiOutlineFileAdd } from "react-icons/ai";
 
 const initialState: Solicitud = {
   estado_solicitud: "",
@@ -44,10 +43,10 @@ const Historial: React.FC = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#createSolicitud"
                     onClick={() => {
-                        setSolicitudModal(initialState);
+                      setSolicitudModal(initialState);
                     }}
                   >
-                    <FontAwesomeIcon icon={faPlus} color="#fff" size="1x" />
+                    <AiOutlineFileAdd className="fs-4" color="#fff" />
                   </button>
                 </div>
               </div>

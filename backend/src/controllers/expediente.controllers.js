@@ -50,7 +50,12 @@ ctrlExpediente.getResumen = async (req, res) => {
   const datos = [{ bancos: bancos }, { materia: materia }, { estado: estado }];
   return res.json({ datos });
 };
-
+//get("/:id")
+ctrlExpediente.getExpedienteByCodigo = async (req, res) => {
+  const expediente = await pool.query("SELECT * FROM expediente WHERE codigo_expediente = ?", [req.params.id]);
+  if (expediente[0]) return res.json({ expediente: expediente[0], success: "Encontrado" });
+  return res.json({ error: "No existe tal expediente" });
+};
 //post("/")
 ctrlExpediente.createExpediente = async (req, res) => {
   try {

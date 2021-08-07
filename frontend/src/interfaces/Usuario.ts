@@ -6,6 +6,6 @@ export interface Usuario {
   apellidos_usuario: string;
   telefono_usuario: string;
   estado_usuario: string;
-  rango_usuario: number;
+  rango_usuario: string;
   authenticate: boolean;
 }
