@@ -4,7 +4,6 @@ import * as expedienteServices from "../../../services/ExpedienteServices";
 import { toast } from "react-toastify";
 import { RiFileForbidLine } from "react-icons/ri";
 import { AiOutlineFileDone } from "react-icons/ai";
-import { useUsuario } from "../../../auth/UsuarioProvider";
 interface Props {
   i: number;
   expediente: Expediente;
@@ -13,7 +12,6 @@ interface Props {
 }
 
 const ExpedienteItem: React.FC<Props> = (props) => {
-  const { usuario } = useUsuario();
 
   const eliminarExpediente = async (id?: number) => {
     const res = await expedienteServices.eliminarExpediente(id + "");
