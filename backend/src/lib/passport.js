@@ -22,7 +22,8 @@ passport.use(
       delete rows[0].password;
       rows[0].authenticate = true;
       if (!validPassword) return done("Contraseña inválidos", false, { message: "Contraseña inválidos" });
-      if (rows[0].estado === 0) return done("Usuario inhabilitado", false, { message: "Usuario inhabilitado" }); //El usuario está inhabilitado
+      console.log(rows[0].estado_usuario)
+      if (rows[0].estado_usuario == 0) return done("Usuario inhabilitado", false, { message: "Usuario inhabilitado" }); //El usuario está inhabilitado
       return done(null, rows[0]); //<- Contraseña correcta
     }
   )
