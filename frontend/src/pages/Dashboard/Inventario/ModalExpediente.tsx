@@ -29,7 +29,7 @@ const initStateExpediente: Expediente = {
   fecha_ep: "",
   estado_actual: "",
   folio: "",
-  estado_uso: "",
+  estado_uso: "0",
   habilitado: "1",
   id_materia: 0,
   id_banco: 0,
@@ -46,7 +46,6 @@ const ModalExpediente: React.FC<Props> = (props) => {
     if (expediente.id_expediente === 0) {
       const res = await expedienteServices.createExpediente(expediente);
       if (res.data.success) {
-        toast.success(res.data.success);
         setExpediente(initStateExpediente);
         props.render();
         props.setTrigguer(props.trigguer + 1);

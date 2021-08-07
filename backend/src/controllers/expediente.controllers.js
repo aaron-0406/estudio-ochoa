@@ -58,6 +58,7 @@ ctrlExpediente.getExpedienteByCodigo = async (req, res) => {
 };
 //post("/")
 ctrlExpediente.createExpediente = async (req, res) => {
+  console.log(req.body)
   try {
     const rows = await pool.query("INSERT INTO expediente SET ?", [req.body]);
     if (rows.affectedRows === 1) return res.json({ success: "Expediente creado" });

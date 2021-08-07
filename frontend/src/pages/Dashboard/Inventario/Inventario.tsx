@@ -13,7 +13,7 @@ const initialState: Expediente = {
   documentos: "",
   estado_actual: "",
   estado_procesal: "",
-  estado_uso: "1",
+  estado_uso: "0",
   fecha_asignacion: "",
   fecha_ep: "",
   folio: "",
