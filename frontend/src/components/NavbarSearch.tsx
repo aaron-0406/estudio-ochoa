@@ -91,19 +91,19 @@ const NavbarSearch: React.FC<Props> = (props) => {
           </Link>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             JAVA
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             AARON
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <FontAwesomeIcon className="ms-3 me-4" icon={faSearch} color="#C17743" size="lg" />
             PERU LIBRE
           </a>
