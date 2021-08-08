@@ -37,6 +37,7 @@ import Usuarios from "../pages/Dashboard/Usuarios/Usuarios";
 import Inventario from "../pages/Dashboard/Inventario/Inventario";
 import Solicitudes from "../pages/Dashboard/Solicitudes/Solicitudes";
 import Historial from "../pages/Dashboard/Historial/Historial";
+import DashboardContacto from '../pages/Dashboard/Contacto/Contacto';
 
 function App() {
   return (
@@ -128,6 +129,7 @@ function App() {
           component={Solicitudes}
         />
         <LayoutDash exact path="/Dashboard/Historial" component={Historial} />
+        <LayoutDash exact path="/Dashboard/Contacto" component={DashboardContacto} />
 
         <Route component={NotFound} />
       </Switch>

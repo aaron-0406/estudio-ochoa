@@ -87,13 +87,13 @@ const DashboardAside: React.FC = () => {
 
             <li className="nav-header">Sitio Web</li>
             <li className="nav-item">
-              <a href="pages/calendar.html" className="nav-link">
+              <Link to="/Dashboard/Contacto" className="nav-link">
                 <i className="nav-icon far fa-envelope" />
                 <p>
                   Contactos
                   <span className="badge badge-info right">2</span>
                 </p>
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
