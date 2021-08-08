@@ -5,6 +5,7 @@ import * as materiaServices from "../../../services/MateriaServices";
 import * as expedienteServices from "../../../services/ExpedienteServices";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
+import expr from '../../../encrypt/exprRegular';
 
 import { toast } from "react-toastify";
 
@@ -43,11 +44,23 @@ const ModalExpediente: React.FC<Props> = (props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (expediente.id_expediente === 0) {
-      const res = await expedienteServices.createExpediente(expediente);
+    if (expr.digit.test(expediente.codigo_estudio) && expr.digit.test(expediente.codigo_expediente) && expr.digit.test(expediente.folio) && expr.letter.test(expediente.estado_actual)) {
+      // Crear
+      if (expediente.id_expediente === 0) {
+        const res = await expedienteServices.createExpediente(expediente);
+        if (res.data.success) {
+          setExpediente(initStateExpediente);
+          props.render();
+          props.setTrigguer(props.trigguer + 1);
+          if (refButton.current) refButton.current.click();
+          return toast.success(res.data.success);
+        }
+        if (res.data.error) return toast.error(res.data.error);
+        return;
+      }
+      // Actualizar
+      const res = await expedienteServices.editarExpediente(expediente.id_expediente + "", expediente);
       if (res.data.success) {
-        toast.success(res.data.success);
-        setExpediente(initStateExpediente);
         props.render();
         props.setTrigguer(props.trigguer + 1);
         if (refButton.current) refButton.current.click();
@@ -55,20 +68,36 @@ const ModalExpediente: React.FC<Props> = (props) => {
       }
       if (res.data.error) return toast.error(res.data.error);
       return;
+    } else {
+      toast.error("Campos invalidos");
     }
-    const res = await expedienteServices.editarExpediente(expediente.id_expediente + "", expediente);
-    if (res.data.success) {
-      props.render();
-      props.setTrigguer(props.trigguer + 1);
-      if (refButton.current) refButton.current.click();
-      return toast.success(res.data.success);
-    }
-    if (res.data.error) return toast.error(res.data.error);
-    return;
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setExpediente({ ...expediente, [event.target.name]: event.target.value });
+    switch (event.target.name) {
+      case "codigo_estudio":
+        validation(expr.digit, event.target);
+        break;
+      case "codigo_expediente":
+        validation(expr.digit, event.target);
+        break;
+      case "folio":
+        validation(expr.digit, event.target);
+        break;
+      case "estado_actual":
+        validation(expr.letter, event.target);
+        break;
+    }
   };
+
+  const validation = (expr: RegExp, e: EventTarget & (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)) => {
+    if (expr.test(e.value)) {
+      e.classList.remove("is-invalid");
+      return;
+    }
+    e.classList.add("is-invalid");
+  }
+
   //El useeffect no lleva nada de callback
   const getBancos = async () => {
     const res = await bancoServices.getAll();
@@ -132,10 +161,16 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   {expediente.id_expediente === 0 ? (
                     <>
                       <input type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} />
+                      <div className="invalid-feedback">
+                        Solo digitos permitidos
+                      </div>
                     </>
                   ) : (
                     <>
                       <input disabled type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} />
+                      <div className="invalid-feedback">
+                        Solo digitos permitidos
+                      </div>
                     </>
                   )}
                   {/* <input type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} disabled /> */}
@@ -146,6 +181,9 @@ const ModalExpediente: React.FC<Props> = (props) => {
                     Codigo Expediente
                   </label>
                   <input type="text" className="form-control" id="input_Codigo_Expediente" name="codigo_expediente" onChange={handleChange} value={expediente.codigo_expediente} />
+                  <div className="invalid-feedback">
+                    Solo digitos permitidos
+                  </div>
                 </div>
                 <div className="col-12 col-md-6 col-lg-6">
                   <br />
@@ -220,6 +258,9 @@ const ModalExpediente: React.FC<Props> = (props) => {
                     Estado Actual
                   </label>
                   <input type="text" className="form-control" id="input_Estado_Actual" name="estado_actual" onChange={handleChange} value={expediente.estado_actual} />
+                  <div className="invalid-feedback">
+                    Caracteres incorrectos
+                  </div>
                 </div>
                 <div className="col-12 col-md-6 col-lg-6">
                   <br />
@@ -262,6 +303,9 @@ const ModalExpediente: React.FC<Props> = (props) => {
                     Folio
                   </label>
                   <input type="text" className="form-control" id="input_Folio" name="folio" onChange={handleChange} value={expediente.folio} />
+                  <div className="invalid-feedback">
+                    Solo digitos permitidos
+                  </div>
                 </div>
               </div>
             </div>
