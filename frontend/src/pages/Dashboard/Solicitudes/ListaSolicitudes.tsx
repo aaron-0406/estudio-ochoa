@@ -83,6 +83,13 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
             <>
               <tr className="m-3">
                 <td>Cargando datos...</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </>
           ) : (
@@ -91,6 +98,13 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
                 <>
                   <tr className="m-3">
                     <td> No hay solictudes registrados aún</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                   </tr>
                 </>
               ) : (

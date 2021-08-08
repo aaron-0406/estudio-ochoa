@@ -90,6 +90,14 @@ const ListaExpediente: React.FC<Props> = (props) => {
             <>
               <tr className="m-3">
                 <td>Cargando datos...</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </>
           ) : (
@@ -98,6 +106,14 @@ const ListaExpediente: React.FC<Props> = (props) => {
                 <>
                   <tr className="m-3">
                     <td> No hay expedientes registrados aún</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                   </tr>
                 </>
               ) : (

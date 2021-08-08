@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-08-2021 a las 19:39:01
+-- Tiempo de generación: 09-08-2021 a las 00:52:08
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -52,7 +52,8 @@ CREATE TABLE `contacto` (
   `nombre_contacto` varchar(100) NOT NULL,
   `email_contacto` varchar(50) NOT NULL,
   `telefono_contacto` varchar(20) NOT NULL,
-  `text` text NOT NULL
+  `text` text NOT NULL,
+  `visto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -81,16 +82,6 @@ CREATE TABLE `expediente` (
   `id_materia` int(11) NOT NULL,
   `id_banco` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `expediente`
---
-
-INSERT INTO `expediente` (`id_expediente`, `codigo_estudio`, `fecha_asignacion`, `nombre_cliente`, `contrato`, `documentos`, `monto`, `codigo_expediente`, `juzgado`, `demanda`, `estado_procesal`, `fecha_ep`, `estado_actual`, `folio`, `estado_uso`, `habilitado`, `id_materia`, `id_banco`) VALUES
-(4, '12345678', '2021-07-31', 'nombre cliente 3', 'contrato 3', 'documentos 3', 'monto 3', 'codigo expediente 3', 'juzgado 3', '2021-07-29', 'estado procesal 3', '2021-07-30', 'estado actual 3', 'folio 3', '0', '1', 2, 2),
-(5, '987456321', '2021-07-01', 'nombre cliente 2 21', 'contrato 2', 'documentos 2', 'monto 2', 'codigo expediente 2222', 'juzgado 2', '2021-07-03', 'estado procesal 2', '2021-07-02', 'estado actual 2', 'folio 2', '0', '1', 1, 2),
-(7, '852147963', '2021-07-01', 'AARON', 'CONTRATO 4', 'DOCUMENTOS 4', 'MONTO 4', 'codigo expediente 4', 'JUZGADO 4', '2021-07-03', 'ESTADO PROCESAL 4', '2021-07-02', 'estado actual 4', '500 HOJAS', '0', '1', 3, 1),
-(8, '1211412422', '2021-08-28', 'Marvin', 'CONTRATO 4', 'xd', 'xddd', '1211412221', 'xd', '2021-08-26', 'xdd', '2021-08-25', 'estado 4', 'xdd', '0', '1', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -125,10 +116,6 @@ CREATE TABLE `sessions` (
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `sessions`
---
-
 -- --------------------------------------------------------
 
 --
@@ -146,13 +133,6 @@ CREATE TABLE `solicitud` (
   `id_usuario` int(11) NOT NULL,
   `id_expediente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `solicitud`
---
-
-INSERT INTO `solicitud` (`id_solicitud`, `fecha_solicitud`, `fecha_entrega_usuario`, `fecha_entrega_inventario`, `motivo_usuario`, `motivo_admin`, `estado_solicitud`, `id_usuario`, `id_expediente`) VALUES
-(8, '2021-08-07', '2021-08-28', '2021-08-30', 'Un texto es una composición de signos codificados en un sistema de escritura que forma una unidad de sentido.\n\nTambién es una composición de caracteres imprimibles (con grafema) generados por un algoritmo de cifrado que, aunque no tienen sentido para cualquier persona, sí puede ser descifrado por su destinatario original. En otras palabras, un texto es un entramado de signos con una intención comunicativa que adquiere sentido en determinado contexto.\n\nLas ideas que comunica un texto están contenidas en lo que se suele denominar «macroproposiciones», unidades estructurales de nivel superior o global, que otorgan coherencia al texto constituyendo su hilo central, el esqueleto estructural que cohesiona elementos lingüísticos formales de alto nivel, como los títulos y subtítulos, la secuencia de párrafos, etc. En contraste, las «microproposiciones son los elementos coadyuvantes de la cohesión de un texto, pero a nivel más particular o local. Esta distinción fue realizada por Teun van Dijk en 1980.1\n\nEl nivel microestructural o local está asociado con el concepto de cohesión. Se refiere a uno de los fenómenos propios de la coherencia, el de las relaciones particulares y locales que se dan entre elementos lingüísticos, tanto los que remiten unos a otros como los que tienen la función de conectar y organizar.\n\nTambién es un conjunto de oraciones agrupadas en párrafos que habla de un tema determinado.', '', 'EN INVENTARIO', 32, 8);
 
 -- --------------------------------------------------------
 
@@ -177,7 +157,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `dni`, `email_usuario`, `password`, `nombres_usuario`, `apellidos_usuario`, `telefono_usuario`, `estado_usuario`, `rango_usuario`) VALUES
-(1, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '123456789', '1', '1');
+(36, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '990489736', '1', '2');
 
 --
 -- Índices para tablas volcadas
@@ -201,7 +181,9 @@ ALTER TABLE `contacto`
 ALTER TABLE `expediente`
   ADD PRIMARY KEY (`id_expediente`),
   ADD UNIQUE KEY `codigo_estudio` (`codigo_estudio`),
-  ADD UNIQUE KEY `codigo_expediente` (`codigo_expediente`);
+  ADD UNIQUE KEY `codigo_expediente` (`codigo_expediente`),
+  ADD KEY `id_banco` (`id_banco`),
+  ADD KEY `id_materia` (`id_materia`);
 
 --
 -- Indices de la tabla `materia`
@@ -219,7 +201,9 @@ ALTER TABLE `sessions`
 -- Indices de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  ADD PRIMARY KEY (`id_solicitud`);
+  ADD PRIMARY KEY (`id_solicitud`),
+  ADD KEY `id_expediente` (`id_expediente`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `usuario`
@@ -249,7 +233,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `expediente`
 --
 ALTER TABLE `expediente`
-  MODIFY `id_expediente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_expediente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `materia`
@@ -261,13 +245,31 @@ ALTER TABLE `materia`
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `expediente`
+--
+ALTER TABLE `expediente`
+  ADD CONSTRAINT `expediente_ibfk_1` FOREIGN KEY (`id_banco`) REFERENCES `banco` (`id_banco`),
+  ADD CONSTRAINT `expediente_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`);
+
+--
+-- Filtros para la tabla `solicitud`
+--
+ALTER TABLE `solicitud`
+  ADD CONSTRAINT `solicitud_ibfk_1` FOREIGN KEY (`id_expediente`) REFERENCES `expediente` (`id_expediente`),
+  ADD CONSTRAINT `solicitud_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
