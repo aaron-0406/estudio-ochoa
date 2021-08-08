@@ -43,7 +43,12 @@ const Footer: React.FC = () => {
             </p>
             <ul className="list-unstyled d-flex">
               <li>
-                <a href="/" className="border p-1 me-2">
+                <a
+                  href="https://www.facebook.com/Estudio-Jur%C3%ADdico-Ochoa-Maldonado-Abogados-Sociedad-Civil-105613827900367/?_rdc=1&_rdr"
+                  className="border p-1 me-2"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <FontAwesomeIcon
                     className="mx-2"
                     icon={faFacebookF}
@@ -53,7 +58,12 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="/" className="border p-1 me-2">
+                <a
+                  href="https://www.instagram.com/estudiojuridicoochoam/"
+                  className="border p-1 me-2"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <FontAwesomeIcon
                     className="mx-2"
                     icon={faInstagram}
@@ -63,7 +73,12 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="/" className="border p-1 me-2">
+                <a
+                  href="https://www.linkedin.com/in/estudio-jur%C3%ADdico-ochoa-maldonado-abogados-sociedad-civil-35b2041b3?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BFEv%2BvHgSSY6DKBwDhf%2FIFw%3D%3D"
+                  className="border p-1 me-2"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <FontAwesomeIcon
                     className="mx-2"
                     icon={faLinkedinIn}
