@@ -51,6 +51,12 @@ const DashboardAside: React.FC = () => {
                         <p>Solicitudes</p>
                       </Link>
                     </li>
+                    <li className="nav-item">
+                      <Link to="/Dashboard/Usuarios" className="nav-link">
+                        <i className="nav-icon fas fa-user-friends" />
+                        <p>Usuarios</p>
+                      </Link>
+                    </li>
                   </>
                 ) : (
                   <></>
@@ -76,12 +82,7 @@ const DashboardAside: React.FC = () => {
                 )}
               </ul>
             </li>
-            <li className="nav-item">
-              <Link to="/Dashboard/Usuarios" className="nav-link">
-                <i className="nav-icon fas fa-user-friends" />
-                <p>Usuarios</p>
-              </Link>
-            </li>
+
             {auth.getRango() === 2 ? null : <></>}
 
             <li className="nav-header">Sitio Web</li>
