@@ -177,23 +177,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `dni`, `email_usuario`, `password`, `nombres_usuario`, `apellidos_usuario`, `telefono_usuario`, `estado_usuario`, `rango_usuario`) VALUES
-(3, '12', 'victor-2027@hotmaeil.com', '$2a$10$udxUUtaBRDmKBChiAnmyCuNajpbxze4gj0DrNquPLhQXDAQ1Igy6i', 'Víctor Gabriel', 'Villaobos', '990978736', '1', '2'),
-(8, '123', 'victor-2027@hoeetmail.com', '$2a$10$/xGDWLTkO6F7gy5fxWtUd.ppT2j8tmmaa0eOO9ceQHoLm8F/fh6QO', 'Victor', 'Hernandez', '+51990978736', '1', '2'),
-(9, '1234', 'admin@gmail.com', '$2a$10$DGk7JLztz8vekDZoB6qTJ.cW1Jd/PN72n0f.girRxcB06cMRiaSEG', 'xddd', 'Villacorta', '+56990978736', '1', '2'),
-(11, '12345', 'marvolo@gmail.com', '$2a$10$KCvnm7DLugsdYEG4BatTHOCZI6zEAID082oV8dhEmFDUxD.9Bzzee', 'Lucho', 'Perez', '+51990978736', '1', '2'),
-(12, '54321', 'arnold@hotmail.com', '$2a$10$BSzuUjyQ5fl/dYSeUPSI7ejtR1oZ..wyN6jisDQCxQ4peBd6rYrRO', 'Víctor Gabriel', 'Villaobos', '990978736', '1', '2'),
-(13, '4321', 'victor-2027@hotmail.comeee', '$2a$10$ol/NT64wg6Xz5Smvgp3vdewwwRXcocQtVoVfsRlccvKQl1RC1Y5OC', 'xd', 'Villacorta', '+56990978736', '1', '2'),
-(14, '321', 'victor-2027@ewehotmail.com', '$2a$10$/VBl07dhLn10Fc7/Y0TXr.DuQp99cFIlJL3RwBSfGsln8uMEsd7g6', 'Victor', 'Hernandez', '+51990978736', '1', '2'),
-(15, '21', 'victqqor-2027@hotmail.com', '$2a$10$a8D/KwknpNhLBLZW8yS4z.NKDanBn/8wy0aQj8e8l5MP46/4FVVVa', 'Víctor Gabriel', 'Villaobos', '990978736', '1', '2'),
-(16, '1324', 'victor-20ww27@hotmail.com', '$2a$10$VRD9/YWOacbwjY/3wYXKN.VGSXSRfRsoxa7yF7wqw.hCQuKn8UVNm', 'Víctor Gabriel', 'Villaobos', '990978736', '1', '2'),
-(17, '1523', 'lucho12@gwwmail.com', '$2a$10$DIYOxFxRtA.oDr0KleDHMuONm4gHZos.d9FgyAjf.wTDj4JF09xMy', 'Lucho', 'Perez', '+51990978736', '1', '2'),
-(18, '1421', 'victor-2027@wwhotmail.com', '$2a$10$0g6H.tAFFVvjgaTDE0666e97QbeT/dEi0Ag9TYBn8D0.WJpVc.LpC', 'Victor', 'Hernandez', '+51990978736', '1', '2'),
-(19, '4244', 'victoreee-2027@hotmail.com', '$2a$10$OuMekT0SLqg1371pXNePHOeDS2xMLIKQm.kvJ1QgTod2SmdrJW1dO', 'Vic', 'Hernandez', '+51990978736', '1', '2'),
-(20, '222', 'villa-2027@gmail.comee', '$2a$10$cnnLSv5uYJcz7OWD4pnXqOrc/fbSPsCkvmmfJISMMjGGBwUiRyqQi', 'Aaron', 'Marcos', '+56990978736', '1', '2'),
-(22, '2222', 'victor-2027@hotmail.ceeeom', '$2a$10$MU5ZxWKRpytw8GLQjt.jpOUbBHTgBLmfOtcPmS9Yd7Gie/XyBj0Zi', 'Victor', 'Hernandez', '+51990978736', '1', '2'),
-(27, '2222222211', 'victor-2027@hotmail.com', '$2a$10$BPr5Pj5QpTo7Ccx1b2PA0u0wVhfeDdtL0uJrvagWVCpI6Td/VKmCi', 'Victor', 'Hernandez', '+51990978736', '1', '2'),
-(31, '7719702211', 'victor-2027@hotmail.comwwww', '$2a$10$CBk8txG7oOv0r1hPDVIAs.vq8PWXOvoh3qRNVKCPerKadvwSB.yB.', 'Víctor', 'Hernandez', '+51990978736', '1', '2'),
-(32, '12321', 'marcos@gmail.com', '$2a$10$CPDUi4P6ieVIA74h3m//CuDir3.kBXSfFeNcAGJSlb3PLLvNl9iaW', 'Marcos', 'Tapia', '123', '1', '1');
+(1, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '123456789', '1', '1');
 
 --
 -- Índices para tablas volcadas
