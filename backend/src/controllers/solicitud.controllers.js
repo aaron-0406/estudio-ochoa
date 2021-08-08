@@ -36,6 +36,21 @@ ctrlSolicitud.getSolicitudes = async (req, res) => {
   res.json({ datos });
 };
 
+//get("/fecha/:fecha")
+ctrlSolicitud.getByFecha = async (req, res) => {
+  let SQLDatos = `codigo_expediente,nombres_usuario,apellidos_usuario,email_usuario, fecha_entrega_usuario,fecha_entrega_inventario,estado_solicitud`;
+  let Joins = `JOIN usuario ON usuario.id_usuario = solicitud.id_usuario JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
+  const rows = await pool.query(`SELECT ${SQLDatos} FROM solicitud ${Joins} WHERE fecha_solicitud = ?`, [req.params.fecha]);
+  res.json(rows);
+};
+//get("/fecha/:fecha/:id")
+ctrlSolicitud.getByFechaIdUsuario = async (req, res) => {
+  let SQLDatos = `codigo_expediente, fecha_entrega_usuario,fecha_entrega_inventario,estado_solicitud`;
+  let Joins = `JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
+  const rows = await pool.query(`SELECT ${SQLDatos} FROM solicitud ${Joins} WHERE fecha_solicitud = ? AND id_usuario = ?`, [req.params.fecha, req.params.id]);
+  res.json(rows);
+};
+
 //get("/count")
 ctrlSolicitud.getCount = async (req, res) => {
   let Joins = `JOIN usuario ON usuario.id_usuario = solicitud.id_usuario JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;

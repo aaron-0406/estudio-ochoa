@@ -49,6 +49,7 @@ app.use(async (req, res, next) => {
 });
 
 //routes
+app.use("/api/v0/informe", require("./routes/informe.routes"));
 app.use("/api/v0/materia", require("./routes/materia.routes"));
 app.use("/api/v0/banco", require("./routes/banco.routes"));
 app.use("/api/v0/solicitud", require("./routes/solicitud.routes"));

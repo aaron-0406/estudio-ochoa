@@ -58,7 +58,7 @@ const Login: React.FC = () => {
         setUsuario(res.data.user);
         //Usamos el método de auth y hacemos login, pasamos los datos del usuario obtenidos de la base de datos
         auth.sigIn();
-        auth.setRango(res.data.user.rango);
+        auth.setRango(res.data.user.rango_usuario);
         //history.push() -> nos permite navegar a otra pàgina
         history.push("/Dashboard");
       }

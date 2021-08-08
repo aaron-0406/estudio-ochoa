@@ -3,6 +3,8 @@ const router = express.Router();
 const ctrlSolicitud = require("../controllers/solicitud.controllers");
 
 router.get("/", ctrlSolicitud.getSolicitudes);
+router.get("/fecha/:fecha", ctrlSolicitud.getByFecha);
+router.get("/fecha/:fecha/:id", ctrlSolicitud.getByFechaIdUsuario);
 router.get("/resumen", ctrlSolicitud.getResumen);
 router.get("/resumen/:id", ctrlSolicitud.getResumenByUsuarioId);
 router.get("/count", ctrlSolicitud.getCount);

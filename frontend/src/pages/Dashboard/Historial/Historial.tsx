@@ -4,6 +4,9 @@ import Solicitud from "../../../interfaces/Solicitud";
 import ListaHistorial from "./ListaHistorial";
 import ResumenHistorial from "./ResumenHistorial";
 import { AiOutlineFileAdd } from "react-icons/ai";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import ModalHistorialInforme from "./ModalHistorialInforme";
 
 const initialState: Solicitud = {
   estado_solicitud: "",
@@ -48,6 +51,9 @@ const Historial: React.FC = () => {
                   >
                     <AiOutlineFileAdd className="fs-4" color="#fff" />
                   </button>
+                  <button type="button" className="btn btn-secondary ms-2" data-bs-toggle="modal" data-bs-target="#createInformeHistorial">
+                    <FontAwesomeIcon icon={faFilePdf} color="#fff" /> Generar Informe
+                  </button>
                 </div>
               </div>
               <div className="card-body">
@@ -91,7 +97,7 @@ const Historial: React.FC = () => {
           </div>
         </section>
       </div>
-
+      <ModalHistorialInforme/>
       {/* Control Sidebar */}
       <aside className="control-sidebar control-sidebar-dark">{/* Control sidebar content goes here */}</aside>
       {/* /.control-sidebar */}
