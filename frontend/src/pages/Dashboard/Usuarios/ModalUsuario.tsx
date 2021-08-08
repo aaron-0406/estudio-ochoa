@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Usuario } from "../../../interfaces/Usuario";
 import * as usuarioServices from "../../../services/UsuarioServices";
 import { toast } from "react-toastify";
+import expr from '../../../encrypt/exprRegular';
 
 interface Props {
   setTrigguer: (trigguer: number) => void;
@@ -25,6 +26,7 @@ const initialState: Usuario = {
 const ModalUsuario: React.FC<Props> = (props) => {
   const [usuario, setUsuario] = useState<Usuario>(initialState);
 
+  // Referencias
   const refButton = useRef<HTMLButtonElement | null>();
 
   useEffect(() => {
@@ -38,33 +40,63 @@ const ModalUsuario: React.FC<Props> = (props) => {
     e.preventDefault();
 
     // Crear
-    if (usuario.id_usuario === 0) {
-      const res = await usuarioServices.crearUsuario(usuario);
+    if (expr.dni.test(usuario.dni) && expr.nameSurname.test(usuario.nombres_usuario) && expr.nameSurname.test(usuario.apellidos_usuario) && expr.telephone.test(usuario.telefono_usuario) && expr.email.test(usuario.email_usuario)) {
+      if (usuario.id_usuario === 0) {
+        const res = await usuarioServices.crearUsuario(usuario);
+        if (res.data.success) {
+          toast.success(res.data.success);
+          setUsuario(initialState);
+          props.render();
+          props.setTrigguer(props.trigguer + 1);
+          if (refButton.current) {
+            refButton.current.click();
+          }
+          return;
+        }
+        if (res.data.error) return toast.error(res.data.error);
+      }
+      const res = await usuarioServices.editarUsuario(usuario.id_usuario + "", usuario);
       if (res.data.success) {
         toast.success(res.data.success);
-        setUsuario(initialState);
         props.render();
         props.setTrigguer(props.trigguer + 1);
         if (refButton.current) refButton.current.click();
         return;
       }
       if (res.data.error) return toast.error(res.data.error);
+    } else {
+      toast.error("Campos invalidos");
     }
-    // Editar
-    const res = await usuarioServices.editarUsuario(usuario.id_usuario + "", usuario);
-    if (res.data.success) {
-        toast.success(res.data.success);
-        props.render();
-        props.setTrigguer(props.trigguer + 1);
-        if (refButton.current) refButton.current.click();
-        return;
-      }
-      if (res.data.error) return toast.error(res.data.error);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
+    switch (e.target.name) {
+      case "dni":
+        validation(expr.dni, e.target);
+        break;
+      case "nombres_usuario":
+        validation(expr.nameSurname, e.target);
+        break;
+      case "apellidos_usuario":
+        validation(expr.nameSurname, e.target);
+        break;
+      case "telefono_usuario":
+        validation(expr.telephone, e.target);
+        break;
+      case "email_usuario":
+        validation(expr.email, e.target);
+        break;
+    }
   };
+
+  const validation = (expr: RegExp, e: EventTarget & (HTMLInputElement)) => {
+    if (expr.test(e.value)) {
+      e.classList.remove("is-invalid");
+      return;
+    }
+    e.classList.add("is-invalid");
+  }
 
   return (
     <>
@@ -75,7 +107,7 @@ const ModalUsuario: React.FC<Props> = (props) => {
               <>
                 <div className="modal-header bg-dark">
                   <h5 className="modal-title" id="createUsuario">
-                  <i className="fas fa-user-plus me-2"></i>
+                    <i className="fas fa-user-plus me-2"></i>
                     Agregar Usuario
                   </h5>
                   <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" />
@@ -85,7 +117,7 @@ const ModalUsuario: React.FC<Props> = (props) => {
               <>
                 <div className="modal-header bg-warning">
                   <h5 className="modal-title" id="createUsuario">
-                  <i className="fas fa-user-edit me-2"></i>
+                    <i className="fas fa-user-edit me-2"></i>
                     Modificar Usuario
                   </h5>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
@@ -97,29 +129,47 @@ const ModalUsuario: React.FC<Props> = (props) => {
                 <div className="form-floating mb-3">
                   {usuario.id_usuario === 0 ? (
                     <>
-                      <input  id="floatingDni"  type="text" className="form-control" name="dni" placeholder="DNI" onChange={handleChange} value={usuario.dni} />
+                      <input id="floatingDni" type="text" className="form-control" name="dni" placeholder="DNI" onChange={handleChange} value={usuario.dni} />
+                      <div className="invalid-feedback">
+                        8 digitos permitidos
+                      </div>
                     </>
                   ) : (
                     <>
-                      <input  id="floatingDni"  disabled type="text" className="form-control" name="dni" placeholder="DNI" onChange={handleChange} value={usuario.dni} />
+                      <input id="floatingDni" disabled type="text" className="form-control" name="dni" placeholder="DNI" onChange={handleChange} value={usuario.dni} />
+                      <div className="invalid-feedback">
+                        8 digitos permitidos
+                      </div>
                     </>
                   )}
-                   <label htmlFor="floatingDni">DNI</label>
+                  <label htmlFor="floatingDni">DNI</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type="text" className="form-control" id="floatingNombres" name="nombres_usuario" placeholder="Nombre" autoFocus onChange={handleChange} value={usuario.nombres_usuario} />
+                  <div className="invalid-feedback">
+                    Permitido letras, espacios y acentos
+                  </div>
                   <label htmlFor="floatingNombres">Nombres</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type="text" className="form-control" id="floatingApellidos" name="apellidos_usuario" placeholder="Apellidos" onChange={handleChange} value={usuario.apellidos_usuario} />
+                  <div className="invalid-feedback">
+                    Permitido letras, espacios y acentos
+                  </div>
                   <label htmlFor="floatingApellidos">Apellidos</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type="text" className="form-control" id="floatingtelefono" name="telefono_usuario" placeholder="Teléfono" onChange={handleChange} value={usuario.telefono_usuario} />
+                  <div className="invalid-feedback">
+                    9 digitos permitidos
+                  </div>
                   <label htmlFor="floatingtelefono">Teléfono</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type="email" id="floatingEmail" className="form-control" name="email_usuario" placeholder="E-mail" onChange={handleChange} value={usuario.email_usuario} />
+                  <div className="invalid-feedback">
+                    Correo invalido (correo@ejemplo.com)
+                  </div>
                   <label htmlFor="floatingEmail">Correo</label>
                 </div>
               </div>

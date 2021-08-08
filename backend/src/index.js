@@ -54,6 +54,7 @@ app.use("/api/v0/banco", require("./routes/banco.routes"));
 app.use("/api/v0/solicitud", require("./routes/solicitud.routes"));
 app.use("/api/v0/expediente", require("./routes/expediente.routes"));
 app.use("/api/v0/usuario", require("./routes/usuario.routes"));
+app.use(require("./routes/contacto.routes"));
 app.use(require("./routes/authentication.routes"));
 app.use(require("./routes/index.routes"));
 

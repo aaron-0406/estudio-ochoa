@@ -37,30 +37,78 @@ import Usuarios from "../pages/Dashboard/Usuarios/Usuarios";
 import Inventario from "../pages/Dashboard/Inventario/Inventario";
 import Solicitudes from "../pages/Dashboard/Solicitudes/Solicitudes";
 import Historial from "../pages/Dashboard/Historial/Historial";
+import DashboardContacto from '../pages/Dashboard/Contacto/Contacto';
 
 function App() {
-
   return (
     <BrowserRouter>
       <Switch>
         <LayoutUsuario exact path="/" component={Home} />
         <LayoutUsuario exact path="/Historia" component={Historia} />
         <LayoutUsuario exact path="/Servicios" component={Servicios} />
-        <LayoutUsuario exact path="/Servicios/Civil" component={ServicioCivil} />
-        <LayoutUsuario exact path="/Servicios/Concursal" component={ServicioConcursal} />
-        <LayoutUsuario exact path="/Servicios/Consumidor" component={ServicioConsumidor} />
-        <LayoutUsuario exact path="/Servicios/Contratos" component={ServicioContratos} />
-        <LayoutUsuario exact path="/Servicios/Corporativa" component={ServicioCorporativa} />
-        <LayoutUsuario exact path="/Servicios/Finanzas" component={ServicioFinanzas} />
-        <LayoutUsuario exact path="/Servicios/Laboral" component={ServicioLaboral} />
-        <LayoutUsuario exact path="/Servicios/Litigios" component={ServicioLitigios} />
-        <LayoutUsuario exact path="/Servicios/Penal" component={ServicioPenal} />
-        <LayoutUsuario exact path="/Servicios/Recuperaciones" component={ServicioRecuperaciones} />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Civil"
+          component={ServicioCivil}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Concursal"
+          component={ServicioConcursal}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Consumidor"
+          component={ServicioConsumidor}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Contratos"
+          component={ServicioContratos}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Corporativa"
+          component={ServicioCorporativa}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Finanzas"
+          component={ServicioFinanzas}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Laboral"
+          component={ServicioLaboral}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Litigios"
+          component={ServicioLitigios}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Penal"
+          component={ServicioPenal}
+        />
+        <LayoutUsuario
+          exact
+          path="/Servicios/Recuperaciones"
+          component={ServicioRecuperaciones}
+        />
         <LayoutUsuario exact path="/Equipo" component={Equipo} />
         <LayoutUsuario exact path="/Equipo/Julio" component={EquipoJulio} />
-        <LayoutUsuario exact path="/Equipo/Mauricio" component={EquipoMauricio} />
+        <LayoutUsuario
+          exact
+          path="/Equipo/Mauricio"
+          component={EquipoMauricio}
+        />
         <LayoutUsuario exact path="/Equipo/Gino" component={EquipoGino} />
-        <LayoutUsuario exact path="/Equipo/Katerine" component={EquipoKaterine} />
+        <LayoutUsuario
+          exact
+          path="/Equipo/Katerine"
+          component={EquipoKaterine}
+        />
         <LayoutUsuario exact path="/Equipo/Carlos" component={EquipoCarlos} />
         <LayoutUsuario exact path="/Equipo/Ramiro" component={EquipoRamiro} />
         <LayoutUsuario exact path="/Clientes" component={Clientes} />
@@ -75,8 +123,13 @@ function App() {
         <LayoutDash exact path="/Dashboard" component={Dashboard} />
         <LayoutDash exact path="/Dashboard/Usuarios" component={Usuarios} />
         <LayoutDash exact path="/Dashboard/Inventario" component={Inventario} />
-        <LayoutDash exact path="/Dashboard/Solicitudes" component={Solicitudes} />
+        <LayoutDash
+          exact
+          path="/Dashboard/Solicitudes"
+          component={Solicitudes}
+        />
         <LayoutDash exact path="/Dashboard/Historial" component={Historial} />
+        <LayoutDash exact path="/Dashboard/Contacto" component={DashboardContacto} />
 
         <Route component={NotFound} />
       </Switch>

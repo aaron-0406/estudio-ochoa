@@ -6,6 +6,7 @@ import Solicitud from "../../../interfaces/Solicitud";
 import * as solicitudesServices from "../../../services/SolicitudesServices";
 import * as expedientesServices from "../../../services/ExpedienteServices";
 import { useUsuario } from "../../../auth/UsuarioProvider";
+import expr from "../../../encrypt/exprRegular";
 
 interface Props {
   setTrigguer: (trigguer: number) => void;
@@ -57,30 +58,34 @@ const ModalHistorial: React.FC<Props> = (props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const resExpediente = await expedientesServices.getByCodigoExpediente(expediente.codigo_expediente + "");
-    if (resExpediente.data.error) return toast.error(resExpediente.data.error);
-    if (resExpediente.data.success) {
-      const newSolicitud: Solicitud = {
-        fecha_solicitud: new Date() + "",
-        fecha_entrega_usuario: solicitud.fecha_entrega_usuario,
-        fecha_entrega_inventario: "0000-00-00",
-        motivo_usuario: solicitud.motivo_usuario,
-        motivo_admin: "",
-        estado_solicitud: "SOLICITADO",
-        id_usuario: usuario.id_usuario,
-        id_expediente: resExpediente.data.expediente.id_expediente,
-      };
-      const res = await solicitudesServices.createSolicitud(newSolicitud);
-      if (res.data.success) {
-        setSolicitud(initialState);
-        setExpediente(initStateExpediente);
-        if (refButton.current) refButton.current.click();
-        props.render();
-        props.setTrigguer(props.trigguer + 1);
-        return toast.success(res.data.success);
+    if (expr.digit.test(expediente.codigo_expediente) && solicitud.fecha_entrega_usuario && solicitud.motivo_usuario) {
+      const resExpediente = await expedientesServices.getByCodigoExpediente(expediente.codigo_expediente + "");
+      if (resExpediente.data.error) return toast.error(resExpediente.data.error);
+      if (resExpediente.data.success) {
+        const newSolicitud: Solicitud = {
+          fecha_solicitud: new Date() + "",
+          fecha_entrega_usuario: solicitud.fecha_entrega_usuario,
+          fecha_entrega_inventario: "0000-00-00",
+          motivo_usuario: solicitud.motivo_usuario,
+          motivo_admin: "",
+          estado_solicitud: "SOLICITADO",
+          id_usuario: usuario.id_usuario,
+          id_expediente: resExpediente.data.expediente.id_expediente,
+        };
+        const res = await solicitudesServices.createSolicitud(newSolicitud);
+        if (res.data.success) {
+          setSolicitud(initialState);
+          setExpediente(initStateExpediente);
+          if (refButton.current) refButton.current.click();
+          props.render();
+          props.setTrigguer(props.trigguer + 1);
+          return toast.success(res.data.success);
+        }
+        if (res.data.error) return toast.success(res.data.error);
+        return;
       }
-      if (res.data.error) return toast.success(res.data.error);
-      return;
+    } else {
+      toast.error("Campos invalidos");
     }
   };
 
@@ -89,6 +94,13 @@ const ModalHistorial: React.FC<Props> = (props) => {
   };
   const handleChangeEx = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setExpediente({ ...expediente, [e.target.name]: e.target.value });
+    if (e.target.name === "codigo_expediente") {
+      if (expr.digit.test(e.target.value)) {
+        e.target.classList.remove("is-invalid");
+        return;
+      }
+      e.target.classList.add("is-invalid");
+    }
   };
   return (
     <div className="modal fade" id="createSolicitud" tabIndex={-1} aria-labelledby="createSolicitud" aria-hidden="true">
@@ -128,6 +140,9 @@ const ModalHistorial: React.FC<Props> = (props) => {
                             Código del expediente
                           </label>
                           <input disabled required value={solicitud.codigo_expediente} onChange={handleChangeEx} placeholder="Código del expediente" name="codigo_expediente" id="codigo_expediente" className="form-control form-control-border border-width-2" type="text" />
+                          <div className="invalid-feedback">
+                            Solo digitos permitidos
+                          </div>
                         </div>
                       </div>
 
@@ -172,6 +187,9 @@ const ModalHistorial: React.FC<Props> = (props) => {
                             Código del expediente
                           </label>
                           <input required value={expediente.codigo_expediente} onChange={handleChangeEx} placeholder="Código del expediente" name="codigo_expediente" id="floatingInput" className="form-control form-control-border border-width-2" type="text" />
+                          <div className="invalid-feedback">
+                            Solo digitos permitidos
+                          </div>
                         </div>
                       </div>
                       <div className="col-12 col-sm-6 col-lg-6 col-md-6">
