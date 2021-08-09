@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Iconos
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
@@ -33,6 +33,10 @@ const EquipoKaterine = () => {
         "Actualmente como abogado del BANCO DE CREDITO DEL PERU, en procesos de recuperaciones en la ciudad de Ica, Nazca, Pisco, Chincha, y Cañete. Disponibilidad absoluta y completa dedicación dirigida al logro de objetivos comunes.",
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

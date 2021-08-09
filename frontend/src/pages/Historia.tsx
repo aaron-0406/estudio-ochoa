@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // Componentes
 import ServicesSectionRoad from "../components/Equipo/ServicesSectionRoad";
 
-const Historia:React.FC = () => {
+const Historia: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <ServicesSectionRoad

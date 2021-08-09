@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Iconos
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
@@ -51,6 +51,10 @@ const EquipoJulio = () => {
         "Docente de la Universidad Privada San Juan Bautista Filial Ica en las cátedras de Títulos Valores, Derecho Monetario y Bancario, Derecho de Obligaciones y Derecho Concursal en la Facultad de Derecho y Ciencias Políticas y del Curso de Sociedades y Asociaciones en la Facultad de Ciencias Administrativas desde el año 2007 hasta 2018.",
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // Componentes
@@ -8,6 +8,10 @@ import ServicesSectionRoad from "../../components/Equipo/ServicesSectionRoad";
 import imagen8 from "../../images/images-services/SERVICIO_2.8.png";
 
 const ServicioPenal = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <ServicesSectionRoad

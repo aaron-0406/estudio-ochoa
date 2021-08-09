@@ -10,15 +10,18 @@ import logobanbif from "../images/images-customers/logobanbif.png";
 import logomibanco from "../images/images-customers/logomibanco.png";
 import logobcp from "../images/images-customers/logobcp.png";
 
-const Clientes:React.FC = () => {
-
+const Clientes: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <>
-      <ServicesSectionRoad nameOption="Nuestros Clientes" numberRoad={2} nameRoadOne="Clientes" />
+      <ServicesSectionRoad
+        nameOption="Nuestros Clientes"
+        numberRoad={2}
+        nameRoadOne="Clientes"
+      />
       <div className="container my-5">
         <div className="row d-flex justify-content-center">
           <div className="col-12 col-md-6 col-lg-4 mb-4">
