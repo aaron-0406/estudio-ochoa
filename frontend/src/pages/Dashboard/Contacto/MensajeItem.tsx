@@ -26,6 +26,7 @@ const MensajeItem: React.FC<Props> = (props) => {
   };
 
   const setVisto = async (id?: number) => {
+    if (props.contacto.visto === 0) return;
     const res = await contactoServices.setVisto(id + "");
     if (res.data.success) {
       props.getContactos();

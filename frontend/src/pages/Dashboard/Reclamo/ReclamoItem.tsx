@@ -27,6 +27,7 @@ const ReclamoItem: React.FC<Props> = (props) => {
   };
 
   const setVisto = async (id?: number) => {
+    if (props.reclamo.visto === 0) return;
     const res = await reclamosServices.setVisto(id + "");
     if (res.data.success) {
       props.getReclamos();
