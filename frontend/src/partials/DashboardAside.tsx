@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import { useUsuario } from "../auth/UsuarioProvider";
 import auth from "../auth/auth";
 
-// Imagenes
-import fotoPerfil from "../images/user2-160x160.jpg";
-
 // Iconos
 import { GoFileSubmodule } from "react-icons/go";
 import { RiFileTransferFill } from "react-icons/ri";
@@ -52,7 +49,7 @@ const DashboardAside: React.FC = () => {
         {/* Sidebar user panel (optional) */}
         <div className="user-panel mt-3 pb-3 mb-3 d-flex">
           <div className="image">
-            <img src={fotoPerfil} className="img-circle elevation-2" alt="" />
+            <i className="img-circle elevation-1 fas fa-user fs-3 me-2 mt-1" style={{ color: "#c2c7d0" }}></i>
           </div>
           <div className="info">
             <a href="/" className="d-block">
