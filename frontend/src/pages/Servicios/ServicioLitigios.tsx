@@ -17,7 +17,7 @@ const ServicioLitigios = () => {
         nameRoadTwo="Litigios"
       />
       <div className="container my-5">
-        <div className="row">
+        <div className="row px-3">
           <div className="col-12 col-md-6">
             <h5 className="text-center fw-bold my-4">LITIGIOS</h5>
             <p className="text-justify">

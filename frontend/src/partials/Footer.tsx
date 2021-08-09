@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
   return (
     <div className="footer w-100 py-5">
       <div className="container">
-        <div className="row">
+        <div className="row px-2">
           <div className="footer-content py-4 col-12 col-md-6 col-lg-3">
             <div className="d-flex justify-content-center">
               <Link to="/" className="footer-content__logo text-decoration-none">
