@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Iconos
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
@@ -45,6 +45,10 @@ const EquipoCarlos = () => {
         "Asimismo fue administrador de la Empresa H&C Abogados Asociados S.C.R.L. encargado de la recuperación de los créditos en cobranza judicial de Caja Municipal de Ahorro y Crédito de Pisco durante el tiempo de intervención por la Superintendencia de Banca y Seguros (SBS) y Financiera TFC S.A. (Cartera Activa en judicial y Cartera Castigada en Judicial) hasta el mes de diciembre del 2019, con conocimiento en manejo de personal, cumplimiento de metas establecidas por la jefatura de recuperaciones y trabajo en equipo.",
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

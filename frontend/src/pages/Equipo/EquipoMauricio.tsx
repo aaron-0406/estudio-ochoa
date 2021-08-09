@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Iconos
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
@@ -40,6 +40,10 @@ const EquipoMauricio = () => {
         "Por ultimo inicio sus prácticas profesionales en el año 2015, desempeñándose como practicante, para luego ser asistente del Director del Estudio Jurídico Ochoa Maldonado & Abogados Asociados.",
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Iconos
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
@@ -108,6 +108,10 @@ const EquipoRamiro = () => {
         "Asesor Legal Externo de la Municipalidad Distrital de Acoria - Huancavelica.",
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
