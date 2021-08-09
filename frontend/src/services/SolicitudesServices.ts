@@ -25,7 +25,12 @@ export const getCountByUsuarioÏd = async (id: string, keyword: string, estado: 
   if (keyword.trim() === "") return await axios.get(`${api}/count/${id}?estado=${estado}`);
   return await axios.get(`${api}/count/${id}?keyword=${keyword}&estado=${estado}`);
 };
-
+export const getByFecha = async (fecha:string) => {
+  return await axios.get(`${api}/fecha/${fecha}`);
+};
+export const getByFechaIdUsuario = async (fecha:string,id_usuario:string) => {
+  return await axios.get(`${api}/fecha/${fecha}/${id_usuario}`);
+};
 export const getResumenByUsuarioId = async (id: string) => {
   return await axios.get(`${api}/resumen/${id}`);
 };

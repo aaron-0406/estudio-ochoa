@@ -9,6 +9,7 @@ export default interface Solicitud {
   id_usuario?: number;
   id_expediente: number;
   nombres_usuario?:string;
+  email_usuario?: string;
   apellidos_usuario?:string;
   codigo_expediente?: string;
 }

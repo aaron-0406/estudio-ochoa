@@ -23,6 +23,16 @@ const SolicitudItem: React.FC<Props> = (props) => {
       return toast.error(res.data.error);
     }
   };
+
+  const formatoFecha = (fecha: string): string => {
+    let formato: string = "";
+    let dia = fecha.slice(8, 10);
+    let mes = fecha.slice(5, 7);
+    let year = fecha.slice(0, 4);
+    formato = `${dia}/${mes}/${year}`;
+    return formato;
+  };
+
   return (
     <tr>
       <td>{props.i}</td>
@@ -30,8 +40,8 @@ const SolicitudItem: React.FC<Props> = (props) => {
       <td>
         {props.solicitud.nombres_usuario} {props.solicitud.apellidos_usuario}
       </td>
-      <td>{props.solicitud.fecha_solicitud}</td>
-      <td>{props.solicitud.fecha_entrega_usuario}</td>
+      <td>{formatoFecha(props.solicitud.fecha_solicitud)}</td>
+      <td>{formatoFecha(props.solicitud.fecha_entrega_usuario)}</td>
       <td>{props.solicitud.estado_solicitud}</td>
       <td>
         <button

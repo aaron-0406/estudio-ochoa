@@ -26,7 +26,7 @@ const DashNavbar: React.FC = () => {
     const res = await axios.get(`${API}/logout`);
     if (res.data.success) {
       auth.logOut();
-      auth.setRango(2);
+      auth.setRango("2");
       setUsuario(initialState);
       history.push("/");
     }

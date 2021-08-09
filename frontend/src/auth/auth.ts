@@ -1,11 +1,11 @@
 interface Auth {
   loged: boolean;
-  rango?: number;
+  rango?: string;
 }
 class Auth {
   constructor() {
     this.loged = false;
-    this.rango = 2;
+    this.rango = "2";
   }
   sigIn() {
     this.loged = true;
@@ -19,7 +19,7 @@ class Auth {
   getRango() {
     return this.rango;
   }
-  setRango(rango: number | undefined) {
+  setRango(rango: string | undefined) {
     this.rango = rango;
   }
 }

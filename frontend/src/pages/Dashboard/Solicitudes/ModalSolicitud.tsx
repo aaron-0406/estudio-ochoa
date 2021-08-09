@@ -45,7 +45,14 @@ const ModalSolicitud: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSolicitud({ ...solicitud, [e.target.name]: e.target.value });
   };
-
+  const formatoFecha = (fecha: string): string => {
+    let formato: string = "";
+    let dia = fecha.slice(8, 10);
+    let mes = fecha.slice(5, 7);
+    let year = fecha.slice(0, 4);
+    formato = `${dia}/${mes}/${year}`;
+    return formato;
+  };
   return (
     <div className="modal fade" id="verSolicitud" tabIndex={-1} aria-labelledby="verSolicitud" aria-hidden="true">
       <div className="modal-dialog modal-lg modal-dialog-scrollable">
@@ -74,11 +81,11 @@ const ModalSolicitud: React.FC<Props> = (props) => {
                     </div>
                     <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                       <dt>Fecha de Solicitud:</dt>
-                      <dd>{solicitud.fecha_solicitud}</dd>
+                      <dd>{formatoFecha(solicitud.fecha_solicitud)}</dd>
                     </div>
                     <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                       <dt>Fecha de Entrega:</dt>
-                      <dd>{solicitud.fecha_entrega_usuario}</dd>
+                      <dd>{formatoFecha(solicitud.fecha_entrega_usuario)}</dd>
                     </div>
                     <div className="col-12 col-sm-12 col-md-12 col-lg-12">
                       <dt>Motivo de la Solicitud:</dt>

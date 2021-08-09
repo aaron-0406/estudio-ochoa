@@ -37,7 +37,7 @@ export const UsuarioProvider = (props: any) => {
       }
     } catch (error) {
       setUsuario(initialState);
-      auth.setRango(2);
+      auth.setRango("2");
       auth.logOut();
     }
     setLoadUser(true);

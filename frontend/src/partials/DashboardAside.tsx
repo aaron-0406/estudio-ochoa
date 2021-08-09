@@ -55,18 +55,12 @@ const DashboardAside: React.FC = () => {
                 </p>
               </Link>
               <ul className="nav nav-treeview">
-                {usuario.rango_usuario === "1" ? (
+                {auth.getRango() === "1" ? (
                   <>
                     <li className="nav-item">
                       <Link to="/Dashboard/Solicitudes" className="nav-link">
                         <i className="far fa-circle nav-icon" />
                         <p>Solicitudes</p>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/Dashboard/Usuarios" className="nav-link">
-                        <i className="nav-icon fas fa-user-friends" />
-                        <p>Usuarios</p>
                       </Link>
                     </li>
                   </>
@@ -80,7 +74,7 @@ const DashboardAside: React.FC = () => {
                     <p>Inventario</p>
                   </Link>
                 </li>
-                {usuario.rango_usuario === "2" ? (
+                {auth.getRango() === "2" ? (
                   <>
                     <li className="nav-item">
                       <Link to="/Dashboard/Historial" className="nav-link">
@@ -95,24 +89,32 @@ const DashboardAside: React.FC = () => {
               </ul>
             </li>
 
-            {auth.getRango() === 2 ? null : <></>}
-
-            <li className="nav-header">Sitio Web</li>
-            <li className="nav-item">
-              <Link to="/Dashboard/Mensajes" className="nav-link">
-                <i className="nav-icon far fa-envelope" />
-                <p>
-                  Mensajes
-                  <span className="badge badge-info right">2</span>
-                </p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/Dashboard/Reclamos" className="nav-link">
-                <VscBook className="fs-4" />
-                <p className="ps-2">Reclamos</p>
-              </Link>
-            </li>
+            {auth.getRango() === "2" ? null : (
+              <>
+                <li className="nav-item">
+                  <Link to="/Dashboard/Usuarios" className="nav-link">
+                    <i className="nav-icon fas fa-user-friends" />
+                    <p>Usuarios</p>
+                  </Link>
+                </li>
+                <li className="nav-header">Sitio Web</li>
+                <li className="nav-item">
+                  <Link to="/Dashboard/Mensajes" className="nav-link">
+                    <i className="nav-icon far fa-envelope" />
+                    <p>
+                      Mensajes
+                      <span className="badge badge-info right">2</span>
+                    </p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/Dashboard/Reclamos" className="nav-link">
+                    <VscBook className="fs-4" />
+                    <p className="ps-2">Reclamos</p>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
         {/* /.sidebar-menu */}

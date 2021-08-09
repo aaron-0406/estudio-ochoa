@@ -23,13 +23,20 @@ const HistorialItem: React.FC<Props> = (props) => {
     }
     if (res.data.error) return toast.error(res.data.error);
   };
-
+  const formatoFecha = (fecha: string): string => {
+    let formato: string = "";
+    let dia = fecha.slice(8, 10);
+    let mes = fecha.slice(5, 7);
+    let year = fecha.slice(0, 4);
+    formato = `${dia}/${mes}/${year}`;
+    return formato;
+  };
   return (
     <tr>
       <td>{props.i}</td>
       <td>{props.solicitud.codigo_expediente}</td>
-      <td>{props.solicitud.fecha_solicitud}</td>
-      <td>{props.solicitud.fecha_entrega_usuario}</td>
+      <td>{formatoFecha(props.solicitud.fecha_solicitud)}</td>
+      <td>{formatoFecha(props.solicitud.fecha_entrega_usuario)}</td>
       <td>{props.solicitud.estado_solicitud}</td>
       <td>
         <button
