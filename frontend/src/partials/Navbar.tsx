@@ -26,7 +26,11 @@ const Navbar: React.FC = () => {
       if (navbar_search.current.style.display === "block") {
         return (navbar_search.current.style.display = "none");
       }
-      return (navbar_search.current.style.display = "block");
+
+      //let input: any = [];
+      //input = navbar_search.current.getElementsByTagName("input");
+      navbar_search.current.style.display = "block";
+      //input[0].focus();
     }
   };
   return (
@@ -123,7 +127,7 @@ const Navbar: React.FC = () => {
                     }}
                   >
                     <FontAwesomeIcon
-                      className="ms-3 me-4"
+                      className="ms-3 me-4 my-2"
                       icon={faSearch}
                       color="#C17743"
                       size="lg"
