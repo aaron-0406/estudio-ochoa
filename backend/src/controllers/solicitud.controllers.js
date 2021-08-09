@@ -87,10 +87,10 @@ ctrlSolicitud.getResumenByUsuarioId = async (req, res) => {
 };
 //get("/:id")
 ctrlSolicitud.getSolicitudesByUsuarioId = async (req, res) => {
-  let datosSQL = `id_solicitud,fecha_solicitud,fecha_entrega_usuario,fecha_entrega_inventario,motivo_usuario,motivo_admin,estado_solicitud, id_usuario,expediente.id_expediente, expediente.codigo_expediente`;
+  let datosSQL = `id_solicitud,fecha_solicitud,fecha_entrega_usuario,fecha_entrega_inventario,motivo_usuario,motivo_admin,estado_solicitud,expediente.id_expediente, expediente.codigo_expediente`;
   let Joins = `JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
   let estado = `id_usuario = ? AND estado_solicitud = '${req.query.estado}' AND`;
-  if (req.query.estado === "TODO") estado = "usuario.id_usuario = ? AND ";
+  if (req.query.estado === "TODO") estado = "id_usuario = ? AND ";
 
   if (req.query.keyword && req.query.page) {
     const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE  ${estado} (codigo_expediente LIKE '%${req.query.keyword}%') ORDER BY estado_solicitud DESC`, [req.params.id]);
@@ -138,7 +138,7 @@ ctrlSolicitud.getCountByUsuarioId = async (req, res) => {
 // post("/:id")
 ctrlSolicitud.crearSolicitud = async (req, res) => {
   const newSolicitud = ({ fecha_solicitud, fecha_entrega_usuario, fecha_entrega_inventario, motivo_usuario, motivo_admin, estado_solicitud, id_usuario, id_expediente } = req.body);
-  newSolicitud.fecha_solicitud = new Date(newSolicitud.fecha_solicitud);
+  console.log(fecha_solicitud);
   const rows = await pool.query("INSERT INTO solicitud set ? ", [newSolicitud]);
   if (rows.affectedRows === 1) return res.json({ success: "Solicitud enviada" });
   res.json({ error: "Ocurrió un error" });
@@ -162,7 +162,7 @@ ctrlSolicitud.modificarSolicitud = async (req, res) => {
       req.params.estado === "EN INVENTARIO" ? (estado_uso = 0) : (estado_uso = 1);
       await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [{ estado_uso }, id_expediente]);
     }
-    return res.json({ success: `Estado de solicitud cambiada a ${estado_solicitud}` });
+    return res.json({ success: `Estado de solicitud cambiada` });
   } catch (error) {
     console.log(error);
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });

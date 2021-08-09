@@ -12,16 +12,16 @@ interface Props {
 }
 const ResumenHistorial: React.FC<Props> = (props) => {
   const [estados, setEstados] = useState<Estado[]>([]);
-  const { usuario } = useUsuario();
+  const { usuario, loadUser } = useUsuario();
   const getResumen = async () => {
     const res = await solicitudesServices.getResumenByUsuarioId(usuario.id_usuario + "");
     setEstados(res.data.datos[0].estado);
   };
 
   useEffect(() => {
-    getResumen();
+    if (loadUser) getResumen();
     return () => {};
-  }, [props.trigguer]);
+  }, [props.trigguer, loadUser]);
 
   return (
     <div className="card">

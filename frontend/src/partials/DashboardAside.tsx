@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useUsuario } from "../auth/UsuarioProvider";
 import auth from "../auth/auth";
 import fotoPerfil from "../images/user2-160x160.jpg";
+import { GoFileSubmodule } from "react-icons/go";
+import { RiFileTransferFill } from "react-icons/ri";
 //Images
 import logo from "../images/logo.png";
 const DashboardAside: React.FC = () => {
@@ -33,70 +35,51 @@ const DashboardAside: React.FC = () => {
           <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
-            <li className="nav-header">Dashboard</li>
+            <li className="nav-header">Expedientes</li>
             <li className="nav-item">
-              <a href="/" className="nav-link">
-                <i className="nav-icon fas fa-copy" />
-                <p>
-                  Expedientes
-                  <i className="right fas fa-angle-left" />
-                </p>
-              </a>
-              <ul className="nav nav-treeview">
-                {auth.getRango() === "1" ? (
-                  <>
-                    <li className="nav-item">
-                      <Link to="/Dashboard/Solicitudes" className="nav-link">
-                        <i className="far fa-circle nav-icon" />
-                        <p>Solicitudes</p>
-                      </Link>
-                    </li>
-                  </>
-                ) : (
-                  <></>
-                )}
-
-                <li className="nav-item">
-                  <Link to="/Dashboard/Inventario" className="nav-link">
-                    <i className="far fa-circle nav-icon" />
-                    <p>Inventario</p>
-                  </Link>
-                </li>
-                {auth.getRango() === "2" ? (
-                  <>
-                    <li className="nav-item">
-                      <Link to="/Dashboard/Historial" className="nav-link">
-                        <i className="far fa-circle nav-icon" />
-                        <p>Historial</p>
-                      </Link>
-                    </li>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </ul>
+              <Link to="/Dashboard/Solicitudes" className="nav-link">
+                <i className="fas fa-file-signature nav-icon" />
+                <p>Solicitudes</p>
+              </Link>
             </li>
-
-            {auth.getRango() === "2" ? null : (
-              <>
-                <li className="nav-item">
-                  <Link to="/Dashboard/Usuarios" className="nav-link">
-                    <i className="nav-icon fas fa-user-friends" />
-                    <p>Usuarios</p>
-                  </Link>
-                </li>
-                <li className="nav-header">Sitio Web</li>
-                <li className="nav-item">
-                  <Link to="/Dashboard/Contacto" className="nav-link">
-                    <i className="nav-icon far fa-envelope" />
-                    <p>
-                      Contactos
-                      <span className="badge badge-info right">2</span>
-                    </p>
-                  </Link>
-                </li>
-              </>
-            )}
+            <li className="nav-item">
+              <Link to="/Dashboard/Inventario" className="nav-link">
+                <GoFileSubmodule className="nav-icon"/>
+                <p>Inventario</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/Dashboard/Historial" className="nav-link">
+                <RiFileTransferFill className="nav-icon"/>
+                <p>Historial</p>
+              </Link>
+            </li>
+            <li className="nav-header">Usuarios</li>
+            <li className="nav-item">
+              <Link to="/Dashboard/Usuarios" className="nav-link">
+                <i className="nav-icon fas fa-user-friends" />
+                <p>Usuarios</p>
+              </Link>
+            </li>
+            <li className="nav-header">Sitio Web</li>
+            <li className="nav-item">
+              <Link to="/Dashboard/Contacto" className="nav-link">
+                <i className="nav-icon far fa-envelope" />
+                <p>
+                  Mensajes de Contáctanos
+                  <span className="badge badge-info right">2</span>
+                </p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/Dashboard/Contacto" className="nav-link">
+                <i className="nav-icon fas fa-book-open" />
+                <p>
+                  Libro de Reclamaciones
+                  <span className="badge badge-info right">2</span>
+                </p>
+              </Link>
+            </li>
           </ul>
         </nav>
         {/* /.sidebar-menu */}

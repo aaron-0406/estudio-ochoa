@@ -47,7 +47,7 @@ ctrlUsuario.whoami = async (req, res) => {
 //post("/")
 ctrlUsuario.createUsuario = async (req, res) => {
   const { apellidos_usuario, nombres_usuario, email_usuario, telefono_usuario, dni } = req.body;
-  const password = await helpers.encryptPassword(nombres_usuario.toLowerCase() + dni);
+  const password = await helpers.encryptPassword(nombres_usuario.toLowerCase().replace(/ \s*/g, "") + dni);
   const newUsuario = {
     nombres_usuario,
     apellidos_usuario,

@@ -15,7 +15,7 @@ interface Props {
   filtro: string;
 }
 const ListaHistorial: React.FC<Props> = (props) => {
-  const { usuario } = useUsuario();
+  const { usuario, loadUser } = useUsuario();
 
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
   const [loadUsuarios, setLoadUsuarios] = useState<boolean>(false);
@@ -48,20 +48,22 @@ const ListaHistorial: React.FC<Props> = (props) => {
     setLoadUsuarios(false);
   };
   useEffect(() => {
-    getSolicitudes();
+    if (loadUser) getSolicitudes();
     return () => limpieza();
-  }, [page, props.filtro, props.estado]);
+  }, [page, props.filtro, props.estado, loadUser]);
 
   useEffect(() => {
-    setPage(1);
-    setCantidadPaginas(0);
-    getCantidad();
+    if (loadUser) {
+      setPage(1);
+      setCantidadPaginas(0);
+      getCantidad();
+    }
     return () => {
       setCantidad(0);
       setCantidadPaginas(0);
       setPage(1);
     };
-  }, [props.filtro, props.trigguer, props.estado]);
+  }, [props.filtro, props.trigguer, props.estado, loadUser]);
   return (
     <>
       <table className="table table-bordered table-hover table-striped">

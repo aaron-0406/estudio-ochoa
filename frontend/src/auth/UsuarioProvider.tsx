@@ -33,7 +33,7 @@ export const UsuarioProvider = (props: any) => {
       if (datos.data.user) {
         setUsuario(datos.data.user);
         auth.sigIn();
-        auth.setRango(datos.data.user.id_rango);
+        auth.setRango(datos.data.user.rango_usuario);
       }
     } catch (error) {
       setUsuario(initialState);
