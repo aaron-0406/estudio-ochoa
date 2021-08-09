@@ -7,13 +7,19 @@ import { GoFileSubmodule } from "react-icons/go";
 import { RiFileTransferFill } from "react-icons/ri";
 //Images
 import logo from "../images/logo.png";
+
 const DashboardAside: React.FC = () => {
   const { usuario } = useUsuario();
   return (
     <aside className="position-fixed main-sidebar sidebar-dark-primary elevation-4">
       {/* Brand Logo */}
       <Link to="/" className="brand-link text-decoration-none">
-        <img src={logo} alt="" className="brand-image img-circle elevation-3" style={{ opacity: ".8" }} />
+        <img
+          src={logo}
+          alt=""
+          className="brand-image img-circle elevation-3"
+          style={{ opacity: ".8" }}
+        />
         <span className="brand-text font-weight-light"> Ochoa Maldonado</span>
       </Link>
       {/* Sidebar */}
@@ -32,7 +38,12 @@ const DashboardAside: React.FC = () => {
 
         {/* Sidebar Menu */}
         <nav className="mt-2">
-          <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <ul
+            className="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview"
+            role="menu"
+            data-accordion="false"
+          >
             {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
             <li className="nav-header">Expedientes</li>

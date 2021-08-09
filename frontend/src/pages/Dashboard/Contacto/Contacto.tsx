@@ -1,3 +1,6 @@
+import { useState } from "react";
+
+import Buscador from "../../../components/Buscador";
 
 /* const initialState = {
   id_contacto: 0,
@@ -7,7 +10,11 @@
   text: ''
 }; */
 const Contacto: React.FC = () => {
-  
+
+  // States
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [filtro, setFiltro] = useState<string>("");
+  const buscar = (text: string) => setFiltro(text);
   return (
     <div className="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
       {/* Content Wrapper. Contains page content */}
@@ -21,10 +28,10 @@ const Contacto: React.FC = () => {
               </div>
               <div className="card-body">
                 <div className="w-100 d-flex justify-content-end">
-                  Buscador
+                  <Buscador placeholder="Buscar Mensaje" funcion={buscar} />
                 </div>
                 <div className="table-responsive mt-4">
-                  Tablas
+                  Tabla
                 </div>
               </div>
             </div>
