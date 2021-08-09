@@ -129,7 +129,7 @@ function App() {
           component={Solicitudes}
         />
         <LayoutDash exact path="/Dashboard/Historial" component={Historial} />
-        <LayoutDash exact path="/Dashboard/Contacto" component={DashboardContacto} />
+        <LayoutDash exact path="/Dashboard/Mensajes" component={DashboardContacto} />
 
         <Route component={NotFound} />
       </Switch>

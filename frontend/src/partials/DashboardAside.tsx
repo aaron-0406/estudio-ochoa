@@ -3,15 +3,22 @@ import { Link } from "react-router-dom";
 import { useUsuario } from "../auth/UsuarioProvider";
 import auth from "../auth/auth";
 import fotoPerfil from "../images/user2-160x160.jpg";
+import { VscBook } from "react-icons/vsc";
 //Images
 import logo from "../images/logo.png";
+
 const DashboardAside: React.FC = () => {
   const { usuario } = useUsuario();
   return (
     <aside className="position-fixed main-sidebar sidebar-dark-primary elevation-4">
       {/* Brand Logo */}
       <Link to="/" className="brand-link text-decoration-none">
-        <img src={logo} alt="" className="brand-image img-circle elevation-3" style={{ opacity: ".8" }} />
+        <img
+          src={logo}
+          alt=""
+          className="brand-image img-circle elevation-3"
+          style={{ opacity: ".8" }}
+        />
         <span className="brand-text font-weight-light"> Ochoa Maldonado</span>
       </Link>
       {/* Sidebar */}
@@ -30,18 +37,23 @@ const DashboardAside: React.FC = () => {
 
         {/* Sidebar Menu */}
         <nav className="mt-2">
-          <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <ul
+            className="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview"
+            role="menu"
+            data-accordion="false"
+          >
             {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
             <li className="nav-header">Dashboard</li>
             <li className="nav-item">
-              <a href="/" className="nav-link">
+              <Link to="#" role="button" className="nav-link">
                 <i className="nav-icon fas fa-copy" />
                 <p>
                   Expedientes
                   <i className="right fas fa-angle-left" />
                 </p>
-              </a>
+              </Link>
               <ul className="nav nav-treeview">
                 {usuario.rango_usuario === "1" ? (
                   <>
@@ -87,12 +99,18 @@ const DashboardAside: React.FC = () => {
 
             <li className="nav-header">Sitio Web</li>
             <li className="nav-item">
-              <Link to="/Dashboard/Contacto" className="nav-link">
+              <Link to="/Dashboard/Mensajes" className="nav-link">
                 <i className="nav-icon far fa-envelope" />
                 <p>
-                  Contactos
+                  Mensajes
                   <span className="badge badge-info right">2</span>
                 </p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/Dashboard/Reclamos" className="nav-link">
+                <VscBook className="fs-4" />
+                <p className="ps-2">Reclamos</p>
               </Link>
             </li>
           </ul>
