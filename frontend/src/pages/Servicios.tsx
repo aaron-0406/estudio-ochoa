@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 
+// Componentes
 import ServicesSectionRoad from "../components/Equipo/ServicesSectionRoad";
 import ServicesSectionService from "../components/Servicios/ServicesSectionService";
+import ServicesSectionPhrase from "../components/Servicios/ServicesSectionPhrase";
 
+// Imagenes
 import img_servicio1 from "../images/images-services/SERVICIO_2.1.jpg";
 import img_servicio2 from "../images/images-services/SERVICIO_2.2.png";
 import img_servicio3 from "../images/images-services/SERVICIO_2.3.png";
@@ -13,7 +16,6 @@ import img_servicio7 from "../images/images-services/SERVICIO_2.7.png";
 import img_servicio8 from "../images/images-services/SERVICIO_2.8.png";
 import img_servicio9 from "../images/images-services/SERVICIO_2.9.png";
 import img_servicio10 from "../images/images-services/SERVICIO_2.10.png";
-import ServicesSectionPhrase from "../components/Servicios/ServicesSectionPhrase";
 
 const Servicios: React.FC = () => {
 

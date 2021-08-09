@@ -20,9 +20,9 @@ router.get("/failedLogin", async (req, res) => {
   return res.json({ error: "Contraseña o Correo inválidos" }); //No autentificado
 });
 
-router.get("/logout", (request, response) => {
-  request.logOut();
-  response.json({ success: "Desconectado" });
+router.get("/logout", (req, res) => {
+  req.logOut();
+  res.json({ success: "Desconectado" });
 });
 
 module.exports = router;

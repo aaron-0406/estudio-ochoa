@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 
+// Componentes
 import Carousel from "../components/Home/Carousel";
 import HomeSectionUs from "../components/Home/HomeSectionUs";
 import Servicios from "../components/Home/Servicios";
 import StaffItem from "../components/Home/StaffItem";
 
+// Imagenes
 import imagen8 from "../images/images-team/Equipo8.png";
 import imagen1 from "../images/images-team/Equipo1.png";
 import imagen4 from "../images/images-team/Equipo4.png";

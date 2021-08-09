@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
+
+// Toast
 import { toast } from "react-toastify";
-import Solicitud from "../../../interfaces/Solicitud";
+
+// Services
 import * as solicitudesServices from "../../../services/SolicitudesServices";
+
+// Interfaces
+import Solicitud from "../../../interfaces/Solicitud";
 interface Props {
   setTrigguer: (trigguer: number) => void;
   trigguer: number;

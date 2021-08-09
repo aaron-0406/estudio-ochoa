@@ -2,9 +2,11 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
+// Componentes
 import ServicesSectionRoad from "../../components/Equipo/ServicesSectionRoad";
 import ServicesAccordion from "../../components/Servicios/ServicesAccordion";
 
+// Imagenes
 import imagen5 from "../../images/images-services/SERVICIO_2.5.png";
 
 interface listaXD {

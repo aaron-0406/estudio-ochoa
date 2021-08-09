@@ -1,10 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Usuario } from "../../../interfaces/Usuario";
+
+// Componentes
 import ModalUsuario from "./ModalUsuario";
+
+// Services
 import * as usuarioServices from "../../../services/UsuarioServices";
+
+// Componentes
 import UsuarioItem from "./UsuarioItem";
 
+// Interfaces
 interface Props {
   setUsuarioModal: (usuario: Usuario) => void;
   usuarioModal: Usuario;

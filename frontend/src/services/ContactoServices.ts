@@ -1,9 +1,27 @@
-import axios from 'axios';
-import { API } from '../config/config';
-import Contact from '../interfaces/Contacto';
+import axios from "axios";
+import { API } from "../config/config";
+import Contact from "../interfaces/Contacto";
 
-const api = `${API}/Contacto`;
+const api = `${API}/api/v0/contacto`;
 
 export const sendMessage = async (dataContact: Contact) => {
-    return await axios.post(`${api}`, dataContact);
-}
+  return await axios.post(`${api}`, dataContact);
+};
+export const getAll = async (page: number, keyword: string) => {
+  if (keyword.trim() !== "") return await axios.get(`${api}?keyword=${keyword}&page=${page}`);
+  return await axios.get(`${api}?page=${page}`);
+};
+export const getCount = async (keyword: string) => {
+  if (keyword.trim() === "") return await axios.get(`${api}/count`);
+  return await axios.get(`${api}/count?keyword=${keyword}`);
+};
+export const getCountNew = async () => {
+  return await axios.get(`${api}/count/new`);
+};
+export const setVisto = async (id: string) => {
+  return await axios.put(`${api}/${id}`);
+};
+
+export const eliminarContacto = async (id: string) => {
+  return await axios.delete(`${api}/${id}`);
+};

@@ -1,9 +1,15 @@
 import React, { useRef, useState } from "react";
+import { API } from "../../../config/config";
+
+// Toast
 import { toast } from "react-toastify";
+
+// Interfaces
 import Solicitud from "../../../interfaces/Solicitud";
+
+// Services
 import * as informeServices from "../../../services/InformeServices";
 import * as solicitudesServices from "../../../services/SolicitudesServices";
-import { API } from "../../../config/config";
 const ModalInforme: React.FC = () => {
   const refButton = useRef<HTMLButtonElement | null>();
 

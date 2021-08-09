@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+
+// Services
+import * as expedienteServices from "../../../services/ExpedienteServices";
+
+// Interfaces
 import Banco from "../../../interfaces/Banco";
 import Materia from "../../../interfaces/Materia";
-import * as expedienteServices from "../../../services/ExpedienteServices";
 
 interface Estado {
   estado_uso: string;

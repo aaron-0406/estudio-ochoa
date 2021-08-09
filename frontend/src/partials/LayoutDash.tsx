@@ -1,7 +1,11 @@
 import React from "react";
 import { Route } from "react-router-dom";
+
+// Compoentes
 import DashboardAside from "./DashboardAside";
 import DashNavbar from "./DashNavbar";
+
+// Interfaces
 interface PrivateRouteProps {
   component: any;
   exact: boolean;

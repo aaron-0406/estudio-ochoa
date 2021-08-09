@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Componentes
 import ServicesSectionRoad from "../components/Equipo/ServicesSectionRoad";
 
-const Historia = () => {
+const Historia:React.FC = () => {
   return (
     <>
       <ServicesSectionRoad

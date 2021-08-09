@@ -2,39 +2,38 @@
 import React, { useEffect, useState } from "react";
 
 // Services
-import * as solicitudesServices from "../../../services/SolicitudesServices";
+import * as reclamosServices from "../../../services/ReclamoServices";
 
 // Componentes
-import ModalRechazar from "./ModalRechazar";
-import ModalSolicitud from "./ModalSolicitud";
-import SolicitudItem from "./SolicitudItem";
+import ReclamoItem from "./ReclamoItem";
 
 // Interfaces
-import Solicitud from "../../../interfaces/Solicitud";
+import Reclamo from "../../../interfaces/Reclamo";
+
 interface Props {
-  estado: string;
   setTrigguer: (trigguer: number) => void;
   trigguer: number;
-  setSolicitudModal: (solicitud: Solicitud) => void;
-  solicitudModal: Solicitud;
+  reclamoModal: Reclamo;
+  setReclamoModal: (mensajeModal: Reclamo) => void;
   filtro: string;
 }
-
-const ListaSolicitudes: React.FC<Props> = (props) => {
-  const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
-  const [loadUsuarios, setLoadUsuarios] = useState<boolean>(false);
+const ListaReclamos: React.FC<Props> = (props) => {
+  //Cargar datos
+  const [reclamos, setReclamos] = useState<Reclamo[]>([]);
+  const [loadReclamos, setLoadReclamos] = useState<boolean>(false);
 
   const [cantidad, setCantidad] = useState<number>(0);
   const [cantidadPaginas, setCantidadPaginas] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
 
-  const getSolicitudes = async () => {
-    const res = await solicitudesServices.getAll(page, props.filtro, props.estado);
-    setSolicitudes(res.data);
-    setLoadUsuarios(true);
+  const getReclamos = async () => {
+    const res = await reclamosServices.getAll(page, props.filtro);
+    setReclamos(res.data);
+    setLoadReclamos(true);
   };
+
   const getCantidad = async () => {
-    const res = await solicitudesServices.getCount(props.filtro, props.estado);
+    const res = await reclamosServices.getCount(props.filtro);
     setCantidad(res.data);
     setCantidadPaginas(Math.ceil(res.data / 12));
   };
@@ -48,13 +47,14 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
     setPage(page - 1);
   };
   const limpieza = () => {
-    setSolicitudes([]);
-    setLoadUsuarios(false);
+    setReclamos([]);
+    setLoadReclamos(false);
   };
+
   useEffect(() => {
-    getSolicitudes();
+    getReclamos();
     return () => limpieza();
-  }, [page, props.filtro, props.estado]);
+  }, [page, props.filtro]);
 
   useEffect(() => {
     setPage(1);
@@ -65,30 +65,30 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
       setCantidadPaginas(0);
       setPage(1);
     };
-  }, [props.filtro, props.trigguer, props.estado]);
+  }, [props.filtro, props.trigguer]);
 
   return (
     <>
       <table className="table table-bordered table-hover table-striped">
-        <caption>Cantidad de Solicitudes: {cantidad}</caption>
+        <caption>Cantidad de mensajes de reclamo: {cantidad}</caption>
         <thead>
           <tr>
-            <th className="border-0">#</th>
-            <th className="border-0">EXPEDIENTE</th>
-            <th className="border-0">USUARIO</th>
-            <th className="border-0">FECHA DE SOLICITUD</th>
-            <th className="border-0">FECHA DE ENTREGA</th>
-            <th className="border-0">ESTADO</th>
+            <th className="border-0" style={{ width: 10 }}>
+              #
+            </th>
+            <th className="border-0">Nombres</th>
+            <th className="border-0">Correo</th>
+            <th className="border-0">Teléfono</th>
+            <th className="border-0" style={{ width: 40 }}></th>
             <th className="border-0" style={{ width: 40 }}></th>
             <th className="border-0" style={{ width: 40 }}></th>
           </tr>
         </thead>
         <tbody>
-          {!loadUsuarios ? (
+          {!loadReclamos ? (
             <>
               <tr className="m-3">
                 <td>Cargando datos...</td>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -99,11 +99,10 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
             </>
           ) : (
             <>
-              {solicitudes.length === 0 ? (
+              {reclamos.length === 0 ? (
                 <>
                   <tr className="m-3">
-                    <td> No hay solictudes registrados aún</td>
-                    <td></td>
+                    <td> No hay mensajes registrados aún</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -114,8 +113,8 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
                 </>
               ) : (
                 <>
-                  {solicitudes.map((solicitud, i) => {
-                    return <SolicitudItem trigguer={props.trigguer} setTrigguer={props.setTrigguer} i={i + 1} getSolicitudes={getSolicitudes} setSolicitudModal={props.setSolicitudModal} solicitud={solicitud} key={solicitud.id_solicitud} />;
+                  {reclamos.map((reclamo, i) => {
+                    return <ReclamoItem i={i + 1} getReclamos={getReclamos} setReclamoModal={props.setReclamoModal} reclamo={reclamo} key={reclamo.id_reclamo} />;
                   })}
                 </>
               )}
@@ -159,10 +158,8 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
           </>
         )}
       </div>
-      <ModalSolicitud setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getSolicitudes} solicitud={props.solicitudModal} />
-      <ModalRechazar setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getSolicitudes} solicitud={props.solicitudModal} />
     </>
   );
 };
 
-export default ListaSolicitudes;
+export default ListaReclamos;

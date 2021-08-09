@@ -1,11 +1,17 @@
+import React, { useState } from "react";
+
+// Iconos
 import { faFilePdf } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+
+// Componentes
 import Buscador from "../../../components/Buscador";
-import Solicitud from "../../../interfaces/Solicitud";
 import ListaSolicitudes from "./ListaSolicitudes";
 import ModalInforme from "./ModalInforme";
 import ResumenSolicitudes from "./ResumenSolicitudes";
+
+// Interfaces
+import Solicitud from "../../../interfaces/Solicitud";
 const initialState: Solicitud = {
   estado_solicitud: "",
   fecha_entrega_inventario: "",
@@ -38,7 +44,10 @@ const Solicitudes: React.FC = () => {
           <div className="container-fluid">
             <div className="card mt-4">
               <div className="card-header">
-                <h3 className="card-title"> Solicitudes de Expedientes</h3>
+                <h3 className="card-title">
+                  <i className="fas fa-file-signature fs-4 me-2" />
+                  Solicitudes de Expedientes
+                </h3>
                 <div className="card-tools">
                   <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createInforme">
                     <FontAwesomeIcon icon={faFilePdf} color="#fff" size="1x" /> Generar Informe
@@ -86,7 +95,7 @@ const Solicitudes: React.FC = () => {
           </div>
         </section>
       </div>
-      <ModalInforme/>
+      <ModalInforme />
       {/* Control Sidebar */}
       <aside className="control-sidebar control-sidebar-dark">{/* Control sidebar content goes here */}</aside>
       {/* /.control-sidebar */}

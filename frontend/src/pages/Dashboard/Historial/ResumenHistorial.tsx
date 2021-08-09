@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useUsuario } from "../../../auth/UsuarioProvider";
+
+// Services
 import * as solicitudesServices from "../../../services/SolicitudesServices";
 
+// Interfaces
 interface Estado {
   estado_solicitud: string;
   cantidad: number;

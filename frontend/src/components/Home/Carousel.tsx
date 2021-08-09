@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Imagenes
 import slide1 from "../../images/images-carousel/slide1.jpg";
 import slide2 from "../../images/images-carousel/slide2.jpg";
 import slide3 from "../../images/images-carousel/slide3.jpg";

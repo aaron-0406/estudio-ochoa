@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { Usuario } from "../../../interfaces/Usuario";
 
+// Iconos
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+
+// Componentes
 import ListaUsuarios from "./ListaUsuarios";
 import Buscador from "../../../components/Buscador";
-import { Usuario } from "../../../interfaces/Usuario";
 const initialState: Usuario = {
   id_usuario: 0,
   apellidos_usuario: "",
@@ -30,7 +33,10 @@ const Usuarios: React.FC = () => {
           <div className="container-fluid">
             <div className="card mt-4">
               <div className="card-header">
-                <h3 className="card-title"> Control de Usuarios</h3>
+                <h3 className="card-title">
+                  <i className="fas fa-user-friends fs-4 me-2" />
+                  Control de Usuarios
+                </h3>
                 <div className="card-tools">
                   <button
                     type="button"

@@ -2,14 +2,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-//Toast
 //Services
-
 import * as expedienteServices from "../../../services/ExpedienteServices";
-import Expediente from "../../../interfaces/Expediente";
+
+// Componentes
 import ExpedienteItem from "./ExpedienteItem";
 import ModalExpediente from "./ModalExpediente";
 
+// Interfaces
+import Expediente from "../../../interfaces/Expediente";
 interface Props {
   setTrigguer: (trigguer: number) => void;
   trigguer: number;

@@ -1,11 +1,15 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { API } from "../config/config";
 import auth from "../auth/auth";
+import { useHistory } from "react-router-dom";
 import { useUsuario } from "../auth/UsuarioProvider";
-import { Usuario } from "../interfaces/Usuario";
+import { API } from "../config/config";
+
+// Toast
 import { ToastContainer } from "react-toastify";
+
+// Interfaces
+import { Usuario } from "../interfaces/Usuario";
 const initialState: Usuario = {
   id_usuario: 0,
   apellidos_usuario: "",

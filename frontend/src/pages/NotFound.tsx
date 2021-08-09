@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Componentes
 import HeadInformation from "../partials/HeadInformation";
 import Navbar from "../partials/Navbar";
 import Footer from "../partials/Footer";

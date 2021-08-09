@@ -1,7 +1,13 @@
 import React from "react";
-import { Usuario } from "../../../interfaces/Usuario";
-import * as usuarioServices from "../../../services/UsuarioServices";
+
+// Toast
 import { toast } from "react-toastify";
+
+// Services
+import * as usuarioServices from "../../../services/UsuarioServices";
+
+// Interfaces
+import { Usuario } from "../../../interfaces/Usuario";
 
 interface Props {
   i: number;

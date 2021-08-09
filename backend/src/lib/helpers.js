@@ -17,9 +17,7 @@ helpers.encryptPassword = async (password) => {
 helpers.matchPassword = async (password, savedPassword) => {
   try {
     return await bcrypt.compare(password, savedPassword);
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 };
 
 module.exports = helpers;

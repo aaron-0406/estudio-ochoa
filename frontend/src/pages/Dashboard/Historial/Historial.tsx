@@ -1,12 +1,19 @@
 import React, { useState } from "react";
+
+// Componentes
 import Buscador from "../../../components/Buscador";
-import Solicitud from "../../../interfaces/Solicitud";
 import ListaHistorial from "./ListaHistorial";
 import ResumenHistorial from "./ResumenHistorial";
+import ModalHistorialInforme from "./ModalHistorialInforme";
+
+// Iconos
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
-import ModalHistorialInforme from "./ModalHistorialInforme";
+import { RiFileTransferFill } from "react-icons/ri";
+
+// Interfaces
+import Solicitud from "../../../interfaces/Solicitud";
 
 const initialState: Solicitud = {
   estado_solicitud: "",
@@ -38,7 +45,10 @@ const Historial: React.FC = () => {
           <div className="container-fluid">
             <div className="card mt-4">
               <div className="card-header">
-                <h3 className="card-title"> Solicitudes de Expedientes</h3>
+                <h3 className="card-title">
+                  <RiFileTransferFill className="fs-3 me-2" />
+                  Solicitudes de Expedientes
+                </h3>
                 <div className="card-tools">
                   <button
                     type="button"
@@ -97,7 +107,7 @@ const Historial: React.FC = () => {
           </div>
         </section>
       </div>
-      <ModalHistorialInforme/>
+      <ModalHistorialInforme />
       {/* Control Sidebar */}
       <aside className="control-sidebar control-sidebar-dark">{/* Control sidebar content goes here */}</aside>
       {/* /.control-sidebar */}

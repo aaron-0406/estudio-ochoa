@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AiOutlineFileAdd } from "react-icons/ai";
-import { toast } from "react-toastify";
-import Expediente from "../../../interfaces/Expediente";
-import Solicitud from "../../../interfaces/Solicitud";
-import * as solicitudesServices from "../../../services/SolicitudesServices";
-import * as expedientesServices from "../../../services/ExpedienteServices";
 import { useUsuario } from "../../../auth/UsuarioProvider";
 import expr from "../../../encrypt/exprRegular";
+
+// Toast
+import { toast } from "react-toastify";
+
+// Iconos
+import { AiOutlineFileAdd } from "react-icons/ai";
+
+// Services
+import * as solicitudesServices from "../../../services/SolicitudesServices";
+import * as expedientesServices from "../../../services/ExpedienteServices";
+
+// Interfaces
+import Solicitud from "../../../interfaces/Solicitud";
+import Expediente from "../../../interfaces/Expediente";
 
 interface Props {
   setTrigguer: (trigguer: number) => void;

@@ -1,7 +1,13 @@
 import React from "react";
+
+// Toast
 import { toast } from "react-toastify";
-import Solicitud from "../../../interfaces/Solicitud";
+
+// Services
 import * as solicitudesServices from "../../../services/SolicitudesServices";
+
+// Interfaces
+import Solicitud from "../../../interfaces/Solicitud";
 interface Props {
   trigguer: number;
   setTrigguer: (trigguer: number) => void;
@@ -10,6 +16,7 @@ interface Props {
   getSolicitudes: () => void;
   setSolicitudModal: (solicitud: Solicitud) => void;
 }
+
 const SolicitudItem: React.FC<Props> = (props) => {
   const aceptarSolicitud = async () => {
     const res = await solicitudesServices.editarSolicitud(props.solicitud.id_solicitud + "", props.solicitud, "EN USO");

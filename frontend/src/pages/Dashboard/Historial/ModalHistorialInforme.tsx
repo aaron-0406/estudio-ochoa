@@ -1,12 +1,18 @@
 import React, { useRef, useState } from "react";
+import { useUsuario } from "../../../auth/UsuarioProvider";
+import { API } from "../../../config/config";
+
+// Toast
 import { toast } from "react-toastify";
+
+// Interfaces
 import Solicitud from "../../../interfaces/Solicitud";
+
+// Services
 import * as informeServices from "../../../services/InformeServices";
 import * as solicitudesServices from "../../../services/SolicitudesServices";
-import { API } from "../../../config/config";
-import { useUsuario } from "../../../auth/UsuarioProvider";
 
-const ModalHistorialInforme = () => {
+const ModalHistorialInforme:React.FC = () => {
   const refButton = useRef<HTMLButtonElement | null>();
 
   const [fecha, setFecha] = useState("");

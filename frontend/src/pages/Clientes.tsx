@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
+
+// Componentes
 import ServicesSectionRoad from "../components/Equipo/ServicesSectionRoad";
 
+// Imagenes
 import logobbva from "../images/images-customers/logobbva.png";
 import logopichincha from "../images/images-customers/logopichincha.png";
 import logobanbif from "../images/images-customers/logobanbif.png";

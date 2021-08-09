@@ -1,23 +1,29 @@
 import React, { useState } from "react";
+
+// Iconos
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faPhoneAlt, faEnvelope, faClock } from "@fortawesome/free-solid-svg-icons";
 
-import { sendMessage } from '../../services/ContactoServices';
+// Services
+import { sendMessage } from "../../services/ContactoServices";
+
+// Toast
 import { toast, ToastContainer } from "react-toastify";
+import Contacto from "../../interfaces/Contacto";
 
 const ContactSectionContactForm: React.FC = () => {
-
-  const initialState = {
-    nombre_contacto: '',
-    email_contacto: '',
-    telefono_contacto: '',
-    text: ''
-  }
-
+  const initialState: Contacto = {
+    nombre_contacto: "",
+    email_contacto: "",
+    telefono_contacto: "",
+    text: "",
+    visto: 1,
+  };
 
   // State
   const [contact, setContact] = useState(initialState);
 
+  // Evento submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await sendMessage(contact);
@@ -27,15 +33,13 @@ const ContactSectionContactForm: React.FC = () => {
       return;
     }
     if (res.data.error) return toast.error(res.data.error);
-  }
+  };
 
+  // Change Input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setContact({
-      ...contact,
-      [name]: value
-    });
-  }
+    setContact({ ...contact, [name]: value });
+  };
 
   return (
     <>
@@ -47,38 +51,13 @@ const ContactSectionContactForm: React.FC = () => {
               ¡Contáctanos ahora!
             </p>
             <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                value={contact.nombre_contacto}
-                className="form-control"
-                name="nombre_contacto"
-                placeholder="Nombre Completo"
-                onChange={handleChange}
-                autoFocus />
+              <input type="text" value={contact.nombre_contacto} className="form-control" name="nombre_contacto" placeholder="Nombre Completo" onChange={handleChange} autoFocus />
               <br />
-              <input
-                type="email"
-                value={contact.email_contacto}
-                className="form-control"
-                name="email_contacto"
-                placeholder="E - mail"
-                onChange={handleChange} />
+              <input type="email" value={contact.email_contacto} className="form-control" name="email_contacto" placeholder="E - mail" onChange={handleChange} />
               <br />
-              <input
-                type="text"
-                value={contact.telefono_contacto}
-                className="form-control"
-                name="telefono_contacto"
-                placeholder="Teléfono"
-                onChange={handleChange} />
+              <input type="text" value={contact.telefono_contacto} className="form-control" name="telefono_contacto" placeholder="Teléfono" onChange={handleChange} />
               <br />
-              <textarea
-                name="text"
-                value={contact.text}
-                rows={4}
-                className="form-control"
-                placeholder="Mensaje"
-                onChange={handleChange}></textarea>
+              <textarea name="text" value={contact.text} rows={4} className="form-control" placeholder="Mensaje" onChange={handleChange}></textarea>
               <br />
               <button className="btn btn-block w-100" style={{ backgroundColor: "#553620", color: "#fff" }}>
                 Enviar

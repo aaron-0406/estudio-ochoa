@@ -6,8 +6,10 @@ import axios from "axios";
 import auth from "../auth/auth";
 import expr from '../encrypt/exprRegular';
 
+// Toast
 import { toast, ToastContainer } from "react-toastify";
 
+// Imagenes
 import imgLogo from "../images/logo-home.png";
 import imgLogo2 from "../images/logo.png";
 

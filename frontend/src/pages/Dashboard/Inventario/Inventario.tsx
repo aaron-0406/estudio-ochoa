@@ -1,9 +1,18 @@
 import { useState } from "react";
-import Expediente from "../../../interfaces/Expediente";
+
+
+// Componentes
 import Buscador from "../../../components/Buscador";
 import ListaExpediente from "./ListaExpediente";
-import { AiOutlineFileAdd } from "react-icons/ai";
 import ResumenInventario from "./ResumenInventario";
+
+// Interfaces
+import Expediente from "../../../interfaces/Expediente";
+
+// Iconos
+import { AiOutlineFileAdd } from "react-icons/ai";
+import { GoFileSubmodule } from "react-icons/go";
+
 const initialState: Expediente = {
   id_expediente: 0,
   codigo_estudio: "",
@@ -39,7 +48,10 @@ const Inventario: React.FC = () => {
           <div className="container-fluid">
             <div className="card mt-4">
               <div className="card-header">
-                <h3 className="card-title"> Gestión de Expedientes</h3>
+                <h3 className="card-title">
+                  <GoFileSubmodule className="fs-3 me-2" />
+                  Gestión de Expedientes
+                </h3>
                 <div className="card-tools">
                   <button
                     type="button"

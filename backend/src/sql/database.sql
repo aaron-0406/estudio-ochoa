@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-08-2021 a las 00:52:08
+-- Tiempo de generación: 09-08-2021 a las 19:34:01
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -56,6 +56,18 @@ CREATE TABLE `contacto` (
   `visto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `contacto`
+--
+
+INSERT INTO `contacto` (`id_contacto`, `nombre_contacto`, `email_contacto`, `telefono_contacto`, `text`, `visto`) VALUES
+(2, 'victor', 'villa-2027@gmail.com', 'wqeqwe', 'qweqwe', 0),
+(4, 'qweqwe', 'marcos@gmail.com', 'wewe', 'wqeqwe', 0),
+(5, 'wdwd', 'victoreee-2027@hotmail.com', '+51990978736', 'fef', 0),
+(6, 'wdwdwd', 'victoreee-2027@hotmail.com', '+51990978736', 'dwdwd', 0),
+(7, 'wewe', 'victoreee-2027@hotmail.com', '+51990978736', 'wewe', 0),
+(8, 'dwdwwe', 'victor-2027@hotmail.com', '990978736', 'qweqweqwe', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +119,28 @@ INSERT INTO `materia` (`id_materia`, `sigla_nombre`, `nombre_materia`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `reclamo`
+--
+
+CREATE TABLE `reclamo` (
+  `id_reclamo` int(11) NOT NULL,
+  `nombre_reclamo` varchar(100) NOT NULL,
+  `apellido_reclamo` varchar(100) NOT NULL,
+  `correo_reclamo` varchar(100) NOT NULL,
+  `direccion_reclamo` varchar(100) NOT NULL,
+  `identificacion_reclamo` varchar(100) NOT NULL,
+  `provincia_reclamo` varchar(100) NOT NULL,
+  `telefono_reclamo` varchar(30) NOT NULL,
+  `distrito_reclamo` varchar(100) NOT NULL,
+  `motivo_reclamo` varchar(100) NOT NULL,
+  `producto_reclamo` varchar(100) NOT NULL,
+  `mensaje_reclamo` text NOT NULL,
+  `visto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `sessions`
 --
 
@@ -115,6 +149,16 @@ CREATE TABLE `sessions` (
   `expires` int(11) UNSIGNED NOT NULL,
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `sessions`
+--
+
+INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
+('Q3diUxT96-4oz8jVGJHfXUHbBfGa-KWs', 1628556635, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":{\"id_usuario\":38,\"dni\":\"77197021\",\"email_usuario\":\"victor-2027@hotmail.com\",\"nombres_usuario\":\"Victor\",\"apellidos_usuario\":\"Hernandez\",\"telefono_usuario\":\"990978736\",\"estado_usuario\":\"1\",\"rango_usuario\":\"2\",\"authenticate\":true}}}'),
+('_WBWSQQfulsK61ARswoP7o0iH8unrA30', 1628556601, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":{\"id_usuario\":36,\"dni\":\"11111111\",\"email_usuario\":\"admin@estudioochoamaldonado.com\",\"nombres_usuario\":\"admin\",\"apellidos_usuario\":\"admin\",\"telefono_usuario\":\"990489736\",\"estado_usuario\":\"1\",\"rango_usuario\":\"1\",\"authenticate\":true}}}'),
+('vvVtdLHjChrvZYDTNy3MameD9BmKOIIT', 1628556465, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":{\"id_usuario\":36,\"dni\":\"11111111\",\"email_usuario\":\"admin@estudioochoamaldonado.com\",\"nombres_usuario\":\"admin\",\"apellidos_usuario\":\"admin\",\"telefono_usuario\":\"990489736\",\"estado_usuario\":\"1\",\"rango_usuario\":\"1\",\"authenticate\":true}}}'),
+('yqTk7eC0dFP_-vwG3G-QjZVcFXu5gXci', 1628556492, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":{\"id_usuario\":36,\"dni\":\"11111111\",\"email_usuario\":\"admin@estudioochoamaldonado.com\",\"nombres_usuario\":\"admin\",\"apellidos_usuario\":\"admin\",\"telefono_usuario\":\"990489736\",\"estado_usuario\":\"1\",\"rango_usuario\":\"1\",\"authenticate\":true}}}');
 
 -- --------------------------------------------------------
 
@@ -157,7 +201,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `dni`, `email_usuario`, `password`, `nombres_usuario`, `apellidos_usuario`, `telefono_usuario`, `estado_usuario`, `rango_usuario`) VALUES
-(1, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '990489736', '1', '1');
+(36, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '990489736', '1', '1');
 
 --
 -- Índices para tablas volcadas
@@ -190,6 +234,12 @@ ALTER TABLE `expediente`
 --
 ALTER TABLE `materia`
   ADD PRIMARY KEY (`id_materia`);
+
+--
+-- Indices de la tabla `reclamo`
+--
+ALTER TABLE `reclamo`
+  ADD PRIMARY KEY (`id_reclamo`);
 
 --
 -- Indices de la tabla `sessions`
@@ -227,13 +277,13 @@ ALTER TABLE `banco`
 -- AUTO_INCREMENT de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `expediente`
 --
 ALTER TABLE `expediente`
-  MODIFY `id_expediente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_expediente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `materia`
@@ -242,16 +292,22 @@ ALTER TABLE `materia`
   MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `reclamo`
+--
+ALTER TABLE `reclamo`
+  MODIFY `id_reclamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Restricciones para tablas volcadas

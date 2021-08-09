@@ -138,7 +138,6 @@ ctrlSolicitud.getCountByUsuarioId = async (req, res) => {
 // post("/:id")
 ctrlSolicitud.crearSolicitud = async (req, res) => {
   const newSolicitud = ({ fecha_solicitud, fecha_entrega_usuario, fecha_entrega_inventario, motivo_usuario, motivo_admin, estado_solicitud, id_usuario, id_expediente } = req.body);
-  console.log(fecha_solicitud);
   const rows = await pool.query("INSERT INTO solicitud set ? ", [newSolicitud]);
   if (rows.affectedRows === 1) return res.json({ success: "Solicitud enviada" });
   res.json({ error: "Ocurrió un error" });
@@ -164,7 +163,6 @@ ctrlSolicitud.modificarSolicitud = async (req, res) => {
     }
     return res.json({ success: `Estado de solicitud cambiada` });
   } catch (error) {
-    console.log(error);
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
   }
   return res.json({ error: "Ocurrió un error." });

@@ -1,9 +1,17 @@
 import React from "react";
-import Expediente from "../../../interfaces/Expediente";
+
+// Services
 import * as expedienteServices from "../../../services/ExpedienteServices";
+
+// Toast
 import { toast } from "react-toastify";
+
+// Iconos
 import { RiFileForbidLine } from "react-icons/ri";
 import { AiOutlineFileDone } from "react-icons/ai";
+
+// Interfaces
+import Expediente from "../../../interfaces/Expediente";
 interface Props {
   i: number;
   expediente: Expediente;
@@ -12,7 +20,6 @@ interface Props {
 }
 
 const ExpedienteItem: React.FC<Props> = (props) => {
-
   const eliminarExpediente = async (id?: number) => {
     const res = await expedienteServices.eliminarExpediente(id + "");
     if (res.data.success) {

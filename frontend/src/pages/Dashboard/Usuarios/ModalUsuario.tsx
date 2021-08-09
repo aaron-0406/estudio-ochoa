@@ -1,10 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import { Usuario } from "../../../interfaces/Usuario";
-import * as usuarioServices from "../../../services/UsuarioServices";
-import { toast } from "react-toastify";
-import expr from '../../../encrypt/exprRegular';
+import expr from "../../../encrypt/exprRegular";
 
+// Toast
+import { toast } from "react-toastify";
+
+// Services
+import * as usuarioServices from "../../../services/UsuarioServices";
+
+// Interfaces
+import { Usuario } from "../../../interfaces/Usuario";
 interface Props {
   setTrigguer: (trigguer: number) => void;
   trigguer: number;
@@ -90,13 +95,13 @@ const ModalUsuario: React.FC<Props> = (props) => {
     }
   };
 
-  const validation = (expr: RegExp, e: EventTarget & (HTMLInputElement)) => {
+  const validation = (expr: RegExp, e: EventTarget & HTMLInputElement) => {
     if (expr.test(e.value)) {
       e.classList.remove("is-invalid");
       return;
     }
     e.classList.add("is-invalid");
-  }
+  };
 
   return (
     <>
@@ -130,46 +135,34 @@ const ModalUsuario: React.FC<Props> = (props) => {
                   {usuario.id_usuario === 0 ? (
                     <>
                       <input id="floatingDni" type="text" className="form-control" name="dni" placeholder="DNI" onChange={handleChange} value={usuario.dni} />
-                      <div className="invalid-feedback">
-                        8 digitos permitidos
-                      </div>
+                      <div className="invalid-feedback">8 digitos permitidos</div>
                     </>
                   ) : (
                     <>
                       <input id="floatingDni" disabled type="text" className="form-control" name="dni" placeholder="DNI" onChange={handleChange} value={usuario.dni} />
-                      <div className="invalid-feedback">
-                        8 digitos permitidos
-                      </div>
+                      <div className="invalid-feedback">8 digitos permitidos</div>
                     </>
                   )}
                   <label htmlFor="floatingDni">DNI</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type="text" className="form-control" id="floatingNombres" name="nombres_usuario" placeholder="Nombre" autoFocus onChange={handleChange} value={usuario.nombres_usuario} />
-                  <div className="invalid-feedback">
-                    Permitido letras, espacios y acentos
-                  </div>
+                  <div className="invalid-feedback">Permitido letras, espacios y acentos</div>
                   <label htmlFor="floatingNombres">Nombres</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type="text" className="form-control" id="floatingApellidos" name="apellidos_usuario" placeholder="Apellidos" onChange={handleChange} value={usuario.apellidos_usuario} />
-                  <div className="invalid-feedback">
-                    Permitido letras, espacios y acentos
-                  </div>
+                  <div className="invalid-feedback">Permitido letras, espacios y acentos</div>
                   <label htmlFor="floatingApellidos">Apellidos</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type="text" className="form-control" id="floatingtelefono" name="telefono_usuario" placeholder="Teléfono" onChange={handleChange} value={usuario.telefono_usuario} />
-                  <div className="invalid-feedback">
-                    9 digitos permitidos
-                  </div>
+                  <div className="invalid-feedback">9 digitos permitidos</div>
                   <label htmlFor="floatingtelefono">Teléfono</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input type="email" id="floatingEmail" className="form-control" name="email_usuario" placeholder="E-mail" onChange={handleChange} value={usuario.email_usuario} />
-                  <div className="invalid-feedback">
-                    Correo invalido (correo@ejemplo.com)
-                  </div>
+                  <div className="invalid-feedback">Correo invalido (correo@ejemplo.com)</div>
                   <label htmlFor="floatingEmail">Correo</label>
                 </div>
               </div>

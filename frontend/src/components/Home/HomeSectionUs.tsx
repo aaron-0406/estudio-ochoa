@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Imagenes
 import imagenUs from "../../images/home-section-us.jpg";
 
 const HomeSectionUs: React.FC = () => {

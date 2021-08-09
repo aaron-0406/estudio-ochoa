@@ -1,5 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
+
+// Componentes
 import Footer from "./Footer";
 import FooterCopyright from "./FooterCopyright";
 import HeadInformation from "./HeadInformation";

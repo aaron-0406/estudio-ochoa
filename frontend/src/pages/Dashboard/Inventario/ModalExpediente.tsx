@@ -1,13 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import Expediente from "../../../interfaces/Expediente";
+import expr from "../../../encrypt/exprRegular";
+
+// Services
 import * as bancoServices from "../../../services/BancoServices";
 import * as materiaServices from "../../../services/MateriaServices";
 import * as expedienteServices from "../../../services/ExpedienteServices";
+
+// Iconos
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
-import expr from '../../../encrypt/exprRegular';
 
+// Toast
 import { toast } from "react-toastify";
+
+// Interfaces
+import Expediente from "../../../interfaces/Expediente";
 
 interface Props {
   setTrigguer: (trigguer: number) => void;
@@ -97,7 +104,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
       return;
     }
     e.classList.add("is-invalid");
-  }
+  };
 
   //El useeffect no lleva nada de callback
   const getBancos = async () => {
@@ -162,16 +169,12 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   {expediente.id_expediente === 0 ? (
                     <>
                       <input type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} />
-                      <div className="invalid-feedback">
-                        Solo digitos permitidos
-                      </div>
+                      <div className="invalid-feedback">Solo digitos permitidos</div>
                     </>
                   ) : (
                     <>
                       <input disabled type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} />
-                      <div className="invalid-feedback">
-                        Solo digitos permitidos
-                      </div>
+                      <div className="invalid-feedback">Solo digitos permitidos</div>
                     </>
                   )}
                   {/* <input type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} disabled /> */}
@@ -182,9 +185,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
                     Codigo Expediente
                   </label>
                   <input type="text" className="form-control" id="input_Codigo_Expediente" name="codigo_expediente" onChange={handleChange} value={expediente.codigo_expediente} />
-                  <div className="invalid-feedback">
-                    Solo digitos permitidos
-                  </div>
+                  <div className="invalid-feedback">Solo digitos permitidos</div>
                 </div>
                 <div className="col-12 col-md-6 col-lg-6">
                   <br />
@@ -259,9 +260,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
                     Estado Actual
                   </label>
                   <input type="text" className="form-control" id="input_Estado_Actual" name="estado_actual" onChange={handleChange} value={expediente.estado_actual} />
-                  <div className="invalid-feedback">
-                    Caracteres incorrectos
-                  </div>
+                  <div className="invalid-feedback">Caracteres incorrectos</div>
                 </div>
                 <div className="col-12 col-md-6 col-lg-6">
                   <br />
@@ -304,9 +303,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
                     Folio
                   </label>
                   <input type="text" className="form-control" id="input_Folio" name="folio" onChange={handleChange} value={expediente.folio} />
-                  <div className="invalid-feedback">
-                    Solo digitos permitidos
-                  </div>
+                  <div className="invalid-feedback">Solo digitos permitidos</div>
                 </div>
               </div>
             </div>

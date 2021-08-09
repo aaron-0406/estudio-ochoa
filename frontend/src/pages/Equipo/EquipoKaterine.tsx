@@ -1,8 +1,12 @@
 import React from "react";
+
+// Iconos
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
+// Imagenes
 import imagen4 from "../../images/images-team/Equipo4.png";
 
+// Componentes
 import ServicesSectionRoad from "../../components/Equipo/ServicesSectionRoad";
 import EquipoDatos from "../../components/Equipo/EquipoDatos";
 

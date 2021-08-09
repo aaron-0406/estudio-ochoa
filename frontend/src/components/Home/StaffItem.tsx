@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Interfaces
 interface Props {
   url: string;
   image: string;
@@ -15,15 +16,10 @@ const StaffItem: React.FC<Props> = (props) => {
           <img src={props.image} className="card-img-top" alt="..." />
         </Link>
         <div className="card-body">
-          <Link
-            to={props.url}
-            className="card-title fs-6 fw-bold w-100 py-2 mx-auto text-dark"
-          >
+          <Link to={props.url} className="card-title fs-6 fw-bold w-100 py-2 mx-auto text-dark">
             {props.name}
           </Link>
-          <p className="hst-job d-block card-text fw-bold text-decoration-none">
-            {props.job}
-          </p>
+          <p className="hst-job d-block card-text fw-bold text-decoration-none">{props.job}</p>
         </div>
       </div>
     </div>

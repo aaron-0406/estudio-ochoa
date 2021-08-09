@@ -1,10 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useUsuario } from "../../../auth/UsuarioProvider";
-import Solicitud from "../../../interfaces/Solicitud";
+
+// Services
 import * as solicitudesServices from "../../../services/SolicitudesServices";
+
+// Componentes
 import HistorialItem from "./HistorialItem";
 import ModalHistorial from "./ModalHistorial";
+
+// Interfaces
+import Solicitud from "../../../interfaces/Solicitud";
 
 interface Props {
   estado: string;
