@@ -77,7 +77,7 @@ const ServicioConsumidor = () => {
         nameRoadTwo="Consumidor"
       />
       <div className="container my-5">
-        <div className="row">
+        <div className="row px-3">
           <div className="col-12 col-md-6">
             <h5 className="text-center fw-bold my-4">
               COMPETENCIA Y PROTECCIÓN AL CONSUMIDOR
@@ -116,7 +116,7 @@ const ServicioConsumidor = () => {
             </div>
           </div>
         </div>
-        <div className="row my-5">
+        <div className="row my-5 px-3">
           <div className="col-12 col-md-2"></div>
           <div className="col-12 col-md-8">
             <p>
