@@ -43,11 +43,18 @@ const initStateExpediente: Expediente = {
   id_banco: 0,
 };
 const ModalExpediente: React.FC<Props> = (props) => {
+
+  // States
   const [bancos, setBancos] = useState([]);
   const [materias, setMaterias] = useState([]);
   const [expediente, setExpediente] = useState(initStateExpediente);
 
+  // References
   const refButton = useRef<HTMLButtonElement | null>();
+  const refCodigoEstudio = useRef<HTMLInputElement>(null);
+  const refCodigoExpediente = useRef<HTMLInputElement>(null);
+  const refEstadoActual = useRef<HTMLInputElement>(null);
+  const refFolio = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -130,8 +137,17 @@ const ModalExpediente: React.FC<Props> = (props) => {
     setExpediente(props.expediente);
     return () => {
       setExpediente(initStateExpediente);
+      console.log('unmounth')
     };
   }, [props.expediente]);
+
+  const cleanInputs = () => {
+    refCodigoEstudio.current?.classList.remove('is-invalid');
+    refCodigoExpediente.current?.classList.remove('is-invalid');
+    refEstadoActual.current?.classList.remove('is-invalid');
+    refFolio.current?.classList.remove('is-invalid');
+    setExpediente(initStateExpediente);
+  }
 
   return (
     <div className="modal fade" id="createExpediente" tabIndex={-1} aria-labelledby="createExpediente" aria-hidden="true">
@@ -144,7 +160,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   <h5 className="modal-title" id="createExpediente">
                     <AiOutlineFileAdd className="fs-3 mb-2 me-1" color="#fff" /> Crear Expediente
                   </h5>
-                  <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" />
+                  <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" onClick={cleanInputs} aria-label="Close" />
                 </div>
               </>
             ) : (
@@ -154,7 +170,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
                     <FaEdit className="fs-4 mb-2 me-1" color="#000" />
                     Modificar Expediente
                   </h5>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                  <button type="button" onClick={cleanInputs} className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                 </div>
               </>
             )}
@@ -168,13 +184,13 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   </label>
                   {expediente.id_expediente === 0 ? (
                     <>
-                      <input type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} />
-                      <div className="invalid-feedback">Solo digitos permitidos</div>
+                      <input type="text" className="form-control" id="input_Codigo_Estudio" ref={refCodigoEstudio} name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} />
+                      <div className="invalid-feedback">Caracteres incorrectos</div>
                     </>
                   ) : (
                     <>
-                      <input disabled type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} />
-                      <div className="invalid-feedback">Solo digitos permitidos</div>
+                      <input disabled type="text" className="form-control" id="input_Codigo_Estudio" ref={refCodigoEstudio} name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} />
+                      <div className="invalid-feedback">Caracteres incorrectos</div>
                     </>
                   )}
                   {/* <input type="text" className="form-control" id="input_Codigo_Estudio" name="codigo_estudio" onChange={handleChange} value={expediente.codigo_estudio} disabled /> */}
@@ -184,8 +200,8 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   <label htmlFor="input_Codigo_Expediente" className="form-label fw-normal">
                     Codigo Expediente
                   </label>
-                  <input type="text" className="form-control" id="input_Codigo_Expediente" name="codigo_expediente" onChange={handleChange} value={expediente.codigo_expediente} />
-                  <div className="invalid-feedback">Solo digitos permitidos</div>
+                  <input type="text" className="form-control" id="input_Codigo_Expediente" ref={refCodigoExpediente} name="codigo_expediente" onChange={handleChange} value={expediente.codigo_expediente} />
+                  <div className="invalid-feedback">Caracteres incorrectos</div>
                 </div>
                 <div className="col-12 col-md-6 col-lg-6">
                   <br />
@@ -259,7 +275,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   <label htmlFor="input_Estado_Actual" className="form-label fw-normal">
                     Estado Actual
                   </label>
-                  <input type="text" className="form-control" id="input_Estado_Actual" name="estado_actual" onChange={handleChange} value={expediente.estado_actual} />
+                  <input type="text" className="form-control" id="input_Estado_Actual" name="estado_actual" ref={refEstadoActual} onChange={handleChange} value={expediente.estado_actual} />
                   <div className="invalid-feedback">Caracteres incorrectos</div>
                 </div>
                 <div className="col-12 col-md-6 col-lg-6">
@@ -302,13 +318,13 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   <label htmlFor="input_Folio" className="form-label fw-normal">
                     Folio
                   </label>
-                  <input type="text" className="form-control" id="input_Folio" name="folio" onChange={handleChange} value={expediente.folio} />
-                  <div className="invalid-feedback">Solo digitos permitidos</div>
+                  <input type="text" className="form-control" id="input_Folio" name="folio" ref={refFolio} onChange={handleChange} value={expediente.folio} />
+                  <div className="invalid-feedback">Caracteres incorrectos</div>
                 </div>
               </div>
             </div>
             <div className="modal-footer">
-              <button ref={(node) => (refButton.current = node)} type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+              <button ref={(node) => (refButton.current = node)} type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={cleanInputs}>
                 Cerrar
               </button>
               {expediente.id_expediente === 0 ? (

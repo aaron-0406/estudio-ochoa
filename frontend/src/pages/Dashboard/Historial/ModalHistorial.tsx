@@ -54,10 +54,15 @@ const initStateExpediente: Expediente = {
   id_banco: 0,
 };
 const ModalHistorial: React.FC<Props> = (props) => {
+
+  // States
   const [solicitud, setSolicitud] = useState<Solicitud>(initialState);
   const [expediente, setExpediente] = useState<Expediente>(initStateExpediente);
   const { usuario } = useUsuario();
+
+  // References
   const refButton = useRef<HTMLButtonElement | null>();
+  const refCodigoExpediente = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setSolicitud(props.solicitud);
@@ -114,6 +119,12 @@ const ModalHistorial: React.FC<Props> = (props) => {
       e.target.classList.add("is-invalid");
     }
   };
+
+  const cleanInputs = () => {
+    refCodigoExpediente.current?.classList.remove('is-invalid');
+    setExpediente(initStateExpediente);
+  }
+
   return (
     <div className="modal fade" id="createSolicitud" tabIndex={-1} aria-labelledby="createSolicitud" aria-hidden="true">
       <div className={`modal-dialog modal-lg modal-dialog-scrollable`}>
@@ -126,7 +137,7 @@ const ModalHistorial: React.FC<Props> = (props) => {
                     <i className="fas fa-eye me-2"></i>
                     Datos de la solicitud
                   </h5>
-                  <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button type="button" onClick={cleanInputs} className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
               </>
             ) : (
@@ -136,7 +147,7 @@ const ModalHistorial: React.FC<Props> = (props) => {
                     <i className="fas fa-plus me-2"></i>
                     Solicitar un expediente
                   </h5>
-                  <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button type="button" onClick={cleanInputs} className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
               </>
             )}
@@ -151,8 +162,8 @@ const ModalHistorial: React.FC<Props> = (props) => {
                           <label className="form-label" htmlFor="codigo_expediente">
                             Código del expediente
                           </label>
-                          <input disabled required value={solicitud.codigo_expediente} onChange={handleChangeEx} placeholder="Código del expediente" name="codigo_expediente" id="codigo_expediente" className="form-control form-control-border border-width-2" type="text" />
-                          <div className="invalid-feedback">Solo digitos permitidos</div>
+                          <input disabled required ref={refCodigoExpediente} value={solicitud.codigo_expediente} onChange={handleChangeEx} placeholder="Código del expediente" name="codigo_expediente" id="codigo_expediente" className="form-control form-control-border border-width-2" type="text" />
+                          <div className="invalid-feedback">Caracteres incorrectos</div>
                         </div>
                       </div>
 
@@ -196,8 +207,8 @@ const ModalHistorial: React.FC<Props> = (props) => {
                           <label className="form-label" htmlFor="codigo_expediente">
                             Código del expediente
                           </label>
-                          <input required value={expediente.codigo_expediente} onChange={handleChangeEx} placeholder="Código del expediente" name="codigo_expediente" id="floatingInput" className="form-control form-control-border border-width-2" type="text" />
-                          <div className="invalid-feedback">Solo digitos permitidos</div>
+                          <input required ref={refCodigoExpediente} value={expediente.codigo_expediente} onChange={handleChangeEx} placeholder="Código del expediente" name="codigo_expediente" id="floatingInput" className="form-control form-control-border border-width-2" type="text" />
+                          <div className="invalid-feedback">Caracteres incorrectos</div>
                         </div>
                       </div>
                       <div className="col-12 col-sm-6 col-lg-6 col-md-6">
@@ -222,7 +233,7 @@ const ModalHistorial: React.FC<Props> = (props) => {
               </div>
             </div>
             <div className="modal-footer">
-              <button ref={(node) => (refButton.current = node)} type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+              <button ref={(node) => (refButton.current = node)} type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={cleanInputs}>
                 Cerrar
               </button>
               {solicitud.id_solicitud ? (
