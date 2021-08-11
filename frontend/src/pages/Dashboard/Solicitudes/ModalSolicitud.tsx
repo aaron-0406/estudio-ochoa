@@ -93,14 +93,16 @@ const ModalSolicitud: React.FC<Props> = (props) => {
                       <dt>Fecha de Entrega:</dt>
                       <dd>{formatoFecha(solicitud.fecha_entrega_usuario)}</dd>
                     </div>
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                      <dt>Estado:</dt>
+                      <dd>{solicitud.estado_solicitud}</dd>
+                    </div>
                     <div className="col-12 col-sm-12 col-md-12 col-lg-12">
                       <dt>Motivo de la Solicitud:</dt>
                       <dd>{solicitud.motivo_usuario}</dd>
                     </div>
                   </div>
 
-                  <dt>Estado:</dt>
-                  <dd>{solicitud.estado_solicitud}</dd>
                   {solicitud.estado_solicitud === "DENEGADO" ? (
                     <>
                       <dt>Motivo de rechazo</dt>
@@ -111,7 +113,7 @@ const ModalSolicitud: React.FC<Props> = (props) => {
                   )}
                   {solicitud.estado_solicitud === "EN USO" || solicitud.estado_solicitud === "EN INVENTARIO" ? (
                     <>
-                      <dt>Fecha Entregado:</dt>
+                      <dt>Fecha Devuelto:</dt>
                       <input required onChange={handleChange} type="date" name="fecha_entrega_inventario" value={solicitud.fecha_entrega_inventario} className="form-control" />
                     </>
                   ) : (
