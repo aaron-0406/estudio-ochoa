@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, RefObject } from "react";
 
 // Iconos
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +10,9 @@ import { sendMessage } from "../../services/ContactoServices";
 // Toast
 import { toast, ToastContainer } from "react-toastify";
 import Contacto from "../../interfaces/Contacto";
+
+// Regular Expression
+import Expr from '../../encrypt/exprRegular';
 
 const ContactSectionContactForm: React.FC = () => {
   const initialState: Contacto = {
@@ -23,23 +26,54 @@ const ContactSectionContactForm: React.FC = () => {
   // State
   const [contact, setContact] = useState(initialState);
 
+  // References
+  const refFullName = useRef<HTMLSpanElement>(null)
+  const refEmail = useRef<HTMLSpanElement>(null)
+  const refTelephone = useRef<HTMLSpanElement>(null)
+
   // Evento submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await sendMessage(contact);
-    if (res.data.success) {
-      toast.success(res.data.success);
-      setContact(initialState);
-      return;
+
+    if (Expr.nameSurname.test(contact.nombre_contacto) && Expr.email.test(contact.email_contacto) && Expr.telephone.test(contact.telefono_contacto) && contact.text) {
+      const res = await sendMessage(contact);
+      if (res.data.success) {
+        toast.success(res.data.success);
+        setContact(initialState);
+        return;
+      }
+      if (res.data.error) return toast.error(res.data.error);
+    } else {
+      toast.error('Campos invalidos');
     }
-    if (res.data.error) return toast.error(res.data.error);
   };
 
   // Change Input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setContact({ ...contact, [name]: value });
+    /* const { name, value } = e.target; */
+    setContact({ ...contact, [e.target.name]: e.target.value });
+    switch (e.target.name) {
+      case "nombre_contacto":
+        validation(Expr.nameSurname, e.target, refFullName);
+        break;
+      case "email_contacto":
+        validation(Expr.email, e.target, refEmail);
+        break;
+      case "telefono_contacto":
+        validation(Expr.telephone, e.target, refTelephone);
+        break;
+    }
   };
+
+  const validation = (expr: RegExp, e: EventTarget & (HTMLInputElement | HTMLTextAreaElement), ref: RefObject<HTMLSpanElement>) => {
+    if (expr.test(e.value)) {
+      e.classList.remove("is-invalid");
+      ref.current?.classList.add('d-none');
+      return;
+    }
+    e.classList.add('is-invalid');
+    ref.current?.classList.remove("d-none");
+  }
 
   return (
     <>
@@ -52,10 +86,19 @@ const ContactSectionContactForm: React.FC = () => {
             </p>
             <form onSubmit={handleSubmit}>
               <input type="text" value={contact.nombre_contacto} className="form-control" name="nombre_contacto" placeholder="Nombre Completo" onChange={handleChange} autoFocus />
+              <span ref={refFullName} className="text-danger d-none">
+                Caracteres incorrectos
+              </span>
               <br />
               <input type="email" value={contact.email_contacto} className="form-control" name="email_contacto" placeholder="E - mail" onChange={handleChange} />
+              <span ref={refEmail} className="text-danger d-none">
+                Correo invalido
+              </span>
               <br />
               <input type="text" value={contact.telefono_contacto} className="form-control" name="telefono_contacto" placeholder="Teléfono" onChange={handleChange} />
+              <span ref={refTelephone} className="text-danger d-none">
+                Número de telefono invalido
+              </span>
               <br />
               <textarea name="text" value={contact.text} rows={4} className="form-control" placeholder="Mensaje" onChange={handleChange}></textarea>
               <br />
