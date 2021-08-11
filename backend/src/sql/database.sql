@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-08-2021 a las 19:34:01
+-- Tiempo de generación: 11-08-2021 a las 21:45:52
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -92,8 +92,16 @@ CREATE TABLE `expediente` (
   `estado_uso` char(1) NOT NULL,
   `habilitado` char(1) NOT NULL,
   `id_materia` int(11) NOT NULL,
-  `id_banco` int(11) NOT NULL
+  `id_banco` int(11) NOT NULL,
+  `id_documento` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `expediente`
+--
+
+INSERT INTO `expediente` (`id_expediente`, `codigo_estudio`, `fecha_asignacion`, `nombre_cliente`, `contrato`, `documentos`, `monto`, `codigo_expediente`, `juzgado`, `demanda`, `estado_procesal`, `fecha_ep`, `estado_actual`, `folio`, `estado_uso`, `habilitado`, `id_materia`, `id_banco`, `id_documento`) VALUES
+(17, '13001', '2021-08-06', 'Lucas pepe', 'weqweefefe', 'qwedwdwd', 'qwe', '1300122', 'qwe', '2021-08-26', 'qwe', '2021-08-19', 'wewqqdefefef', '1231', '0', '1', 2, 1, '1lpGm28APSapFDpeINBCmpBrdtEb_SkOg');
 
 -- --------------------------------------------------------
 
@@ -150,16 +158,6 @@ CREATE TABLE `sessions` (
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `sessions`
---
-
-INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('Q3diUxT96-4oz8jVGJHfXUHbBfGa-KWs', 1628556635, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":{\"id_usuario\":38,\"dni\":\"77197021\",\"email_usuario\":\"victor-2027@hotmail.com\",\"nombres_usuario\":\"Victor\",\"apellidos_usuario\":\"Hernandez\",\"telefono_usuario\":\"990978736\",\"estado_usuario\":\"1\",\"rango_usuario\":\"2\",\"authenticate\":true}}}'),
-('_WBWSQQfulsK61ARswoP7o0iH8unrA30', 1628556601, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":{\"id_usuario\":36,\"dni\":\"11111111\",\"email_usuario\":\"admin@estudioochoamaldonado.com\",\"nombres_usuario\":\"admin\",\"apellidos_usuario\":\"admin\",\"telefono_usuario\":\"990489736\",\"estado_usuario\":\"1\",\"rango_usuario\":\"1\",\"authenticate\":true}}}'),
-('vvVtdLHjChrvZYDTNy3MameD9BmKOIIT', 1628556465, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":{\"id_usuario\":36,\"dni\":\"11111111\",\"email_usuario\":\"admin@estudioochoamaldonado.com\",\"nombres_usuario\":\"admin\",\"apellidos_usuario\":\"admin\",\"telefono_usuario\":\"990489736\",\"estado_usuario\":\"1\",\"rango_usuario\":\"1\",\"authenticate\":true}}}'),
-('yqTk7eC0dFP_-vwG3G-QjZVcFXu5gXci', 1628556492, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":{\"id_usuario\":36,\"dni\":\"11111111\",\"email_usuario\":\"admin@estudioochoamaldonado.com\",\"nombres_usuario\":\"admin\",\"apellidos_usuario\":\"admin\",\"telefono_usuario\":\"990489736\",\"estado_usuario\":\"1\",\"rango_usuario\":\"1\",\"authenticate\":true}}}');
-
 -- --------------------------------------------------------
 
 --
@@ -201,7 +199,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `dni`, `email_usuario`, `password`, `nombres_usuario`, `apellidos_usuario`, `telefono_usuario`, `estado_usuario`, `rango_usuario`) VALUES
-(36, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '990489736', '1', '1');
+(1, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '990489736', '1', '1'),
+(2, '77197021', 'victor-2027@hotmail.com', '$2a$10$doMos7.4yAuUMxQTJpjpw.j2exbMnFW3bfquQBl7gzui/Hsk8Ia16', 'Víctor', 'Hernandez', '990978736', '1', '2'),
+(3, '77197022', 'victor-2027@hotmail.comm', '$2a$10$F/Tba6XomlVdb8hqvULnm.LT3QYfAXAcX0PmGYuTR.03OYd0LtfSC', 'Victor', 'Hernandez', '990978736', '1', '2');
 
 --
 -- Índices para tablas volcadas
@@ -226,6 +226,7 @@ ALTER TABLE `expediente`
   ADD PRIMARY KEY (`id_expediente`),
   ADD UNIQUE KEY `codigo_estudio` (`codigo_estudio`),
   ADD UNIQUE KEY `codigo_expediente` (`codigo_expediente`),
+  ADD UNIQUE KEY `id_documento` (`id_documento`),
   ADD KEY `id_banco` (`id_banco`),
   ADD KEY `id_materia` (`id_materia`);
 
@@ -283,7 +284,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `expediente`
 --
 ALTER TABLE `expediente`
-  MODIFY `id_expediente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_expediente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `materia`
@@ -307,7 +308,7 @@ ALTER TABLE `solicitud`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Restricciones para tablas volcadas
