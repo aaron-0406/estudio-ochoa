@@ -19,4 +19,6 @@ export default interface Expediente {
   id_banco: number;
   nombre_banco?:string;
   sigla_nombre?:string;
+  archivo?: File[];
+  id_documento?: string;
 }

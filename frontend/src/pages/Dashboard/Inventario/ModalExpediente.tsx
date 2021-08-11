@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import expr from "../../../encrypt/exprRegular";
-
 // Services
 import * as bancoServices from "../../../services/BancoServices";
 import * as materiaServices from "../../../services/MateriaServices";
@@ -8,7 +7,7 @@ import * as expedienteServices from "../../../services/ExpedienteServices";
 
 // Iconos
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaEye } from "react-icons/fa";
 
 // Toast
 import { toast } from "react-toastify";
@@ -41,45 +40,71 @@ const initStateExpediente: Expediente = {
   habilitado: "1",
   id_materia: 0,
   id_banco: 0,
+  archivo: [new File([""], "filename")],
 };
 const ModalExpediente: React.FC<Props> = (props) => {
   const [bancos, setBancos] = useState([]);
   const [materias, setMaterias] = useState([]);
   const [expediente, setExpediente] = useState(initStateExpediente);
 
-  const refButton = useRef<HTMLButtonElement | null>();
+  const refInputFile = useRef<HTMLInputElement | null>();
 
+  const refButton = useRef<HTMLButtonElement | null>();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (expr.digit.test(expediente.codigo_estudio) && expr.digit.test(expediente.codigo_expediente) && expr.digit.test(expediente.folio) && expr.letter.test(expediente.estado_actual)) {
-      // Crear
-      if (expediente.id_expediente === 0) {
-        const res = await expedienteServices.createExpediente(expediente);
-        if (res.data.success) {
-          setExpediente(initStateExpediente);
-          props.render();
-          props.setTrigguer(props.trigguer + 1);
-          if (refButton.current) refButton.current.click();
-          return toast.success(res.data.success);
-        }
-        if (res.data.error) return toast.error(res.data.error);
-        return;
-      }
-      // Actualizar
-      const res = await expedienteServices.editarExpediente(expediente.id_expediente + "", expediente);
+    if (!(expr.digit.test(expediente.codigo_estudio) && expr.digit.test(expediente.codigo_expediente) && expr.digit.test(expediente.folio) && expr.letter.test(expediente.estado_actual))) return toast.error("Campos invalidos");
+    // Crear
+    const formData = new FormData();
+    formData.set("codigo_estudio", expediente.codigo_estudio);
+    formData.set("fecha_asignacion", expediente.fecha_asignacion);
+    formData.set("nombre_cliente", expediente.nombre_cliente);
+    formData.set("contrato", expediente.contrato);
+    formData.set("documentos", expediente.documentos);
+    formData.set("monto", expediente.monto);
+    formData.set("codigo_expediente", expediente.codigo_expediente);
+    formData.set("juzgado", expediente.juzgado);
+    formData.set("demanda", expediente.demanda);
+    formData.set("estado_procesal", expediente.estado_procesal);
+    formData.set("fecha_ep", expediente.fecha_ep);
+    formData.set("estado_actual", expediente.estado_actual);
+    formData.set("folio", expediente.folio);
+    formData.set("estado_uso", "0");
+    formData.set("habilitado", "1");
+    formData.set("id_materia", expediente.id_materia + "");
+    formData.set("id_banco", expediente.id_banco + "");
+    if (expediente.archivo) formData.append("archivo", expediente.archivo[0]);
+
+    if (expediente.id_expediente === 0) {
+      const res = await expedienteServices.createExpediente(formData);
       if (res.data.success) {
         setExpediente(initStateExpediente);
         props.render();
         props.setTrigguer(props.trigguer + 1);
         if (refButton.current) refButton.current.click();
+        if (refInputFile.current) refInputFile.current.value = "";
         return toast.success(res.data.success);
       }
       if (res.data.error) return toast.error(res.data.error);
       return;
-    } else {
-      toast.error("Campos invalidos");
     }
+    // Actualizar
+    const res = await expedienteServices.editarExpediente(expediente.id_expediente + "", formData);
+    if (res.data.success) {
+      setExpediente(initStateExpediente);
+      props.render();
+      props.setTrigguer(props.trigguer + 1);
+      if (refButton.current) refButton.current.click();
+      if (refInputFile.current) refInputFile.current.value = "";
+      return toast.success(res.data.success);
+    }
+    if (res.data.error) return toast.error(res.data.error);
+    return;
   };
+
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) setExpediente({ ...expediente, [e.target.name]: e.target.files });
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setExpediente({ ...expediente, [event.target.name]: event.target.value });
     switch (event.target.name) {
@@ -305,6 +330,21 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   <input type="text" className="form-control" id="input_Folio" name="folio" onChange={handleChange} value={expediente.folio} />
                   <div className="invalid-feedback">Solo digitos permitidos</div>
                 </div>
+                <div className="col-12 col-md-6 col-lg-6">
+                  <br />
+                  <label htmlFor="input_Folio" className="form-label fw-normal">
+                    Archivo
+                  </label>
+                  {expediente.id_expediente === 0 ? (
+                    <>
+                      <input ref={(node) => (refInputFile.current = node)} required type="file" className="form-control" id="archivo" name="archivo" onChange={handleChangeFile} />
+                    </>
+                  ) : (
+                    <>
+                      <input ref={(node) => (refInputFile.current = node)} type="file" className="form-control" id="archivo" name="archivo" onChange={handleChangeFile} />
+                    </>
+                  )}
+                </div>
               </div>
             </div>
             <div className="modal-footer">
@@ -320,6 +360,10 @@ const ModalExpediente: React.FC<Props> = (props) => {
                 </>
               ) : (
                 <>
+                  <a href={`https://drive.google.com/file/d/${expediente.id_documento}/view?usp=sharing`} target="__blank" className="btn btn-primary">
+                    <FaEye className="fs-4 me-1" color="#fff" />
+                    Ver Expediente Digital
+                  </a>
                   <button type="submit" className="btn btn-warning">
                     <FaEdit className="fs-4 me-1" color="#000" />
                     Modificar Expediente

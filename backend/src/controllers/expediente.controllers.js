@@ -1,6 +1,9 @@
 const ctrlExpediente = {};
 const pool = require("../database");
+const drive = require("../lib/drive");
 const helpers = require("../lib/helpers");
+const path = require("path");
+const fs = require("fs-extra");
 
 //get("/")
 ctrlExpediente.getExpedientes = async (req, res) => {
@@ -58,39 +61,75 @@ ctrlExpediente.getExpedienteByCodigo = async (req, res) => {
 };
 //post("/")
 ctrlExpediente.createExpediente = async (req, res) => {
+  // Google drive api
+  const filePath = req.file.path;
+  // Crear el archivo
   try {
-    const rows = await pool.query("INSERT INTO expediente SET ?", [req.body]);
-    if (rows.affectedRows === 1) return res.json({ success: "Expediente creado" });
+    const response = await drive.files.create({
+      requestBody: {
+        name: req.file.originalname,
+        mimeType: req.file.mimetype,
+      },
+      media: {
+        body: fs.createReadStream(filePath),
+        mimeType: req.file.mimetype,
+      },
+    });
+    // Cualquiera con el link
+    await drive.permissions.create({
+      fileId: response.data.id,
+      requestBody: {
+        role: "reader",
+        type: "anyone",
+      },
+    });
+    req.body.id_documento = response.data.id;
+    try {
+      const rows = await pool.query("INSERT INTO expediente SET ?", [req.body]);
+      if (rows.affectedRows === 1) {
+        res.json({ success: "Expediente creado" });
+        await fs.unlink(filePath);
+        return;
+      }
+    } catch (error) {
+      if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
+      if (error.code === "ER_DUP_ENTRY") return res.json({ error: `Ese codigo ya está registrado` });
+      return res.json({ error: "Ocurrió un error" });
+    }
   } catch (error) {
-    if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
-    if (error.code === "ER_DUP_ENTRY") return res.json({ error: `Ese codigo de estudio ya está registrado` });
-    return res.json({ error: "Ocurrió un error" });
+    console.log(error);
   }
-  return res.json({ error: "Ocurrió un error" });
+  res.json({ error: "Ocurrió un error" });
 };
 
 //put("/:id")
 ctrlExpediente.updateExpediente = async (req, res) => {
   const { fecha_asignacion, nombre_cliente, contrato, documentos, monto, codigo_expediente, juzgado, demanda, estado_procesal, fecha_ep, estado_actual, folio, id_materia } = req.body;
-  const newExpediente = {
-    fecha_asignacion,
-    nombre_cliente,
-    contrato,
-    documentos,
-    monto,
-    codigo_expediente,
-    juzgado,
-    demanda,
-    estado_procesal,
-    fecha_ep,
-    estado_actual,
-    folio,
-    id_materia,
-    estado_uso: 0,
-  };
+  const newExpediente = { fecha_asignacion, nombre_cliente, contrato, documentos, monto, codigo_expediente, juzgado, demanda, estado_procesal, fecha_ep, estado_actual, folio, id_materia, estado_uso: 0 };
+  if (req.file) {
+    const expediente = await pool.query("SELECT id_documento FROM expediente");
+    try {
+      await drive.files.update({
+        fileId: expediente[0].id_documento,
+        requestBody: {
+          name: req.file.originalname,
+          mimeType: req.file.mimetype,
+        },
+        media: {
+          body: fs.createReadStream(req.file.path),
+          mimeType: req.file.mimetype,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   try {
     const rows = await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [newExpediente, req.params.id]);
-    if (rows.affectedRows === 1) return res.json({ success: "Expediente Actualizado" });
+    if (rows.affectedRows === 1) {
+      if (req.file) await fs.unlink(req.file.path);
+      return res.json({ success: "Expediente Actualizado" });
+    }
   } catch (error) {
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
   }
