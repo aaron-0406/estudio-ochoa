@@ -24,8 +24,11 @@ const ModalReclamo: React.FC<Props> = (props) => {
   const [reclamo, setReclamo] = useState<Reclamo>(initialState);
 
   const refButton = useRef<HTMLButtonElement | null>();
+  const refParrafo = useRef<HTMLDivElement | null>();
 
   useEffect(() => {
+    props.reclamoModal.mensaje_reclamo = props.reclamoModal.mensaje_reclamo.replace(/\n/g, "<br/>");
+    if (refParrafo.current) refParrafo.current.innerHTML = props.reclamoModal.mensaje_reclamo;
     setReclamo(props.reclamoModal);
     return () => setReclamo(initialState);
   }, [props.reclamoModal]);
@@ -81,7 +84,7 @@ const ModalReclamo: React.FC<Props> = (props) => {
                 </div>
                 <div className="col-12 col-sm-12 col-lg-12 col-md-12 mb-3">
                   <p className="fw-bold mb-0">Mensaje de Reclamo:</p>
-                  <div className="w-100">
+                  <div ref={(node) => (refParrafo.current = node)} className="w-100">
                     <p style={{ textAlign: "justify" }}>{reclamo.mensaje_reclamo}</p>
                   </div>
                 </div>

@@ -107,7 +107,7 @@ ctrlExpediente.updateExpediente = async (req, res) => {
   const { fecha_asignacion, nombre_cliente, contrato, documentos, monto, codigo_expediente, juzgado, demanda, estado_procesal, fecha_ep, estado_actual, folio, id_materia } = req.body;
   const newExpediente = { fecha_asignacion, nombre_cliente, contrato, documentos, monto, codigo_expediente, juzgado, demanda, estado_procesal, fecha_ep, estado_actual, folio, id_materia, estado_uso: 0 };
   if (req.file) {
-    const expediente = await pool.query("SELECT id_documento FROM expediente");
+    const expediente = await pool.query("SELECT id_documento FROM expediente WHERE id_expediente = ?", [req.params.id]);
     try {
       await drive.files.update({
         fileId: expediente[0].id_documento,
