@@ -4,7 +4,7 @@ import { useUsuario } from "../auth/UsuarioProvider";
 import { API } from "../config/config";
 import axios from "axios";
 import auth from "../auth/auth";
-import expr from '../encrypt/exprRegular';
+import expr from "../encrypt/exprRegular";
 
 // Toast
 import { toast, ToastContainer } from "react-toastify";
@@ -14,7 +14,6 @@ import imgLogo from "../images/logo-home.png";
 import imgLogo2 from "../images/logo.png";
 
 const Login: React.FC = () => {
-
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -49,7 +48,7 @@ const Login: React.FC = () => {
     }
     ref.current?.classList.add("is-invalid");
     ref.current?.classList.remove("d-none");
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,7 +61,8 @@ const Login: React.FC = () => {
         auth.sigIn();
         auth.setRango(res.data.user.rango_usuario);
         //history.push() -> nos permite navegar a otra pàgina
-        history.push("/Dashboard");
+        if (res.data.user.rango_usuario === "1") return history.push("/Dashboard/Solicitudes");
+        return history.push("/Dashboard/Historial");
       }
       if (res.data.error) return toast.error(res.data.error);
     } else {
@@ -86,11 +86,15 @@ const Login: React.FC = () => {
               <h6 className="py-2 fs-3">Ingresa a tu cuenta</h6>
               <div className="mb-3">
                 <input value={user.email} type="email" className="form-control" name="email" placeholder="Correo" autoFocus onChange={handleChange} />
-                <p className="text-danger d-none" ref={refEmail}>Correo invalido (correo@ejemplo.com)</p>
+                <p className="text-danger d-none" ref={refEmail}>
+                  Correo invalido (correo@ejemplo.com)
+                </p>
               </div>
               <div className="mb-3">
                 <input value={user.password} type="password" className="form-control" name="password" placeholder="Contraseña" autoFocus onChange={handleChange} />
-                <p className="text-danger d-none" ref={refPassword}>La contraseña debe tener mínimo 4 caracteres</p>
+                <p className="text-danger d-none" ref={refPassword}>
+                  La contraseña debe tener mínimo 4 caracteres
+                </p>
               </div>
               <button className="btn btn-block w-100">Inicia sesión</button>
             </form>
@@ -99,6 +103,6 @@ const Login: React.FC = () => {
       </div>
     </>
   );
-}
+};
 
 export default Login;
