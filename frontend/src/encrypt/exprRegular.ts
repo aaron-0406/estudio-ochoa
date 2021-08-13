@@ -6,6 +6,7 @@ const exprRegular = {
   telephone: /^\d{9}$/,
   digit: /^[0-9a-zA-Z-.À-ÿ\s]+$/,
   letter: /^[a-zA-Z]+$/,
+  ruc: /^\d{8,11}$/,
 };
 
 export default exprRegular;

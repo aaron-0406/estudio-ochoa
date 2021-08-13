@@ -50,7 +50,6 @@ const ContactSectionContactForm: React.FC = () => {
 
   // Change Input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    /* const { name, value } = e.target; */
     setContact({ ...contact, [e.target.name]: e.target.value });
     switch (e.target.name) {
       case "nombre_contacto":
