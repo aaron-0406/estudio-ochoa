@@ -53,7 +53,7 @@ const Usuarios: React.FC = () => {
               </div>
               <div className="card-body">
                 <div className="w-100 d-flex justify-content-end">
-                  <Buscador placeholder="Buscar Usuario" funcion={buscar} />
+                  <Buscador tooltip="Buscar por nombres o correo" placeholder="Buscar Usuario" funcion={buscar} />
                 </div>
                 <div className="table-responsive mt-4">
                   <ListaUsuarios usuarioModal={usuarioModal} setUsuarioModal={setUsuarioModal} filtro={filtro} />
