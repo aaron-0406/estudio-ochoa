@@ -54,7 +54,6 @@ const initStateExpediente: Expediente = {
   id_banco: 0,
 };
 const ModalHistorial: React.FC<Props> = (props) => {
-
   // States
   const [solicitud, setSolicitud] = useState<Solicitud>(initialState);
   const [expediente, setExpediente] = useState<Expediente>(initStateExpediente);
@@ -121,9 +120,9 @@ const ModalHistorial: React.FC<Props> = (props) => {
   };
 
   const cleanInputs = () => {
-    refCodigoExpediente.current?.classList.remove('is-invalid');
+    refCodigoExpediente.current?.classList.remove("is-invalid");
     setExpediente(initStateExpediente);
-  }
+  };
 
   return (
     <div className="modal fade" id="createSolicitud" tabIndex={-1} aria-labelledby="createSolicitud" aria-hidden="true">
@@ -175,6 +174,20 @@ const ModalHistorial: React.FC<Props> = (props) => {
                           <input disabled required value={solicitud.fecha_entrega_usuario} onChange={handleChange} id="fecha" name="fecha_entrega_usuario" type="date" placeholder="Fecha de Entrega" className="form-control form-control-border border-width-2" />
                         </div>
                       </div>
+                      {solicitud.estado_solicitud === "EN INVENTARIO" ? (
+                        <>
+                          <div className="col-12 col-sm-6 col-lg-6 col-md-6">
+                            <div className="mb-3">
+                              <label className="form-label" htmlFor="fecha">
+                                Fecha Devuelto
+                              </label>
+                              <input disabled required value={solicitud.fecha_entrega_inventario} onChange={handleChange} id="fecha" name="fecha_entrega_usuario" type="date" placeholder="Fecha de Entrega" className="form-control form-control-border border-width-2" />
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
 
                       <div className="col-12 col-sm-12 col-lg-12 col-md-12">
                         <div className="mb-3">
