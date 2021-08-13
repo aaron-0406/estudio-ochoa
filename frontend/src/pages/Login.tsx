@@ -75,10 +75,10 @@ const Login: React.FC = () => {
       <ToastContainer />
       <div className="login container-fluid vh-100 d-flex justify-content-center align-items-center">
         <div className="row w-75">
-          <div className="login-first col-12 col-md-12 col-lg-6 h-100 my-auto py-3">
+          <div className="text-center login-first col-12 col-md-12 col-lg-6 h-100 my-auto py-3">
             <Link to="/">
-              <img alt="" className="login-img d-none d-md-block m-auto py-4 w-100" src={imgLogo} />
-              <img alt="" className="login-img d-block d-md-none m-auto py-2 w-50" src={imgLogo2} />
+              <img alt="" className="login-img d-none d-md-inline py-4 w-100 m-0" src={imgLogo} />
+              <img alt="" className="login-img d-inline d-md-none py-2 w-50 m-0" src={imgLogo2} />
             </Link>
           </div>
           <div className="login-second col-12 col-md-12 col-lg-6">
