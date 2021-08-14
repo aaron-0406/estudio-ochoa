@@ -52,10 +52,13 @@ const DashboardAside: React.FC = () => {
             <i className="img-circle elevation-1 fas fa-user fs-3 me-2 mt-1" style={{ color: "#c2c7d0" }}></i>
           </div>
           <div className="info">
-            <a href="/" className="d-block">
+            <p className="d-block mb-0" style={{ color: "#c2c7d0" }}>
               {usuario.nombres_usuario}
-            </a>
+            </p>
           </div>
+          <a className="btn btn-secondary ms-auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Web Mail" rel="noreferrer" target="_blank" href="https://ip-72-167-43-179.ip.secureserver.net:2096/webmaillogout.cgi">
+            <i className="fas fa-envelope"></i>
+          </a>
         </div>
 
         {/* Sidebar Menu */}

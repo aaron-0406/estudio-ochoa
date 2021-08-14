@@ -15,6 +15,7 @@ import * as expedientesServices from "../../../services/ExpedienteServices";
 // Interfaces
 import Solicitud from "../../../interfaces/Solicitud";
 import Expediente from "../../../interfaces/Expediente";
+import { FaEye } from "react-icons/fa";
 
 interface Props {
   setTrigguer: (trigguer: number) => void;
@@ -249,6 +250,16 @@ const ModalHistorial: React.FC<Props> = (props) => {
               <button ref={(node) => (refButton.current = node)} type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={cleanInputs}>
                 Cerrar
               </button>
+              {solicitud.estado_solicitud === "EN USO" && solicitud.habilitado === "1" ? (
+                <>
+                  <a href={`https://drive.google.com/file/d/${solicitud.id_documento}/view?usp=sharing`} target="__blank" className="btn btn-primary">
+                    <FaEye className="fs-4 me-1" color="#fff" />
+                    Ver Expediente Digital
+                  </a>
+                </>
+              ) : (
+                <></>
+              )}
               {solicitud.id_solicitud ? (
                 <></>
               ) : (

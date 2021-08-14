@@ -60,14 +60,6 @@ CREATE TABLE `contacto` (
 -- Volcado de datos para la tabla `contacto`
 --
 
-INSERT INTO `contacto` (`id_contacto`, `nombre_contacto`, `email_contacto`, `telefono_contacto`, `text`, `visto`) VALUES
-(2, 'victor', 'villa-2027@gmail.com', 'wqeqwe', 'qweqwe', 0),
-(4, 'qweqwe', 'marcos@gmail.com', 'wewe', 'wqeqwe', 0),
-(5, 'wdwd', 'victoreee-2027@hotmail.com', '+51990978736', 'fef', 0),
-(6, 'wdwdwd', 'victoreee-2027@hotmail.com', '+51990978736', 'dwdwd', 0),
-(7, 'wewe', 'victoreee-2027@hotmail.com', '+51990978736', 'wewe', 0),
-(8, 'dwdwwe', 'victor-2027@hotmail.com', '990978736', 'qweqweqwe', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -99,9 +91,6 @@ CREATE TABLE `expediente` (
 --
 -- Volcado de datos para la tabla `expediente`
 --
-
-INSERT INTO `expediente` (`id_expediente`, `codigo_estudio`, `fecha_asignacion`, `nombre_cliente`, `contrato`, `documentos`, `monto`, `codigo_expediente`, `juzgado`, `demanda`, `estado_procesal`, `fecha_ep`, `estado_actual`, `folio`, `estado_uso`, `habilitado`, `id_materia`, `id_banco`, `id_documento`) VALUES
-(17, '13001', '2021-08-06', 'Lucas pepe', 'weqweefefe', 'qwedwdwd', 'qwe', '1300122', 'qwe', '2021-08-26', 'qwe', '2021-08-19', 'wewqqdefefef', '1231', '0', '1', 2, 1, '1lpGm28APSapFDpeINBCmpBrdtEb_SkOg');
 
 -- --------------------------------------------------------
 
@@ -199,9 +188,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `dni`, `email_usuario`, `password`, `nombres_usuario`, `apellidos_usuario`, `telefono_usuario`, `estado_usuario`, `rango_usuario`) VALUES
-(1, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '990489736', '1', '1'),
-(2, '77197021', 'victor-2027@hotmail.com', '$2a$10$doMos7.4yAuUMxQTJpjpw.j2exbMnFW3bfquQBl7gzui/Hsk8Ia16', 'Víctor', 'Hernandez', '990978736', '1', '2'),
-(3, '77197022', 'victor-2027@hotmail.comm', '$2a$10$F/Tba6XomlVdb8hqvULnm.LT3QYfAXAcX0PmGYuTR.03OYd0LtfSC', 'Victor', 'Hernandez', '990978736', '1', '2');
+(1, '11111111', 'admin@estudioochoamaldonado.com', '$2a$10$RQDnF6c6HVa5DhK9LAjnhu36F2zoAFgBXFTGClf1hpstxrzAFN.hy', 'admin', 'admin', '990489736', '1', '1');
 
 --
 -- Índices para tablas volcadas

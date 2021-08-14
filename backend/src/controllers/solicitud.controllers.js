@@ -87,7 +87,7 @@ ctrlSolicitud.getResumenByUsuarioId = async (req, res) => {
 };
 //get("/:id")
 ctrlSolicitud.getSolicitudesByUsuarioId = async (req, res) => {
-  let datosSQL = `id_solicitud,fecha_solicitud,fecha_entrega_usuario,fecha_entrega_inventario,motivo_usuario,motivo_admin,estado_solicitud,expediente.id_expediente, expediente.codigo_expediente`;
+  let datosSQL = `id_solicitud,fecha_solicitud,fecha_entrega_usuario,fecha_entrega_inventario,motivo_usuario,motivo_admin,estado_solicitud,expediente.id_expediente, expediente.codigo_expediente,expediente.habilitado,expediente.id_documento`;
   let Joins = `JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
   let estado = `id_usuario = ? AND estado_solicitud = '${req.query.estado}' AND`;
   if (req.query.estado === "TODO") estado = "id_usuario = ? AND ";

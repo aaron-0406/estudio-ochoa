@@ -17,8 +17,11 @@ const ModalMensajes: React.FC<Props> = (props) => {
   const [solicitud, setSolicitud] = useState<Contacto>(initialState);
 
   const refButton = useRef<HTMLButtonElement | null>();
+  const refParrafo = useRef<HTMLDivElement | null>();
 
   useEffect(() => {
+    props.mensajeModal.text = props.mensajeModal.text.replace(/\n/g, "<br/>");
+    if (refParrafo.current) refParrafo.current.innerHTML = props.mensajeModal.text;
     setSolicitud(props.mensajeModal);
     return () => setSolicitud(initialState);
   }, [props.mensajeModal]);
@@ -51,7 +54,7 @@ const ModalMensajes: React.FC<Props> = (props) => {
                 </div>
                 <div className="col-12 col-sm-12 col-lg-12 col-md-12 mb-3">
                   <p className="fw-bold mb-0">Mensaje:</p>
-                  <div className="w-100">
+                  <div ref={(node) => (refParrafo.current = node)} className="w-100">
                     <p style={{ textAlign: "justify" }}>{solicitud.text}</p>
                   </div>
                 </div>
