@@ -106,30 +106,30 @@ const ModalUsuario: React.FC<Props> = (props) => {
   return (
     <>
       <div className="modal fade" id="createUsuario" tabIndex={-1} aria-labelledby="createUsuario" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div className="modal-content">
-            {usuario.id_usuario === 0 ? (
-              <>
-                <div className="modal-header bg-dark">
-                  <h5 className="modal-title" id="createUsuario">
-                    <i className="fas fa-user-plus me-2"></i>
-                    Agregar Usuario
-                  </h5>
-                  <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" />
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="modal-header bg-warning">
-                  <h5 className="modal-title" id="createUsuario">
-                    <i className="fas fa-user-edit me-2"></i>
-                    Modificar Usuario
-                  </h5>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-                </div>
-              </>
-            )}
-            <form className="py-3" onSubmit={handleSubmit}>
+        <div className="modal-dialog modal-lg">
+          <form className="py-3" onSubmit={handleSubmit}>
+            <div className="modal-content">
+              {usuario.id_usuario === 0 ? (
+                <>
+                  <div className="modal-header bg-dark">
+                    <h5 className="modal-title" id="createUsuario">
+                      <i className="fas fa-user-plus me-2"></i>
+                      Agregar Usuario
+                    </h5>
+                    <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="modal-header bg-warning">
+                    <h5 className="modal-title" id="createUsuario">
+                      <i className="fas fa-user-edit me-2"></i>
+                      Modificar Usuario
+                    </h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                  </div>
+                </>
+              )}
               <div className="modal-body">
                 <div className="form-floating mb-3">
                   {usuario.id_usuario === 0 ? (
@@ -186,8 +186,8 @@ const ModalUsuario: React.FC<Props> = (props) => {
                   </>
                 )}
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </>
