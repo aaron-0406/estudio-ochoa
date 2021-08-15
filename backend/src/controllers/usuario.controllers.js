@@ -9,24 +9,24 @@ ctrlUsuario.getUsuarios = async (req, res) => {
       const data = await pool.query(`SELECT * FROM usuario WHERE (nombres_usuario LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR email_usuario LIKE '%${req.query.keyword}%') ORDER BY id_usuario DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", usuarios: data.splice(pagina, cantidadDatos) });
     }
 
     if (req.query.keyword) {
       const data = await pool.query(`SELECT * FROM usuario WHERE (nombres_usuario LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR email_usuario LIKE '%${req.query.keyword}%') ORDER BY id_usuario DESC`);
-      return res.json(data);
+      return res.json({ success: "Datos obtenidos", usuarios: data });
     }
 
     if (req.query.page) {
       const data = await pool.query(`SELECT * FROM usuario ORDER BY id_usuario DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", usuarios: data.splice(pagina, cantidadDatos) });
     }
     const datos = await pool.query("SELECT * FROM usuario");
-    return res.json(datos);
+    return res.json({ success: "Datos obtenidos", usuarios: datos });
   } catch (error) {
-    return res.json([]);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 //get("/count")
@@ -59,7 +59,7 @@ ctrlUsuario.createUsuario = async (req, res) => {
     email_usuario,
     telefono_usuario,
     dni,
-    estado_usuario: 1, // 1 habilidadto // 0 deshabilitado
+    estado_usuario: 1, // 1 habilitado // 0 deshabilitado
     rango_usuario: 2,
     password,
   };

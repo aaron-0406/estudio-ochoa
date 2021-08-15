@@ -1,8 +1,6 @@
 const ctrlExpediente = {};
 const pool = require("../database");
 const drive = require("../lib/drive");
-const helpers = require("../lib/helpers");
-const path = require("path");
 const fs = require("fs-extra");
 
 //get("/")
@@ -13,24 +11,24 @@ ctrlExpediente.getExpedientes = async (req, res) => {
       const data = await pool.query(`SELECT * FROM expediente ${Joins} WHERE (codigo_expediente LIKE '%${req.query.keyword}%' OR nombre_cliente LIKE '%${req.query.keyword}%') ORDER BY id_expediente DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", expedientes: data.splice(pagina, cantidadDatos) });
     }
 
     if (req.query.keyword) {
       const data = await pool.query(`SELECT * FROM expediente ${Joins} WHERE (codigo_expediente LIKE '%${req.query.keyword}%' OR nombre_cliente LIKE '%${req.query.keyword}%')  ORDER BY id_expediente DESC`);
-      return res.json(data);
+      return res.json({ success: "Datos obtenidos", expedientes: data });
     }
 
     if (req.query.page) {
       const data = await pool.query(`SELECT * FROM expediente ${Joins} ORDER BY id_expediente DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", expedientes: data.splice(pagina, cantidadDatos) });
     }
     const datos = await pool.query(`SELECT * FROM ${Joins} expediente`);
-    return res.json(datos);
+    return res.json({ success: "Datos obtenidos", expedientes: datos });
   } catch (error) {
-    return res.json([]);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 
@@ -57,9 +55,9 @@ ctrlExpediente.getResumen = async (req, res) => {
     const materia = await pool.query("SELECT nombre_materia,COUNT(*) as cantidad FROM expediente JOIN materia ON materia.id_materia = expediente.id_materia GROUP BY nombre_materia");
     const estado = await pool.query("SELECT estado_uso,COUNT(*) as cantidad FROM expediente GROUP BY estado_uso");
     const datos = [{ bancos: bancos }, { materia: materia }, { estado: estado }];
-    return res.json({ datos });
+    return res.json({ success: "Datos obtenidos", datos: datos });
   } catch (error) {
-    return res.json([]);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 //get("/:id")
@@ -105,6 +103,7 @@ ctrlExpediente.createExpediente = async (req, res) => {
         return;
       }
     } catch (error) {
+      await drive.files.delete({ fileId: response.data.id });
       if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
       if (error.code === "ER_DUP_ENTRY") return res.json({ error: `Ese codigo ya está registrado` });
       return res.json({ error: "Ocurrió un error" });
@@ -119,9 +118,18 @@ ctrlExpediente.createExpediente = async (req, res) => {
 ctrlExpediente.updateExpediente = async (req, res) => {
   const { fecha_asignacion, nombre_cliente, contrato, documentos, monto, codigo_expediente, juzgado, demanda, estado_procesal, fecha_ep, estado_actual, folio, id_materia } = req.body;
   const newExpediente = { fecha_asignacion, nombre_cliente, contrato, documentos, monto, codigo_expediente, juzgado, demanda, estado_procesal, fecha_ep, estado_actual, folio, id_materia, estado_uso: 0 };
-  if (req.file) {
-    const expediente = await pool.query("SELECT id_documento FROM expediente WHERE id_expediente = ?", [req.params.id]);
-    try {
+  try {
+    const rows = await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [newExpediente, req.params.id]);
+    if (rows.affectedRows !== 1) return res.json({ error: "Ocurrió un error." });
+    res.json({ success: "Expediente Actualizado" });
+  } catch (error) {
+    if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
+    res.json({ error: "Ocurrió un error." });
+  }
+
+  try {
+    if (req.file) {
+      const expediente = await pool.query("SELECT id_documento FROM expediente WHERE id_expediente = ?", [req.params.id]);
       await drive.files.update({
         fileId: expediente[0].id_documento,
         requestBody: {
@@ -133,20 +141,10 @@ ctrlExpediente.updateExpediente = async (req, res) => {
           mimeType: req.file.mimetype,
         },
       });
-    } catch (error) {
-      console.log(error);
+      await fs.unlink(req.file.path);
     }
-  }
-  try {
-    const rows = await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [newExpediente, req.params.id]);
-    if (rows.affectedRows === 1) {
-      if (req.file) await fs.unlink(req.file.path);
-      return res.json({ success: "Expediente Actualizado" });
-    }
-    return res.json({ error: "Ocurrió un error." });
   } catch (error) {
-    if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
-    return res.json({ error: "Ocurrió un error." });
+    console.log(error);
   }
 };
 

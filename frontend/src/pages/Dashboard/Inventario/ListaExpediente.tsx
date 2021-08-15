@@ -29,7 +29,8 @@ const ListaExpediente: React.FC<Props> = (props) => {
 
   const getExpedientes = async () => {
     const res = await expedienteServices.getAll(page, props.filtro);
-    setExpedientes(res.data);
+    if (res.data.error) return setExpedientes([]);
+    setExpedientes(res.data.expedientes);
     setLoadExpedientes(true);
   };
 

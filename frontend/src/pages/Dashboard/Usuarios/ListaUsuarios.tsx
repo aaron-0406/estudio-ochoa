@@ -29,7 +29,8 @@ const ListaUsuarios: React.FC<Props> = (props) => {
 
   const getUsuarios = async () => {
     const res = await usuarioServices.getAll(page, props.filtro);
-    setUsuarios(res.data);
+    if (res.data.error) return;
+    setUsuarios(res.data.usuarios);
     setLoadUsuarios(true);
   };
   const getCantidad = async () => {

@@ -5,9 +5,9 @@ const pool = require("../database");
 ctrlBancos.getBancos = async (req, res) => {
   try {
     const rows = await pool.query("SELECT * FROM banco");
-    res.json(rows);
+    return res.json({ success: "Datos obtenidos", bancos: rows });
   } catch (error) {
-    res.json([]);
+    return res.json({ error: "No se pudieron obtener los datos" });
   }
 };
 

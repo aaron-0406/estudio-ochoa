@@ -18,6 +18,7 @@ const ResumenHistorial: React.FC<Props> = (props) => {
   const { usuario, loadUser } = useUsuario();
   const getResumen = async () => {
     const res = await solicitudesServices.getResumenByUsuarioId(usuario.id_usuario + "");
+    if (res.data.error) return;
     setEstados(res.data.datos[0].estado);
   };
 

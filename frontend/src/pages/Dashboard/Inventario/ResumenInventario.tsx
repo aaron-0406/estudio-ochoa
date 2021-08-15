@@ -21,6 +21,7 @@ const ResumenInventario: React.FC<Props> = (props) => {
 
   const getResumen = async () => {
     const res = await expedienteServices.getResumen();
+    if (res.data.error) return;
     setBancos(res.data.datos[0].bancos);
     setMaterias(res.data.datos[1].materia);
     setEstados(res.data.datos[2].estado);

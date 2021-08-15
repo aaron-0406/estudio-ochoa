@@ -1,6 +1,5 @@
 const ctrlSolicitud = {};
 const pool = require("../database");
-const helpers = require("../lib/helpers");
 
 //get("/")
 ctrlSolicitud.getSolicitudes = async (req, res) => {
@@ -14,12 +13,12 @@ ctrlSolicitud.getSolicitudes = async (req, res) => {
       const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE  ${estado} (codigo_expediente LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR nombres_usuario LIKE '%${req.query.keyword}%') ORDER BY estado_solicitud DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", solicitudes: data.splice(pagina, cantidadDatos) });
     }
 
     if (req.query.keyword) {
       const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE  ${estado} (codigo_expediente LIKE '%${req.query.keyword}%' OR apellidos_usuario LIKE '%${req.query.keyword}%' OR nombres_usuario LIKE '%${req.query.keyword}%')  ORDER BY estado_solicitud DESC`);
-      return res.json(data);
+      return res.json({ success: "Datos obtenidos", solicitudes: data });
     }
 
     if (req.query.page) {
@@ -27,16 +26,16 @@ ctrlSolicitud.getSolicitudes = async (req, res) => {
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
       if (req.query.estado === "TODO") {
         const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} ORDER BY estado_solicitud DESC`);
-        return res.json(data.splice(pagina, cantidadDatos));
+        return res.json({ success: "Datos obtenidos", solicitudes: data.splice(pagina, cantidadDatos) });
       }
       estado = `estado_solicitud = '${req.query.estado}'`;
       const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE ${estado} ORDER BY estado_solicitud DESC`);
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", solicitudes: data.splice(pagina, cantidadDatos) });
     }
     const datos = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins}`);
-    return res.json({ datos });
+    return res.json({ success: "Datos obtenidos", solicitudes: datos });
   } catch (error) {
-    return res.json({ error });
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 
@@ -46,20 +45,20 @@ ctrlSolicitud.getByFecha = async (req, res) => {
   let Joins = `JOIN usuario ON usuario.id_usuario = solicitud.id_usuario JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
   try {
     const rows = await pool.query(`SELECT ${SQLDatos} FROM solicitud ${Joins} WHERE fecha_solicitud = ?`, [req.params.fecha]);
-    return res.json(rows);
+    return res.json({ sucess: "Datos obtenidos", solicitudes: rows });
   } catch (error) {
-    return res.json([]);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
-//get("/fecha/:fecha/:id")
+//get("/fecha/:fecha/:id")  
 ctrlSolicitud.getByFechaIdUsuario = async (req, res) => {
   let SQLDatos = `codigo_expediente, fecha_entrega_usuario,fecha_entrega_inventario,estado_solicitud`;
   let Joins = `JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
   try {
     const rows = await pool.query(`SELECT ${SQLDatos} FROM solicitud ${Joins} WHERE fecha_solicitud = ? AND id_usuario = ?`, [req.params.fecha, req.params.id]);
-    return res.json(rows);
+    return res.json({ success: "Datos obtenidos", solicitudes: rows });
   } catch (error) {
-    return res.json([]);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 
@@ -92,9 +91,9 @@ ctrlSolicitud.getResumen = async (req, res) => {
   try {
     const estado = await pool.query("SELECT estado_solicitud,COUNT(*) as cantidad FROM solicitud GROUP BY estado_solicitud");
     const datos = [{ estado: estado }];
-    return res.json({ datos });
+    return res.json({ success: "Datos obtenidos", datos: datos });
   } catch (error) {
-    return res.json({ error });
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 
@@ -103,9 +102,9 @@ ctrlSolicitud.getResumenByUsuarioId = async (req, res) => {
   try {
     const estado = await pool.query("SELECT estado_solicitud,COUNT(*) as cantidad FROM solicitud WHERE id_usuario = ? GROUP BY estado_solicitud", [req.params.id]);
     const datos = [{ estado: estado }];
-    return res.json({ datos });
+    return res.json({ success: "Datos obtenidos", datos: datos });
   } catch (error) {
-    return res.json({});
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 //get("/:id")
@@ -120,12 +119,12 @@ ctrlSolicitud.getSolicitudesByUsuarioId = async (req, res) => {
       const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE  ${estado} (codigo_expediente LIKE '%${req.query.keyword}%') ORDER BY estado_solicitud DESC`, [req.params.id]);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", solicitudes: data.splice(pagina, cantidadDatos) });
     }
 
     if (req.query.keyword) {
       const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE  ${estado} (codigo_expediente LIKE '%${req.query.keyword}%')  ORDER BY estado_solicitud DESC`, [req.params.id]);
-      return res.json(data);
+      return res.json({ success: "Datos obtenidos", solicitudes: data });
     }
 
     if (req.query.page) {
@@ -133,16 +132,16 @@ ctrlSolicitud.getSolicitudesByUsuarioId = async (req, res) => {
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
       if (req.query.estado === "TODO") {
         const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE id_usuario = ? ORDER BY estado_solicitud DESC`, [req.params.id]);
-        return res.json(data.splice(pagina, cantidadDatos));
+        return res.json({ success: "Datos obtenidos", solicitudes: data.splice(pagina, cantidadDatos) });
       }
       estado = `id_usuario = ? AND estado_solicitud = '${req.query.estado}'`;
       const data = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins} WHERE ${estado} ORDER BY estado_solicitud DESC`, [req.params.id]);
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", solicitudes: data.splice(pagina, cantidadDatos) });
     }
     const datos = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins}  WHERE id_usuario = ?`, [req.params.id]);
-    return res.json({ datos });
+    return res.json({ success: "Datos obtenidos", solicitudes: datos });
   } catch (error) {
-    res.json({});
+    res.json({ error: "Ocurrió un error" });
   }
 };
 
@@ -208,7 +207,7 @@ ctrlSolicitud.eliminarSolicitud = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Solicitud Eliminada" });
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
-    return res.json({ error: error });
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 

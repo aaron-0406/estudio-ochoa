@@ -37,7 +37,8 @@ const ModalHistorialInforme:React.FC = () => {
     e.preventDefault();
     if (fecha === "") return toast.warning("Seleccione una fecha");
     const res = await solicitudesServices.getByFechaIdUsuario(fecha, usuario.id_usuario + "");
-    setSolicitudes(res.data);
+    if (res.data.error) return toast.error(res.data.error);
+    setSolicitudes(res.data.solicitudes);
   };
   return (
     <div className="modal fade" id="createInformeHistorial" tabIndex={-1} aria-labelledby="createInformeHistorial" aria-hidden="true">

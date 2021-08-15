@@ -5,9 +5,9 @@ const pool = require("../database");
 ctrlMateria.getMaterias = async (req, res) => {
   try {
     const rows = await pool.query("SELECT * FROM materia");
-    return res.json(rows);
+    return res.json({ success: "Datos obtenidos", materias: rows });
   } catch (error) {
-    return res.json([]);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 

@@ -22,7 +22,7 @@ interface Props {
 
 const ListaSolicitudes: React.FC<Props> = (props) => {
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
-  const [loadUsuarios, setLoadUsuarios] = useState<boolean>(false);
+  const [loadSolicitudes, setLoadSolicitudes] = useState<boolean>(false);
 
   const [cantidad, setCantidad] = useState<number>(0);
   const [cantidadPaginas, setCantidadPaginas] = useState<number>(0);
@@ -30,8 +30,9 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
 
   const getSolicitudes = async () => {
     const res = await solicitudesServices.getAll(page, props.filtro, props.estado);
-    setSolicitudes(res.data);
-    setLoadUsuarios(true);
+    if (res.data.error) return setSolicitudes([]);
+    setSolicitudes(res.data.solicitudes);
+    setLoadSolicitudes(true);
   };
   const getCantidad = async () => {
     const res = await solicitudesServices.getCount(props.filtro, props.estado);
@@ -42,14 +43,13 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
     if (page === cantidadPaginas) return;
     setPage(page + 1);
   };
-
   const paginaAnterior = () => {
     if (page === 1) return;
     setPage(page - 1);
   };
   const limpieza = () => {
     setSolicitudes([]);
-    setLoadUsuarios(false);
+    setLoadSolicitudes(false);
   };
   useEffect(() => {
     getSolicitudes();
@@ -84,7 +84,7 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
           </tr>
         </thead>
         <tbody>
-          {!loadUsuarios ? (
+          {!loadSolicitudes ? (
             <>
               <tr className="m-3">
                 <td>Cargando datos...</td>
@@ -132,12 +132,7 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
               <></>
             ) : (
               <>
-                <button
-                  onClick={() => {
-                    paginaAnterior();
-                  }}
-                  className="btn btn__blue"
-                >
+                <button onClick={() => { paginaAnterior(); }} className="btn btn__blue" >
                   <span aria-hidden="true">&laquo; Página Anterior</span>
                 </button>
               </>
@@ -147,11 +142,7 @@ const ListaSolicitudes: React.FC<Props> = (props) => {
             ) : (
               <>
                 <button
-                  onClick={() => {
-                    paginaSiguiente();
-                  }}
-                  className="btn btn__blue ms-auto"
-                >
+                  onClick={() => { paginaSiguiente(); }} className="btn btn__blue ms-auto" >
                   <span aria-hidden="true">Página Siguiente &raquo;</span>
                 </button>
               </>

@@ -28,7 +28,8 @@ const ListaReclamos: React.FC<Props> = (props) => {
 
   const getReclamos = async () => {
     const res = await reclamosServices.getAll(page, props.filtro);
-    setReclamos(res.data);
+    if (res.data.error) return;
+    setReclamos(res.data.reclamos);
     setLoadReclamos(true);
   };
 

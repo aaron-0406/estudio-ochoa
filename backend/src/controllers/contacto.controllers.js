@@ -19,24 +19,24 @@ ctrlContacto.getAllMessage = async (req, res) => {
       const data = await pool.query(`SELECT * FROM contacto WHERE (nombre_contacto LIKE '%${req.query.keyword}%' OR email_contacto LIKE '%${req.query.keyword}%') ORDER BY visto DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", mensajes: data.splice(pagina, cantidadDatos) });
     }
 
     if (req.query.keyword) {
       const data = await pool.query(`SELECT * FROM contacto WHERE (nombre_contacto LIKE '%${req.query.keyword}%' OR email_contacto LIKE '%${req.query.keyword}%') ORDER BY visto DESC`);
-      return res.json(data);
+      return res.json({ success: "Datos obtenidos", mensajes: data });
     }
 
     if (req.query.page) {
       const data = await pool.query(`SELECT * FROM contacto ORDER BY visto DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", mensajes: data.splice(pagina, cantidadDatos) });
     }
     const datos = await pool.query("SELECT * FROM contacto");
-    return res.json(datos);
+    return res.json({ success: "Datos obtenidos", mensajes: datos });
   } catch (error) {
-    return res.json([]);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 

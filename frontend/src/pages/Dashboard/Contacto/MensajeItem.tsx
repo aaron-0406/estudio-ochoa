@@ -18,19 +18,15 @@ const MensajeItem: React.FC<Props> = (props) => {
   const eliminarMensaje = async (id?: number) => {
     if (!window.confirm("¿Está seguro que desea eliminar este mensaje?")) return;
     const res = await contactoServices.eliminarContacto(id + "");
-    if (res.data.success) {
-      props.getContactos();
-      return toast.success(res.data.success);
-    }
     if (res.data.error) return toast.error(res.data.error);
+    props.getContactos();
+    return toast.success(res.data.success);
   };
 
   const setVisto = async (id?: number) => {
     if (props.contacto.visto === 0) return;
     const res = await contactoServices.setVisto(id + "");
-    if (res.data.success) {
-      props.getContactos();
-    }
+    if (res.data.success) return props.getContactos();
   };
 
   return (

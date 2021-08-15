@@ -19,6 +19,7 @@ const ModalInforme: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (fecha === "") return toast.warning("Seleccione una fecha");
+
     const res = await informeServices.getInforme(fecha);
     var link = document.createElement("a");
     link.href = `${API}/api/v0/informe/${res.data.nombre_archivo}`;
@@ -34,7 +35,8 @@ const ModalInforme: React.FC = () => {
     e.preventDefault();
     if (fecha === "") return toast.warning("Seleccione una fecha");
     const res = await solicitudesServices.getByFecha(fecha);
-    setSolicitudes(res.data);
+    if (res.data.error) return toast.error(res.data.error);
+    setSolicitudes(res.data.solicitudes);
   };
 
   return (

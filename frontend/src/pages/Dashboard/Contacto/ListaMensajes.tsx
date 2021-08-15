@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
-
 // Componentes
 import MensajeItem from "./MensajeItem";
 
@@ -21,7 +20,7 @@ interface Props {
 const ListaMensajes: React.FC<Props> = (props) => {
   //Cargar datos
   const [contactos, setContactos] = useState<Contacto[]>([]);
-  const [loadExpedientes, setLoadExpedientes] = useState<boolean>(false);
+  const [loadContactos, setLoadContactos] = useState<boolean>(false);
 
   const [cantidad, setCantidad] = useState<number>(0);
   const [cantidadPaginas, setCantidadPaginas] = useState<number>(0);
@@ -29,8 +28,9 @@ const ListaMensajes: React.FC<Props> = (props) => {
 
   const getContactos = async () => {
     const res = await contactoServices.getAll(page, props.filtro);
-    setContactos(res.data);
-    setLoadExpedientes(true);
+    if (res.data.error) return;
+    setContactos(res.data.mensajes);
+    setLoadContactos(true);
   };
 
   const getCantidad = async () => {
@@ -49,7 +49,7 @@ const ListaMensajes: React.FC<Props> = (props) => {
   };
   const limpieza = () => {
     setContactos([]);
-    setLoadExpedientes(false);
+    setLoadContactos(false);
   };
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const ListaMensajes: React.FC<Props> = (props) => {
           </tr>
         </thead>
         <tbody>
-          {!loadExpedientes ? (
+          {!loadContactos ? (
             <>
               <tr className="m-3">
                 <td>Cargando datos...</td>

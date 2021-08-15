@@ -17,24 +17,24 @@ ctrlReclamo.getAllReclaim = async (req, res) => {
       const data = await pool.query(`SELECT * FROM reclamo WHERE (nombre_reclamo LIKE '%${req.query.keyword}%' OR correo_reclamo LIKE '%${req.query.keyword}%') ORDER BY visto DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ success: "Datos obtenidos", reclamos: data.splice(pagina, cantidadDatos) });
     }
 
     if (req.query.keyword) {
       const data = await pool.query(`SELECT * FROM reclamo WHERE (nombre_reclamo LIKE '%${req.query.keyword}%' OR correo_reclamo LIKE '%${req.query.keyword}%') ORDER BY visto DESC`);
-      return res.json(data);
+      return res.json({ success: "Datos obtenidos", reclamos: data });
     }
 
     if (req.query.page) {
       const data = await pool.query(`SELECT * FROM reclamo ORDER BY visto DESC`);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
-      return res.json(data.splice(pagina, cantidadDatos));
+      return res.json({ sucess: "Datos obtenidos", reclamos: data.splice(pagina, cantidadDatos) });
     }
     const datos = await pool.query("SELECT * FROM reclamo");
-    return res.json({ datos });
+    return res.json({ success: "Datos obtenidos", reclamos: datos });
   } catch (error) {
-    return res.json([]);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 
