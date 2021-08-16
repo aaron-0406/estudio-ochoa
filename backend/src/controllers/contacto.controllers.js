@@ -8,6 +8,7 @@ ctrlContacto.sendMessage = async (req, res) => {
     if (result.affectedRows === 1) return res.json({ success: "Mensaje enviado" });
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -36,6 +37,7 @@ ctrlContacto.getAllMessage = async (req, res) => {
     const datos = await pool.query("SELECT * FROM contacto");
     return res.json({ success: "Datos obtenidos", mensajes: datos });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -52,6 +54,7 @@ ctrlContacto.getCount = async (req, res) => {
     if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
     return res.json(0);
   } catch (error) {
+    console.log(error);
     return res.json(0);
   }
 };
@@ -63,6 +66,7 @@ ctrlContacto.getCountNoVistos = async (req, res) => {
     if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
     return res.json(0);
   } catch (error) {
+    console.log(error);
     return res.json(0);
   }
 };
@@ -74,6 +78,7 @@ ctrlContacto.deleteMessage = async (req, res) => {
     if (data.affectedRows === 1) return res.json({ success: `Mensaje eliminado` }); //Se logró actualizar
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -87,6 +92,7 @@ ctrlContacto.setVisto = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Visto" });
     return res.json({ error: "Ocurrió un error." });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error." });
   }
 };

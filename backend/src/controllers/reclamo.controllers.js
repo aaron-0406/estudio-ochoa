@@ -7,6 +7,7 @@ ctrlReclamo.sendReclaim = async (req, res) => {
     if (result.affectedRows === 1) return res.json({ success: "Reclamo enviado" });
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -34,6 +35,7 @@ ctrlReclamo.getAllReclaim = async (req, res) => {
     const datos = await pool.query("SELECT * FROM reclamo");
     return res.json({ success: "Datos obtenidos", reclamos: datos });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -50,6 +52,7 @@ ctrlReclamo.getCount = async (req, res) => {
     if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
     return res.json(0);
   } catch (error) {
+    console.log(error);
     return res.json(0);
   }
 };
@@ -61,6 +64,7 @@ ctrlReclamo.getCountNoVistos = async (req, res) => {
     if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
     return res.json(0);
   } catch (error) {
+    console.log(error);
     return res.json(0);
   }
 };
@@ -72,6 +76,7 @@ ctrlReclamo.deleteMessage = async (req, res) => {
     if (data.affectedRows === 1) return res.json({ success: `Mensaje eliminado` }); //Se logró actualizar
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -85,6 +90,7 @@ ctrlReclamo.setVisto = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Visto" });
     return res.json({ error: "Ocurrió un error." });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error." });
   }
 };

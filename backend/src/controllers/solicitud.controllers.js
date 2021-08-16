@@ -35,6 +35,7 @@ ctrlSolicitud.getSolicitudes = async (req, res) => {
     const datos = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins}`);
     return res.json({ success: "Datos obtenidos", solicitudes: datos });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -47,6 +48,7 @@ ctrlSolicitud.getByFecha = async (req, res) => {
     const rows = await pool.query(`SELECT ${SQLDatos} FROM solicitud ${Joins} WHERE fecha_solicitud = ?`, [req.params.fecha]);
     return res.json({ sucess: "Datos obtenidos", solicitudes: rows });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -58,6 +60,7 @@ ctrlSolicitud.getByFechaIdUsuario = async (req, res) => {
     const rows = await pool.query(`SELECT ${SQLDatos} FROM solicitud ${Joins} WHERE fecha_solicitud = ? AND id_usuario = ?`, [req.params.fecha, req.params.id]);
     return res.json({ success: "Datos obtenidos", solicitudes: rows });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -82,6 +85,7 @@ ctrlSolicitud.getCount = async (req, res) => {
     if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
     return res.json(0);
   } catch (error) {
+    console.log(error);
     return res.json(0);
   }
 };
@@ -93,6 +97,7 @@ ctrlSolicitud.getResumen = async (req, res) => {
     const datos = [{ estado: estado }];
     return res.json({ success: "Datos obtenidos", datos: datos });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -104,6 +109,7 @@ ctrlSolicitud.getResumenByUsuarioId = async (req, res) => {
     const datos = [{ estado: estado }];
     return res.json({ success: "Datos obtenidos", datos: datos });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -141,6 +147,7 @@ ctrlSolicitud.getSolicitudesByUsuarioId = async (req, res) => {
     const datos = await pool.query(`SELECT ${datosSQL} FROM solicitud ${Joins}  WHERE id_usuario = ?`, [req.params.id]);
     return res.json({ success: "Datos obtenidos", solicitudes: datos });
   } catch (error) {
+    console.log(error);
     res.json({ error: "Ocurrió un error" });
   }
 };
@@ -158,6 +165,7 @@ ctrlSolicitud.getCountByUsuarioId = async (req, res) => {
     if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
     return res.json(0);
   } catch (error) {
+    console.log(error);
     return res.json(0);
   }
 };
@@ -171,6 +179,7 @@ ctrlSolicitud.crearSolicitud = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Solicitud enviada" });
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: error });
   }
 };
@@ -208,6 +217,7 @@ ctrlSolicitud.eliminarSolicitud = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Solicitud Eliminada" });
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };

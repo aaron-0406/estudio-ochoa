@@ -26,6 +26,7 @@ ctrlUsuario.getUsuarios = async (req, res) => {
     const datos = await pool.query("SELECT * FROM usuario");
     return res.json({ success: "Datos obtenidos", usuarios: datos });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -41,6 +42,7 @@ ctrlUsuario.count = async (req, res) => {
     if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
     return res.json(0);
   } catch (error) {
+    console.log(error);
     return res.json(0);
   }
 };
@@ -68,6 +70,7 @@ ctrlUsuario.createUsuario = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Usuario Creado." });
     return res.json({ error: "Ocurrió un error." });
   } catch (error) {
+    console.log(error);
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
     if (error.code === "ER_DUP_ENTRY") {
       let fila;
@@ -86,6 +89,7 @@ ctrlUsuario.updateUsuario = async (req, res) => {
     if (rows.affectedRows === 1) return res.json({ success: "Usuario Actualizado" });
     return res.json({ error: "Ocurrió un error." });
   } catch (error) {
+    console.log(error);
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
     if (error.code === "ER_DUP_ENTRY") {
       let fila;
@@ -108,6 +112,7 @@ ctrlUsuario.deleteUsuario = async (req, res) => {
     if (data.affectedRows === 1) return res.json({ success: `Usuario ${rows[0].nombres_usuario} ${estado}` }); //Se logró actualizar
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };

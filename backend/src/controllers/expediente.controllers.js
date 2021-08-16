@@ -21,7 +21,6 @@ ctrlExpediente.getExpedientes = async (req, res) => {
 
     if (req.query.page) {
       const data = await pool.query(`SELECT * FROM expediente ${Joins} ORDER BY id_expediente DESC`);
-      console.log(data);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
       return res.json({ success: "Datos obtenidos", expedientes: data.splice(pagina, cantidadDatos) });
@@ -29,6 +28,7 @@ ctrlExpediente.getExpedientes = async (req, res) => {
     const datos = await pool.query(`SELECT * FROM ${Joins} expediente`);
     return res.json({ success: "Datos obtenidos", expedientes: datos });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -45,6 +45,7 @@ ctrlExpediente.getCount = async (req, res) => {
     if (rows[0]["COUNT(*)"]) return res.json(rows[0]["COUNT(*)"]);
     return res.json(0);
   } catch (error) {
+    console.log(error);
     return res.json(0);
   }
 };
@@ -58,6 +59,7 @@ ctrlExpediente.getResumen = async (req, res) => {
     const datos = [{ bancos: bancos }, { materia: materia }, { estado: estado }];
     return res.json({ success: "Datos obtenidos", datos: datos });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -71,6 +73,7 @@ ctrlExpediente.getExpedienteByCodigo = async (req, res) => {
     }
     return res.json({ error: "No existe tal expediente" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };
@@ -109,12 +112,14 @@ ctrlExpediente.createExpediente = async (req, res) => {
         return;
       }
     } catch (error) {
+      console.log(error);
       await drive.files.delete({ fileId: response.data.id });
       if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
       if (error.code === "ER_DUP_ENTRY") return res.json({ error: `Ese codigo ya está registrado` });
       return res.json({ error: "Ocurrió un error" });
     }
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
   res.json({ error: "Ocurrió un error" });
@@ -129,6 +134,7 @@ ctrlExpediente.updateExpediente = async (req, res) => {
     if (rows.affectedRows !== 1) return res.json({ error: "Ocurrió un error." });
     res.json({ success: "Expediente Actualizado" });
   } catch (error) {
+    console.log(error);
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
     res.json({ error: "Ocurrió un error." });
   }
@@ -158,7 +164,7 @@ ctrlExpediente.updateExpediente = async (req, res) => {
         newExpediente.id_documento = response.data.id;
         await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [newExpediente, req.params.id]);
         await fs.unlink(req.file.path);
-        return; 
+        return;
       }
       await drive.files.update({
         fileId: expediente[0].id_documento,
@@ -191,6 +197,7 @@ ctrlExpediente.deleteExpediente = async (req, res) => {
     if (data.affectedRows === 1) return res.json({ success: `Expediente ${rows[0].codigo_expediente} ${estado}` }); //Se logró actualizar
     return res.json({ error: "Ocurrió un error" });
   } catch (error) {
+    console.log(error);
     return res.json({ error: "Ocurrió un error" });
   }
 };

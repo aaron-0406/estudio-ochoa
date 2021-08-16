@@ -6,14 +6,6 @@ const fs = require("fs-extra");
 const font = require("../lib/pdf/fonts");
 const styles = require("../lib/pdf/style");
 
-const formatFecha = (fecha, dir) => {
-  let dia = fecha.slice(8, 10);
-  let mes = fecha.slice(5, 7);
-  let year = fecha.slice(0, 4);
-  if (dir === "dir") return `${dia}-${mes}-${year}`;
-  return `${dia}/${mes}/${year}`;
-};
-
 //post("/")
 ctrlInforme.getInforme = async (req, res) => {
   // Cabecera del pdf

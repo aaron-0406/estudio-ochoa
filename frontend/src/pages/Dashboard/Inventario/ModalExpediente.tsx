@@ -346,13 +346,19 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   <input type="text" className="form-control" id="input_Folio" name="folio" ref={refFolio} onChange={handleChange} value={expediente.folio} />
                   <div className="invalid-feedback">Caracteres incorrectos</div>
                 </div>
-                <div className="col-12 col-md-6 col-lg-6">
-                  <br />
-                  <label htmlFor="input_Folio" className="form-label fw-normal">
-                    Archivo
-                  </label>
-                  <input ref={(node) => (refInputFile.current = node)} type="file" className="form-control" id="archivo" name="archivo" onChange={handleChangeFile} />
-                </div>
+                {usuario.rango_usuario === "1" ? (
+                  <>
+                    <div className="col-12 col-md-6 col-lg-6">
+                      <br />
+                      <label htmlFor="input_Folio" className="form-label fw-normal">
+                        Archivo
+                      </label>
+                      <input ref={(node) => (refInputFile.current = node)} type="file" className="form-control" id="archivo" name="archivo" onChange={handleChangeFile} />
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
             <div className="modal-footer">
