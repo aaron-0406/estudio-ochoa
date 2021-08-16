@@ -14,36 +14,6 @@ const formatFecha = (fecha, dir) => {
   return `${dia}/${mes}/${year}`;
 };
 
-const getTabla = (cabecera, datos, estado) => {
-  let cuerpo = [];
-  cuerpo.push(cabecera);
-  if (estado === "usuario") {
-    for (let i = 0; i < datos.length; i++) {
-      const element = [];
-      element.push(i + 1);
-      element.push(datos[i].codigo_expediente);
-      element.push(formatFecha(datos[i].fecha_entrega_usuario));
-      element.push(formatFecha(datos[i].fecha_entrega_inventario));
-      element.push(datos[i].estado_solicitud);
-      cuerpo.push(element);
-    }
-    return cuerpo;
-  }
-  for (let i = 0; i < datos.length; i++) {
-    const element = [];
-    element.push(i + 1);
-    element.push(datos[i].codigo_expediente);
-    element.push(datos[i].nombres_usuario + " " + datos[i].apellidos_usuario);
-    element.push(datos[i].email_usuario);
-    element.push(formatFecha(datos[i].fecha_entrega_usuario));
-    element.push(formatFecha(datos[i].fecha_entrega_inventario));
-    element.push(datos[i].estado_solicitud);
-    cuerpo.push(element);
-  }
-
-  return cuerpo;
-};
-
 //post("/")
 ctrlInforme.getInforme = async (req, res) => {
   // Cabecera del pdf
@@ -56,8 +26,28 @@ ctrlInforme.getInforme = async (req, res) => {
   try {
     const rows = await pool.query(`SELECT ${SQLDatos} FROM solicitud ${Joins} WHERE fecha_solicitud = ?`, [fecha_solicitud]);
     // Cuerpo de la tabla
-    let cabeceraTabla = ["#", "Código de Expediente", "Usuario", "Correo", "Fecha de Entrega", "Fecha Entregado", "Estado"];
-    let cuerpo = getTabla(cabeceraTabla, rows, "admin");
+    let cuerpo = [["#", "Código de Expediente", "Usuario", "Correo", "Fecha de Entrega", "Fecha Entregado", "Estado"]];
+    for (let i = 0; i < rows.length; i++) {
+      let dia1 = rows[i].fecha_entrega_usuario.slice(8, 10);
+      let mes1 = rows[i].fecha_entrega_usuario.slice(5, 7);
+      let year1 = rows[i].fecha_entrega_usuario.slice(0, 4);
+
+      if (rows[i].fecha_entrega_inventario === null) rows[i].fecha_entrega_inventario = "0000-00-00";
+      let dia2 = rows[i].fecha_entrega_inventario.slice(8, 10);
+      let mes2 = rows[i].fecha_entrega_inventario.slice(5, 7);
+      let year2 = rows[i].fecha_entrega_inventario.slice(0, 4);
+
+      const element = [];
+      element.push(i + 1);
+      element.push(rows[i].codigo_expediente);
+      element.push(rows[i].nombres_usuario + " " + rows[i].apellidos_usuario);
+      element.push(rows[i].email_usuario);
+      element.push(`${dia1}/${mes1}/${year1}`);
+      element.push(`${dia2}/${mes2}/${year2}`);
+      element.push(rows[i].estado_solicitud);
+      cuerpo.push(element);
+    }
+
     let tabla = {
       layout: "lightHorizontalLines", // optional
       table: {
@@ -67,6 +57,9 @@ ctrlInforme.getInforme = async (req, res) => {
         style: "tabla",
       },
     };
+    let dia = fecha_solicitud.slice(8, 10);
+    let mes = fecha_solicitud.slice(5, 7);
+    let year = fecha_solicitud.slice(0, 4);
     // Definicion del documento
     let docDefinition = {
       info: {
@@ -79,17 +72,18 @@ ctrlInforme.getInforme = async (req, res) => {
       pageOrientation: "landscape",
       pageMargins: [60, 80, 60, 80],
       header: header,
-      content: [{ text: `Lista de Solicitudes del dia ${formatFecha(fecha_solicitud, "text")}`, fontSize: 20, margin: [0, 20] }, tabla],
+      content: [{ text: `Lista de Solicitudes del dia ${dia}/${mes}/${year}`, fontSize: 20, margin: [0, 20] }, tabla],
       styles: styles,
     };
 
     const printer = new PdfPrinter(font);
     const pdfDoc = printer.createPdfKitDocument(docDefinition);
-    await pdfDoc.pipe(fs.createWriteStream(path.join(__dirname, `../lib/docs/Informe ${formatFecha(fecha_solicitud, "dir")}.pdf`)));
+    await pdfDoc.pipe(fs.createWriteStream(path.join(__dirname, `../lib/docs/Informe ${dia}-${mes}-${year}.pdf`)));
     pdfDoc.end();
-    return res.json({ success: "Generado correctamente", nombre_archivo: `Informe ${formatFecha(fecha_solicitud, "dir")}.pdf` });
+    return res.json({ success: "Generado correctamente", nombre_archivo: `Informe ${dia}-${mes}-${year}.pdf` });
   } catch (error) {
-    return res.json({ error: "Ocurrió un error", nombre_archivo: `Informe ${formatFecha(fecha_solicitud, "dir")}.pdf` });
+    console.log(error);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 
@@ -106,8 +100,25 @@ ctrlInforme.getInformeByIdUsuario = async (req, res) => {
     const rows = await pool.query(`SELECT ${SQLDatos} FROM solicitud ${Joins} WHERE fecha_solicitud = ? AND id_usuario = ?`, [fecha_solicitud, req.params.id]);
     const usuario = await pool.query(`SELECT nombres_usuario,apellidos_usuario,email_usuario FROM usuario WHERE id_usuario = ?`, [req.params.id]);
     // Cuerpo de la tabla
-    let cabeceraTabla = ["#", "Código de Expediente", "Fecha de Entrega", "Fecha Entregado", "Estado"];
-    let cuerpo = getTabla(cabeceraTabla, rows, "usuario");
+    let cuerpo = [["#", "Código de Expediente", "Fecha de Entrega", "Fecha Entregado", "Estado"]];
+    for (let i = 0; i < rows.length; i++) {
+      let dia1 = rows[i].fecha_entrega_usuario.slice(8, 10);
+      let mes1 = rows[i].fecha_entrega_usuario.slice(5, 7);
+      let year1 = rows[i].fecha_entrega_usuario.slice(0, 4);
+
+      if (rows[i].fecha_entrega_inventario === null) rows[i].fecha_entrega_inventario = "0000-00-00";
+      let dia2 = rows[i].fecha_entrega_inventario.slice(8, 10);
+      let mes2 = rows[i].fecha_entrega_inventario.slice(5, 7);
+      let year2 = rows[i].fecha_entrega_inventario.slice(0, 4);
+
+      const element = [];
+      element.push(i + 1);
+      element.push(rows[i].codigo_expediente);
+      element.push(`${dia1}/${mes1}/${year1}`);
+      element.push(`${dia2}/${mes2}/${year2}`);
+      element.push(rows[i].estado_solicitud);
+      cuerpo.push(element);
+    }
     let tabla = {
       layout: "lightHorizontalLines", // optional
       table: {
@@ -117,6 +128,9 @@ ctrlInforme.getInformeByIdUsuario = async (req, res) => {
         style: "tabla",
       },
     };
+    let dia = fecha_solicitud.slice(8, 10);
+    let mes = fecha_solicitud.slice(5, 7);
+    let year = fecha_solicitud.slice(0, 4);
     // Definicion del documento
     let docDefinition = {
       info: {
@@ -129,17 +143,18 @@ ctrlInforme.getInformeByIdUsuario = async (req, res) => {
       pageOrientation: "portrait",
       pageMargins: [60, 80, 60, 80],
       header: header,
-      content: [{ text: `Lista de Solicitudes de ${usuario[0].nombres_usuario} ${usuario[0].apellidos_usuario} del dia ${formatFecha(fecha_solicitud, "text")}`, fontSize: 20, margin: [0, 20] }, tabla],
+      content: [{ text: `Lista de Solicitudes de ${usuario[0].nombres_usuario} ${usuario[0].apellidos_usuario} del dia ${dia}/${mes}/${year}`, fontSize: 20, margin: [0, 20] }, tabla],
       styles: styles,
     };
 
     const printer = new PdfPrinter(font);
     const pdfDoc = printer.createPdfKitDocument(docDefinition);
-    await pdfDoc.pipe(fs.createWriteStream(path.join(__dirname, `../lib/docs/Informe ${formatFecha(fecha_solicitud, "dir")}.pdf`)));
+    await pdfDoc.pipe(fs.createWriteStream(path.join(__dirname, `../lib/docs/Informe ${dia}-${mes}-${year}.pdf`)));
     pdfDoc.end();
-    return res.json({ success: "Generado correctamente", nombre_archivo: `Informe ${formatFecha(fecha_solicitud, "dir")}.pdf` });
+    return res.json({ success: "Generado correctamente", nombre_archivo: `Informe ${dia}-${mes}-${year}.pdf` });
   } catch (error) {
-    return res.json({ error: "Ocurrió un error", nombre_archivo: `Informe ${formatFecha(fecha_solicitud, "dir")}.pdf` });
+    console.log(error);
+    return res.json({ error: "Ocurrió un error" });
   }
 };
 module.exports = ctrlInforme;

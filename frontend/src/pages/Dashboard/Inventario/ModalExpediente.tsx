@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 
 // Interfaces
 import Expediente from "../../../interfaces/Expediente";
+import { useUsuario } from "../../../auth/UsuarioProvider";
 
 interface Props {
   setTrigguer: (trigguer: number) => void;
@@ -43,6 +44,8 @@ const initStateExpediente: Expediente = {
   archivo: [new File([""], "filename")],
 };
 const ModalExpediente: React.FC<Props> = (props) => {
+  const { usuario } = useUsuario();
+
   // States
   const [bancos, setBancos] = useState([]);
   const [materias, setMaterias] = useState([]);
@@ -78,13 +81,14 @@ const ModalExpediente: React.FC<Props> = (props) => {
     formData.set("habilitado", "1");
     formData.set("id_materia", expediente.id_materia + "");
     formData.set("id_banco", expediente.id_banco + "");
+    formData.set("id_documento", "");
     if (expediente.archivo) formData.append("archivo", expediente.archivo[0]);
 
     // Crear
     if (expediente.id_expediente === 0) {
       const res = await expedienteServices.createExpediente(formData);
       if (res.data.error) return toast.error(res.data.error);
-      
+
       setExpediente(initStateExpediente);
       props.render();
       props.setTrigguer(props.trigguer + 1);
@@ -95,7 +99,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
     // Actualizar
     const res = await expedienteServices.editarExpediente(expediente.id_expediente + "", formData);
     if (res.data.error) return toast.error(res.data.error);
-    
+
     setExpediente(initStateExpediente);
     props.render();
     props.setTrigguer(props.trigguer + 1);
@@ -346,15 +350,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
                   <label htmlFor="input_Folio" className="form-label fw-normal">
                     Archivo
                   </label>
-                  {expediente.id_expediente === 0 ? (
-                    <>
-                      <input ref={(node) => (refInputFile.current = node)} required type="file" className="form-control" id="archivo" name="archivo" onChange={handleChangeFile} />
-                    </>
-                  ) : (
-                    <>
-                      <input ref={(node) => (refInputFile.current = node)} type="file" className="form-control" id="archivo" name="archivo" onChange={handleChangeFile} />
-                    </>
-                  )}
+                  <input ref={(node) => (refInputFile.current = node)} type="file" className="form-control" id="archivo" name="archivo" onChange={handleChangeFile} />
                 </div>
               </div>
             </div>
@@ -371,10 +367,16 @@ const ModalExpediente: React.FC<Props> = (props) => {
                 </>
               ) : (
                 <>
-                  <a href={`https://drive.google.com/file/d/${expediente.id_documento}/view?usp=sharing`} target="__blank" className="btn btn-primary">
-                    <FaEye className="fs-4 me-1" color="#fff" />
-                    Ver Expediente Digital
-                  </a>
+                  {expediente.id_documento !== "" && usuario.rango_usuario === "1" ? (
+                    <>
+                      <a href={`https://drive.google.com/file/d/${expediente.id_documento}/view?usp=sharing`} target="__blank" className="btn btn-primary">
+                        <FaEye className="fs-4 me-1" color="#fff" />
+                        Ver Expediente Digital
+                      </a>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                   <button type="submit" className="btn btn-warning">
                     <FaEdit className="fs-4 me-1" color="#000" />
                     Modificar Expediente

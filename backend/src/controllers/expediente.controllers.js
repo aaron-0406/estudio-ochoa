@@ -64,7 +64,10 @@ ctrlExpediente.getResumen = async (req, res) => {
 ctrlExpediente.getExpedienteByCodigo = async (req, res) => {
   try {
     const expediente = await pool.query("SELECT * FROM expediente WHERE codigo_expediente = ?", [req.params.id]);
-    if (expediente[0]) return res.json({ expediente: expediente[0], success: "Encontrado" });
+    if (expediente[0]) {
+      if (expediente[0].habilitado == "1") return res.json({ expediente: expediente[0], success: "Encontrado" });
+      return res.json({ error: "Expediente inhabilitado" });
+    }
     return res.json({ error: "No existe tal expediente" });
   } catch (error) {
     return res.json({ error: "Ocurrió un error" });
@@ -73,33 +76,35 @@ ctrlExpediente.getExpedienteByCodigo = async (req, res) => {
 //post("/")
 ctrlExpediente.createExpediente = async (req, res) => {
   // Google drive api
-  const filePath = req.file.path;
   // Crear el archivo
+
   try {
-    const response = await drive.files.create({
-      requestBody: {
-        name: req.file.originalname,
-        mimeType: req.file.mimetype,
-      },
-      media: {
-        body: fs.createReadStream(filePath),
-        mimeType: req.file.mimetype,
-      },
-    });
-    // Cualquiera con el link
-    await drive.permissions.create({
-      fileId: response.data.id,
-      requestBody: {
-        role: "reader",
-        type: "anyone",
-      },
-    });
-    req.body.id_documento = response.data.id;
+    if (req.file) {
+      const response = await drive.files.create({
+        requestBody: {
+          name: req.file.originalname,
+          mimeType: req.file.mimetype,
+        },
+        media: {
+          body: fs.createReadStream(req.file.path),
+          mimeType: req.file.mimetype,
+        },
+      });
+      // Cualquiera con el link
+      await drive.permissions.create({
+        fileId: response.data.id,
+        requestBody: {
+          role: "reader",
+          type: "anyone",
+        },
+      });
+      req.body.id_documento = response.data.id;
+    }
     try {
       const rows = await pool.query("INSERT INTO expediente SET ?", [req.body]);
       if (rows.affectedRows === 1) {
         res.json({ success: "Expediente creado" });
-        await fs.unlink(filePath);
+        if (req.file) await fs.unlink(req.file.path);
         return;
       }
     } catch (error) {
@@ -152,6 +157,7 @@ ctrlExpediente.updateExpediente = async (req, res) => {
 ctrlExpediente.deleteExpediente = async (req, res) => {
   try {
     const rows = await pool.query("SELECT * FROM expediente WHERE id_expediente = ?", [req.params.id]);
+    if (rows[0].estado_uso == "1") return res.json({ error: "El expediente está en uso" });
     rows[0].habilitado == 0 ? (rows[0].habilitado = 1) : (rows[0].habilitado = 0);
     const data = await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [rows[0], req.params.id]);
     let estado = "";
