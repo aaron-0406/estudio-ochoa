@@ -50,7 +50,7 @@ ctrlSolicitud.getByFecha = async (req, res) => {
     return res.json({ error: "Ocurrió un error" });
   }
 };
-//get("/fecha/:fecha/:id")  
+//get("/fecha/:fecha/:id")
 ctrlSolicitud.getByFechaIdUsuario = async (req, res) => {
   let SQLDatos = `codigo_expediente, fecha_entrega_usuario,fecha_entrega_inventario,estado_solicitud`;
   let Joins = `JOIN expediente ON expediente.id_expediente = solicitud.id_expediente`;
@@ -195,6 +195,7 @@ ctrlSolicitud.modificarSolicitud = async (req, res) => {
     }
     return res.json({ success: `Estado de solicitud cambiada` });
   } catch (error) {
+    console.log(error);
     if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
     return res.json({ error: "Ocurrió un error." });
   }

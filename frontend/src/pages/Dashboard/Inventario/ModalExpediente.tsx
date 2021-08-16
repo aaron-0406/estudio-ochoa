@@ -19,6 +19,7 @@ import { useUsuario } from "../../../auth/UsuarioProvider";
 interface Props {
   setTrigguer: (trigguer: number) => void;
   trigguer: number;
+  setExpedienteModal: (expediente: Expediente) => void;
   expediente: Expediente;
   render: () => void;
 }
@@ -170,7 +171,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
     refCodigoExpediente.current?.classList.remove("is-invalid");
     refEstadoActual.current?.classList.remove("is-invalid");
     refFolio.current?.classList.remove("is-invalid");
-    setExpediente(initStateExpediente);
+    props.setExpedienteModal(initStateExpediente);
   };
 
   return (

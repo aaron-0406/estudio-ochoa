@@ -165,7 +165,7 @@ const ListaExpediente: React.FC<Props> = (props) => {
           </>
         )}
       </div>
-      <ModalExpediente setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getExpedientes} expediente={props.expedienteModal} />
+      <ModalExpediente setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getExpedientes} expediente={props.expedienteModal} setExpedienteModal={props.setExpedienteModal} />
     </>
   );
 };

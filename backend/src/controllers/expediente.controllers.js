@@ -21,6 +21,7 @@ ctrlExpediente.getExpedientes = async (req, res) => {
 
     if (req.query.page) {
       const data = await pool.query(`SELECT * FROM expediente ${Joins} ORDER BY id_expediente DESC`);
+      console.log(data);
       const cantidadDatos = 12;
       const pagina = (parseInt(req.query.page) - 1) * cantidadDatos;
       return res.json({ success: "Datos obtenidos", expedientes: data.splice(pagina, cantidadDatos) });
@@ -135,6 +136,30 @@ ctrlExpediente.updateExpediente = async (req, res) => {
   try {
     if (req.file) {
       const expediente = await pool.query("SELECT id_documento FROM expediente WHERE id_expediente = ?", [req.params.id]);
+      if (expediente[0].id_documento == "") {
+        const response = await drive.files.create({
+          requestBody: {
+            name: req.file.originalname,
+            mimeType: req.file.mimetype,
+          },
+          media: {
+            body: fs.createReadStream(req.file.path),
+            mimeType: req.file.mimetype,
+          },
+        });
+        // Cualquiera con el link
+        await drive.permissions.create({
+          fileId: response.data.id,
+          requestBody: {
+            role: "reader",
+            type: "anyone",
+          },
+        });
+        newExpediente.id_documento = response.data.id;
+        await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [newExpediente, req.params.id]);
+        await fs.unlink(req.file.path);
+        return; 
+      }
       await drive.files.update({
         fileId: expediente[0].id_documento,
         requestBody: {
