@@ -79,50 +79,30 @@ ctrlExpediente.getExpedienteByCodigo = async (req, res) => {
 };
 //post("/")
 ctrlExpediente.createExpediente = async (req, res) => {
-  // Google drive api
-  // Crear el archivo
-
+  // Guardando en la bd
+  try {
+    const rows = await pool.query("INSERT INTO expediente SET ?", [req.body]);
+    if (rows.affectedRows !== 1) return res.json({ error: "Ocurrió un error." });
+    res.json({ success: "Expediente creado" });
+  } catch (error) {
+    console.log(error);
+    if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
+    if (error.code === "ER_DUP_ENTRY") return res.json({ error: `Ese codigo ya está registrado` });
+    res.json({ error: "Ocurrió un error." });
+  }
   try {
     if (req.file) {
-      const response = await drive.files.create({
-        requestBody: {
-          name: req.file.originalname,
-          mimeType: req.file.mimetype,
-        },
-        media: {
-          body: fs.createReadStream(req.file.path),
-          mimeType: req.file.mimetype,
-        },
-      });
+      // Subiendo el archivo
+      const response = await drive.files.create({ requestBody: { name: req.file.originalname, mimeType: req.file.mimetype }, media: { body: fs.createReadStream(req.file.path), mimeType: req.file.mimetype } });
       // Cualquiera con el link
-      await drive.permissions.create({
-        fileId: response.data.id,
-        requestBody: {
-          role: "reader",
-          type: "anyone",
-        },
-      });
+      await drive.permissions.create({ fileId: response.data.id, requestBody: { role: "reader", type: "anyone" } });
       req.body.id_documento = response.data.id;
-    }
-    try {
-      const rows = await pool.query("INSERT INTO expediente SET ?", [req.body]);
-      if (rows.affectedRows === 1) {
-        res.json({ success: "Expediente creado" });
-        if (req.file) await fs.unlink(req.file.path);
-        return;
-      }
-    } catch (error) {
-      console.log(error);
-      if (req.file) await drive.files.delete({ fileId: response.data.id });
-      if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
-      if (error.code === "ER_DUP_ENTRY") return res.json({ error: `Ese codigo ya está registrado` });
-      return res.json({ error: "Ocurrió un error" });
+      await pool.query("UPDATE expediente set ? WHERE codigo_expediente = ?", [req.body, req.body.codigo_expediente]);
+      await fs.unlink(req.file.path);
     }
   } catch (error) {
     console.log(error);
-    return res.json({ error: "Ocurrió un error" });
   }
-  res.json({ error: "Ocurrió un error" });
 };
 
 //put("/:id")
@@ -142,41 +122,21 @@ ctrlExpediente.updateExpediente = async (req, res) => {
   try {
     if (req.file) {
       const expediente = await pool.query("SELECT id_documento FROM expediente WHERE id_expediente = ?", [req.params.id]);
+
+      // Sin archivo
       if (expediente[0].id_documento == "") {
-        const response = await drive.files.create({
-          requestBody: {
-            name: req.file.originalname,
-            mimeType: req.file.mimetype,
-          },
-          media: {
-            body: fs.createReadStream(req.file.path),
-            mimeType: req.file.mimetype,
-          },
-        });
+        // Crear
+        const response = await drive.files.create({ requestBody: { name: req.file.originalname, mimeType: req.file.mimetype }, media: { body: fs.createReadStream(req.file.path), mimeType: req.file.mimetype } });
         // Cualquiera con el link
-        await drive.permissions.create({
-          fileId: response.data.id,
-          requestBody: {
-            role: "reader",
-            type: "anyone",
-          },
-        });
+        await drive.permissions.create({ fileId: response.data.id, requestBody: { role: "reader", type: "anyone" } });
         newExpediente.id_documento = response.data.id;
         await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [newExpediente, req.params.id]);
         await fs.unlink(req.file.path);
         return;
       }
-      await drive.files.update({
-        fileId: expediente[0].id_documento,
-        requestBody: {
-          name: req.file.originalname,
-          mimeType: req.file.mimetype,
-        },
-        media: {
-          body: fs.createReadStream(req.file.path),
-          mimeType: req.file.mimetype,
-        },
-      });
+
+      // Con archivo
+      await drive.files.update({ fileId: expediente[0].id_documento, requestBody: { name: req.file.originalname, mimeType: req.file.mimetype }, media: { body: fs.createReadStream(req.file.path), mimeType: req.file.mimetype } });
       await fs.unlink(req.file.path);
     }
   } catch (error) {

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import expr from "../../../encrypt/exprRegular";
+
 // Services
 import * as bancoServices from "../../../services/BancoServices";
 import * as materiaServices from "../../../services/MateriaServices";
@@ -53,6 +54,7 @@ const ModalExpediente: React.FC<Props> = (props) => {
   const [expediente, setExpediente] = useState(initStateExpediente);
 
   // References
+  const refProgresss = useRef<HTMLDivElement | null>();
   const refInputFile = useRef<HTMLInputElement | null>();
   const refButton = useRef<HTMLButtonElement | null>();
   const refCodigoEstudio = useRef<HTMLInputElement>(null);
@@ -103,9 +105,13 @@ const ModalExpediente: React.FC<Props> = (props) => {
 
     // Crear
     if (expediente.id_expediente === 0) {
-      const res = await expedienteServices.createExpediente(formData);
+      const res = await expedienteServices.createExpediente(formData, refProgresss.current);
       if (res.data.error) return toast.error(res.data.error);
 
+      if (refProgresss.current) {
+        refProgresss.current.innerHTML = "0%";
+        refProgresss.current.style.width = "0%";
+      }
       setExpediente(initStateExpediente);
       props.render();
       props.setTrigguer(props.trigguer + 1);
@@ -114,9 +120,13 @@ const ModalExpediente: React.FC<Props> = (props) => {
       return toast.success(res.data.success);
     }
     // Actualizar
-    const res = await expedienteServices.editarExpediente(expediente.id_expediente + "", formData);
+    const res = await expedienteServices.editarExpediente(expediente.id_expediente + "", formData, refProgresss.current);
     if (res.data.error) return toast.error(res.data.error);
 
+    if (refProgresss.current) {
+      refProgresss.current.innerHTML = "0%";
+      refProgresss.current.style.width = "0%";
+    }
     setExpediente(initStateExpediente);
     props.render();
     props.setTrigguer(props.trigguer + 1);
@@ -167,7 +177,6 @@ const ModalExpediente: React.FC<Props> = (props) => {
     if (res.data.error) return setMaterias([]);
     setMaterias(res.data.materias);
   };
-
   useEffect(() => {
     getBancos();
     getMaterias();
@@ -359,6 +368,13 @@ const ModalExpediente: React.FC<Props> = (props) => {
                 ) : (
                   <></>
                 )}
+                <div className="col-12 col-md-12 col-lg-12 mt-3">
+                  <div className="progress">
+                    <div className="progress-bar" ref={(node) => (refProgresss.current = node)} role="progressbar" style={{ width: "0%" }} aria-valuenow={0} aria-valuemin={0} aria-valuemax={100}>
+                      0%
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="modal-footer">

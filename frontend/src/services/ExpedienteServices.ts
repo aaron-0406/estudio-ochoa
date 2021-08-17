@@ -18,15 +18,33 @@ export const getResumen = async () => {
   return await axios.get(`${api}/resumen`);
 };
 
-export const createExpediente = async (expediente: FormData) => {
+export const createExpediente = async (expediente: FormData, progressBar: any) => {
   return await axios.post(`${api}`, expediente, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    onUploadProgress: (e) => {
+      let progress = Math.round((e.loaded * 100.0) / e.total);
+      if (progressBar != null) {
+        progressBar.innerHTML = `${progress}%`;
+        progressBar.style.width = `${progress}%`;
+      }
+    },
   });
 };
-export const editarExpediente = async (id: string | undefined, expediente: FormData) => {
-  return await axios.put(`${api}/${id}`, expediente);
+export const editarExpediente = async (id: string | undefined, expediente: FormData, progressBar: any) => {
+  return await axios.put(`${api}/${id}`, expediente, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    onUploadProgress: (e) => {
+      let progress = Math.round((e.loaded * 100.0) / e.total);
+      if (progressBar != null) {
+        progressBar.innerHTML = `${progress}%`;
+        progressBar.style.width = `${progress}%`;
+      }
+    },
+  });
 };
 
 export const eliminarExpediente = async (id: string | undefined) => {
