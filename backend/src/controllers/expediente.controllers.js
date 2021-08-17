@@ -113,7 +113,7 @@ ctrlExpediente.createExpediente = async (req, res) => {
       }
     } catch (error) {
       console.log(error);
-      await drive.files.delete({ fileId: response.data.id });
+      if (req.file) await drive.files.delete({ fileId: response.data.id });
       if (error.code === "ECONNREFUSED") return res.json({ error: "Base de datos desconectada" });
       if (error.code === "ER_DUP_ENTRY") return res.json({ error: `Ese codigo ya está registrado` });
       return res.json({ error: "Ocurrió un error" });
