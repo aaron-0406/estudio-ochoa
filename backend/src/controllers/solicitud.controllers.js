@@ -189,6 +189,7 @@ ctrlSolicitud.modificarSolicitud = async (req, res) => {
   const { fecha_solicitud, fecha_entrega_usuario, fecha_entrega_inventario, motivo_usuario, motivo_admin, estado_solicitud, id_expediente } = req.body;
   const newSolicitud = { fecha_solicitud, fecha_entrega_usuario, fecha_entrega_inventario, motivo_usuario, motivo_admin, estado_solicitud };
   newSolicitud.estado_solicitud = req.params.estado;
+  delete newSolicitud.fecha_entrega_inventario;
   try {
     if (req.params.estado === "EN USO") {
       const expediente = await pool.query("SELECT * FROM expediente WHERE id_expediente = ?", [id_expediente]);
@@ -199,6 +200,7 @@ ctrlSolicitud.modificarSolicitud = async (req, res) => {
     await pool.query("UPDATE solicitud set ? WHERE id_solicitud = ?", [newSolicitud, req.params.id]);
     if (req.params.estado === "EN INVENTARIO" || req.params.estado === "EN USO") {
       let estado_uso;
+      newSolicitud.fecha_entrega_inventario = fecha_entrega_inventario;
       req.params.estado === "EN INVENTARIO" ? (estado_uso = 0) : (estado_uso = 1);
       await pool.query("UPDATE expediente set ? WHERE id_expediente = ?", [{ estado_uso }, id_expediente]);
     }
