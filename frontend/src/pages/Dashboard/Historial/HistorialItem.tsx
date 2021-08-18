@@ -45,26 +45,14 @@ const HistorialItem: React.FC<Props> = (props) => {
       <td>{formatoFecha(props.solicitud.fecha_entrega_usuario)}</td>
       <td>{props.solicitud.estado_solicitud}</td>
       <td>
-        <button
-          data-bs-toggle="modal"
-          data-bs-target="#createSolicitud"
-          onClick={() => {
-            props.setSolicitudModal(props.solicitud);
-          }}
-          className="btn btn-primary"
-        >
+        <button data-bs-toggle="modal" data-bs-target="#createSolicitud" onClick={() => { props.setSolicitudModal(props.solicitud); }} className="btn btn-primary" >
           <i className="nav-icon fas fa-eye" />
         </button>
       </td>
       <td>
         {props.solicitud.estado_solicitud === "DENEGADO" ? (
           <>
-            <button
-              onClick={() => {
-                eliminarSolicitud();
-              }}
-              className="btn btn-danger"
-            >
+            <button onClick={() => { eliminarSolicitud(); }} className="btn btn-danger" >
               <i className="nav-icon fas fa-trash-alt" />
             </button>
           </>

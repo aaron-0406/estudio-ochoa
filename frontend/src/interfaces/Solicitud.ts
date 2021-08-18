@@ -12,4 +12,6 @@ export default interface Solicitud {
   email_usuario?: string;
   apellidos_usuario?:string;
   codigo_expediente?: string;
+  habilitado?: string;
+  id_documento?: string;
 }

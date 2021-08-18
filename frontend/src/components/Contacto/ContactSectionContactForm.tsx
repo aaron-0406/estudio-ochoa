@@ -12,7 +12,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Contacto from "../../interfaces/Contacto";
 
 // Regular Expression
-import Expr from '../../encrypt/exprRegular';
+import Expr from "../../encrypt/exprRegular";
 
 const ContactSectionContactForm: React.FC = () => {
   const initialState: Contacto = {
@@ -27,30 +27,22 @@ const ContactSectionContactForm: React.FC = () => {
   const [contact, setContact] = useState(initialState);
 
   // References
-  const refFullName = useRef<HTMLSpanElement>(null)
-  const refEmail = useRef<HTMLSpanElement>(null)
-  const refTelephone = useRef<HTMLSpanElement>(null)
+  const refFullName = useRef<HTMLSpanElement>(null);
+  const refEmail = useRef<HTMLSpanElement>(null);
+  const refTelephone = useRef<HTMLSpanElement>(null);
 
   // Evento submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (Expr.nameSurname.test(contact.nombre_contacto) && Expr.email.test(contact.email_contacto) && Expr.telephone.test(contact.telefono_contacto) && contact.text) {
-      const res = await sendMessage(contact);
-      if (res.data.success) {
-        toast.success(res.data.success);
-        setContact(initialState);
-        return;
-      }
-      if (res.data.error) return toast.error(res.data.error);
-    } else {
-      toast.error('Campos invalidos');
-    }
+    if (!(Expr.nameSurname.test(contact.nombre_contacto) && Expr.email.test(contact.email_contacto) && Expr.telephone.test(contact.telefono_contacto) && contact.text)) return toast.error("Campos invalidos");
+    const res = await sendMessage(contact);
+    if (res.data.error) return toast.error(res.data.error);
+    toast.success(res.data.success);
+    return setContact(initialState);
   };
 
   // Change Input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    /* const { name, value } = e.target; */
     setContact({ ...contact, [e.target.name]: e.target.value });
     switch (e.target.name) {
       case "nombre_contacto":
@@ -68,12 +60,12 @@ const ContactSectionContactForm: React.FC = () => {
   const validation = (expr: RegExp, e: EventTarget & (HTMLInputElement | HTMLTextAreaElement), ref: RefObject<HTMLSpanElement>) => {
     if (expr.test(e.value)) {
       e.classList.remove("is-invalid");
-      ref.current?.classList.add('d-none');
+      ref.current?.classList.add("d-none");
       return;
     }
-    e.classList.add('is-invalid');
+    e.classList.add("is-invalid");
     ref.current?.classList.remove("d-none");
-  }
+  };
 
   return (
     <>

@@ -31,6 +31,7 @@ const ModalSolicitud: React.FC<Props> = (props) => {
   const refButton = useRef<HTMLButtonElement | null>();
 
   useEffect(() => {
+    if (props.solicitud.fecha_entrega_inventario === null) props.solicitud.fecha_entrega_inventario = "";
     setSolicitud(props.solicitud);
     return () => setSolicitud(initialState);
   }, [props.solicitud]);

@@ -24,7 +24,7 @@ const ListaHistorial: React.FC<Props> = (props) => {
   const { usuario, loadUser } = useUsuario();
 
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
-  const [loadUsuarios, setLoadUsuarios] = useState<boolean>(false);
+  const [loadSolicitudes, setLoadSolicitudes] = useState<boolean>(false);
 
   const [cantidad, setCantidad] = useState<number>(0);
   const [cantidadPaginas, setCantidadPaginas] = useState<number>(0);
@@ -32,8 +32,9 @@ const ListaHistorial: React.FC<Props> = (props) => {
 
   const getSolicitudes = async () => {
     const res = await solicitudesServices.getAllByUsuarioId(usuario.id_usuario + "", page, props.filtro, props.estado);
-    setSolicitudes(res.data);
-    setLoadUsuarios(true);
+    if (res.data.error) return;
+    setSolicitudes(res.data.solicitudes);
+    setLoadSolicitudes(true);
   };
   const getCantidad = async () => {
     const res = await solicitudesServices.getCountByUsuarioÏd(usuario.id_usuario + "", props.filtro, props.estado);
@@ -51,7 +52,7 @@ const ListaHistorial: React.FC<Props> = (props) => {
   };
   const limpieza = () => {
     setSolicitudes([]);
-    setLoadUsuarios(false);
+    setLoadSolicitudes(false);
   };
   useEffect(() => {
     if (loadUser) getSolicitudes();
@@ -86,10 +87,16 @@ const ListaHistorial: React.FC<Props> = (props) => {
           </tr>
         </thead>
         <tbody>
-          {!loadUsuarios ? (
+          {!loadSolicitudes ? (
             <>
               <tr className="m-3">
                 <td>Cargando datos...</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </>
           ) : (
@@ -97,7 +104,13 @@ const ListaHistorial: React.FC<Props> = (props) => {
               {solicitudes.length === 0 ? (
                 <>
                   <tr className="m-3">
-                    <td> No hay solictudes registrados aún</td>
+                    <td> No hay solictudes registradas aún</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                   </tr>
                 </>
               ) : (

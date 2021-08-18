@@ -29,7 +29,8 @@ const ListaExpediente: React.FC<Props> = (props) => {
 
   const getExpedientes = async () => {
     const res = await expedienteServices.getAll(page, props.filtro);
-    setExpedientes(res.data);
+    if (res.data.error) return setExpedientes([]);
+    setExpedientes(res.data.expedientes);
     setLoadExpedientes(true);
   };
 
@@ -164,7 +165,7 @@ const ListaExpediente: React.FC<Props> = (props) => {
           </>
         )}
       </div>
-      <ModalExpediente setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getExpedientes} expediente={props.expedienteModal} />
+      <ModalExpediente setTrigguer={props.setTrigguer} trigguer={props.trigguer} render={getExpedientes} expediente={props.expedienteModal} setExpedienteModal={props.setExpedienteModal} />
     </>
   );
 };

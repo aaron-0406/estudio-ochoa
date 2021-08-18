@@ -15,6 +15,7 @@ import * as expedientesServices from "../../../services/ExpedienteServices";
 // Interfaces
 import Solicitud from "../../../interfaces/Solicitud";
 import Expediente from "../../../interfaces/Expediente";
+import { FaEye } from "react-icons/fa";
 
 interface Props {
   setTrigguer: (trigguer: number) => void;
@@ -24,7 +25,7 @@ interface Props {
 }
 const initialState: Solicitud = {
   estado_solicitud: "",
-  fecha_entrega_inventario: "0000-00-00",
+  fecha_entrega_inventario: "",
   fecha_entrega_usuario: "",
   fecha_solicitud: "",
   id_expediente: 0,
@@ -68,53 +69,63 @@ const ModalHistorial: React.FC<Props> = (props) => {
     return () => setSolicitud(initialState);
   }, [props.solicitud]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (expr.digit.test(expediente.codigo_expediente) && solicitud.fecha_entrega_usuario && solicitud.motivo_usuario) {
-      const fecha = new Date();
-      let dia = fecha.getDate();
-      let mes = fecha.getMonth() + 1;
-      let year = fecha.getFullYear();
-      const resExpediente = await expedientesServices.getByCodigoExpediente(expediente.codigo_expediente + "");
-      if (resExpediente.data.error) return toast.error(resExpediente.data.error);
-      if (resExpediente.data.success) {
-        const newSolicitud: Solicitud = {
-          fecha_solicitud: `${year}-${mes}-${dia}`,
-          fecha_entrega_usuario: solicitud.fecha_entrega_usuario,
-          fecha_entrega_inventario: "0000-00-00",
-          motivo_usuario: solicitud.motivo_usuario,
-          motivo_admin: "",
-          estado_solicitud: "SOLICITADO",
-          id_usuario: usuario.id_usuario,
-          id_expediente: resExpediente.data.expediente.id_expediente,
-        };
-        const res = await solicitudesServices.createSolicitud(newSolicitud);
-        if (res.data.success) {
-          setSolicitud(initialState);
-          setExpediente(initStateExpediente);
-          if (refButton.current) refButton.current.click();
-          props.render();
-          props.setTrigguer(props.trigguer + 1);
-          return toast.success(res.data.success);
-        }
-        if (res.data.error) return toast.success(res.data.error);
-        return;
-      }
-    } else {
-      toast.error("Campos invalidos");
-    }
+  const getDateNow = (): string => {
+    const fecha = new Date();
+    let dia = fecha.getDate();
+    let mes = fecha.getMonth() + 1;
+    let year = fecha.getFullYear();
+    return `${year}-${mes}-${dia}`;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      !(
+        expr.digit.test(expediente.codigo_expediente) &&
+        solicitud.fecha_entrega_usuario &&
+        solicitud.motivo_usuario
+      )
+    )
+      return toast.error("Campos invalidos");
+
+    const resExpediente = await expedientesServices.getByCodigoExpediente(
+      expediente.codigo_expediente + ""
+    );
+    if (resExpediente.data.error) return toast.error(resExpediente.data.error);
+
+    const newSolicitud: Solicitud = {
+      fecha_solicitud: `${getDateNow()}`,
+      fecha_entrega_usuario: solicitud.fecha_entrega_usuario,
+      fecha_entrega_inventario: "",
+      motivo_usuario: solicitud.motivo_usuario,
+      motivo_admin: "",
+      estado_solicitud: "SOLICITADO",
+      id_usuario: usuario.id_usuario,
+      id_expediente: resExpediente.data.expediente.id_expediente,
+    };
+    const res = await solicitudesServices.createSolicitud(newSolicitud);
+    if (res.data.error) return toast.success(res.data.error);
+
+    setSolicitud(initialState);
+    setExpediente(initStateExpediente);
+    if (refButton.current) refButton.current.click();
+    props.render();
+    props.setTrigguer(props.trigguer + 1);
+    toast.success(res.data.success);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setSolicitud({ ...solicitud, [e.target.name]: e.target.value });
   };
-  const handleChangeEx = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChangeEx = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setExpediente({ ...expediente, [e.target.name]: e.target.value });
     if (e.target.name === "codigo_expediente") {
-      if (expr.digit.test(e.target.value)) {
-        e.target.classList.remove("is-invalid");
-        return;
-      }
+      if (expr.digit.test(e.target.value))
+        return e.target.classList.remove("is-invalid");
       e.target.classList.add("is-invalid");
     }
   };
@@ -125,7 +136,15 @@ const ModalHistorial: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className="modal fade" id="createSolicitud" tabIndex={-1} aria-labelledby="createSolicitud" aria-hidden="true">
+    <div
+      className="modal fade"
+      id="createSolicitud"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabIndex={-1}
+      aria-labelledby="createSolicitud"
+      aria-hidden="true"
+    >
       <div className={`modal-dialog modal-lg modal-dialog-scrollable`}>
         <form onSubmit={handleSubmit}>
           <div className="modal-content">
@@ -136,7 +155,13 @@ const ModalHistorial: React.FC<Props> = (props) => {
                     <i className="fas fa-eye me-2"></i>
                     Datos de la solicitud
                   </h5>
-                  <button type="button" onClick={cleanInputs} className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button
+                    type="button"
+                    onClick={cleanInputs}
+                    className="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
                 </div>
               </>
             ) : (
@@ -146,7 +171,13 @@ const ModalHistorial: React.FC<Props> = (props) => {
                     <i className="fas fa-plus me-2"></i>
                     Solicitar un expediente
                   </h5>
-                  <button type="button" onClick={cleanInputs} className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button
+                    type="button"
+                    onClick={cleanInputs}
+                    className="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
                 </div>
               </>
             )}
@@ -158,30 +189,66 @@ const ModalHistorial: React.FC<Props> = (props) => {
                     <>
                       <div className="col-12 col-sm-6 col-lg-6 col-md-6">
                         <div className="mb-4">
-                          <label className="form-label" htmlFor="codigo_expediente">
+                          <label
+                            className="form-label"
+                            htmlFor="codigo_expediente"
+                          >
                             Código del expediente
                           </label>
-                          <input disabled required ref={refCodigoExpediente} value={solicitud.codigo_expediente} onChange={handleChangeEx} placeholder="Código del expediente" name="codigo_expediente" id="codigo_expediente" className="form-control form-control-border border-width-2" type="text" />
-                          <div className="invalid-feedback">Caracteres incorrectos</div>
+                          <input
+                            disabled
+                            required
+                            ref={refCodigoExpediente}
+                            value={solicitud.codigo_expediente}
+                            onChange={handleChangeEx}
+                            placeholder="Código del expediente"
+                            name="codigo_expediente"
+                            id="codigo_expediente"
+                            className="form-control form-control-border border-width-2"
+                            type="text"
+                          />
+                          <div className="invalid-feedback">
+                            Caracteres incorrectos
+                          </div>
                         </div>
                       </div>
 
                       <div className="col-12 col-sm-6 col-lg-6 col-md-6">
                         <div className="mb-3">
-                          <label className="form-label" htmlFor="fecha">
+                          <label className="form-label" htmlFor="fecha_1">
                             Fecha de Entrega
                           </label>
-                          <input disabled required value={solicitud.fecha_entrega_usuario} onChange={handleChange} id="fecha" name="fecha_entrega_usuario" type="date" placeholder="Fecha de Entrega" className="form-control form-control-border border-width-2" />
+                          <input
+                            disabled
+                            required
+                            value={solicitud.fecha_entrega_usuario}
+                            onChange={handleChange}
+                            id="fecha_1"
+                            name="fecha_entrega_usuario"
+                            type="date"
+                            placeholder="Fecha de Entrega"
+                            className="form-control form-control-border border-width-2"
+                          />
                         </div>
                       </div>
                       {solicitud.estado_solicitud === "EN INVENTARIO" ? (
                         <>
                           <div className="col-12 col-sm-6 col-lg-6 col-md-6">
                             <div className="mb-3">
-                              <label className="form-label" htmlFor="fecha">
+                              <label className="form-label" htmlFor="fecha_2">
                                 Fecha Devuelto
                               </label>
-                              <input disabled required value={solicitud.fecha_entrega_inventario} onChange={handleChange} id="fecha" name="fecha_entrega_usuario" type="date" placeholder="Fecha de Entrega" className="form-control form-control-border border-width-2" />
+                              <input
+                                disabled
+                                required
+                                value={solicitud.fecha_entrega_inventario}
+                                onChange={handleChange}
+                                id="fecha_2"
+                                name="fecha_entrega_usuario"
+                                type="date"
+                                placeholder="Fecha de Entrega"
+                                className="form-control form-control-border border-width-2"
+                              />
                             </div>
                           </div>
                         </>
@@ -191,10 +258,23 @@ const ModalHistorial: React.FC<Props> = (props) => {
 
                       <div className="col-12 col-sm-12 col-lg-12 col-md-12">
                         <div className="mb-3">
-                          <label className="form-label" htmlFor="motivo_usuario">
+                          <label
+                            className="form-label"
+                            htmlFor="motivo_usuario"
+                          >
                             Motivo de Solicitud
                           </label>
-                          <textarea style={{ minHeight: "200px", maxHeight: "200px" }} disabled required value={solicitud.motivo_usuario} onChange={handleChange} id="motivo_usuario" name="motivo_usuario" placeholder="Motivo de la solicitud" className="form-control form-control-border border-width-2" />
+                          <textarea
+                            style={{ minHeight: "200px", maxHeight: "200px" }}
+                            disabled
+                            required
+                            value={solicitud.motivo_usuario}
+                            onChange={handleChange}
+                            id="motivo_usuario"
+                            name="motivo_usuario"
+                            placeholder="Motivo de la solicitud"
+                            className="form-control form-control-border border-width-2"
+                          />
                         </div>
                       </div>
 
@@ -202,10 +282,26 @@ const ModalHistorial: React.FC<Props> = (props) => {
                         <>
                           <div className="col-12 col-sm-12 col-lg-12 col-md-12">
                             <div className="mb-3">
-                              <label className="form-label" htmlFor="motivo_admin">
+                              <label
+                                className="form-label"
+                                htmlFor="motivo_admin"
+                              >
                                 Motivo de Rechazo
                               </label>
-                              <textarea style={{ minHeight: "200px", maxHeight: "200px" }} disabled required value={solicitud.motivo_admin} onChange={handleChange} id="motivo_admin" name="motivo_admin" placeholder="Motivo de la solicitud" className="form-control form-control-border border-width-2" />
+                              <textarea
+                                style={{
+                                  minHeight: "200px",
+                                  maxHeight: "200px",
+                                }}
+                                disabled
+                                required
+                                value={solicitud.motivo_admin}
+                                onChange={handleChange}
+                                id="motivo_admin"
+                                name="motivo_admin"
+                                placeholder="Motivo de la solicitud"
+                                className="form-control form-control-border border-width-2"
+                              />
                             </div>
                           </div>
                         </>
@@ -217,27 +313,63 @@ const ModalHistorial: React.FC<Props> = (props) => {
                     <>
                       <div className="col-12 col-sm-6 col-lg-6 col-md-6">
                         <div className="mb-4">
-                          <label className="form-label" htmlFor="codigo_expediente">
+                          <label
+                            className="form-label"
+                            htmlFor="codigo_expediente"
+                          >
                             Código del expediente
                           </label>
-                          <input required ref={refCodigoExpediente} value={expediente.codigo_expediente} onChange={handleChangeEx} placeholder="Código del expediente" name="codigo_expediente" id="floatingInput" className="form-control form-control-border border-width-2" type="text" />
-                          <div className="invalid-feedback">Caracteres incorrectos</div>
+                          <input
+                            required
+                            ref={refCodigoExpediente}
+                            value={expediente.codigo_expediente}
+                            onChange={handleChangeEx}
+                            placeholder="Código del expediente"
+                            name="codigo_expediente"
+                            id="floatingInput"
+                            className="form-control form-control-border border-width-2"
+                            type="text"
+                          />
+                          <div className="invalid-feedback">
+                            Caracteres incorrectos
+                          </div>
                         </div>
                       </div>
                       <div className="col-12 col-sm-6 col-lg-6 col-md-6">
                         <div className="mb-3">
-                          <label className="form-label" htmlFor="fecha">
+                          <label className="form-label" htmlFor="fecha_3">
                             Fecha de Entrega
                           </label>
-                          <input required value={solicitud.fecha_entrega_usuario} onChange={handleChange} id="fecha" name="fecha_entrega_usuario" type="date" placeholder="Fecha de Entrega" className="form-control form-control-border border-width-2" />
+                          <input
+                            required
+                            value={solicitud.fecha_entrega_usuario}
+                            onChange={handleChange}
+                            id="fecha_3"
+                            name="fecha_entrega_usuario"
+                            type="date"
+                            placeholder="Fecha de Entrega"
+                            className="form-control form-control-border border-width-2"
+                          />
                         </div>
                       </div>
                       <div className="col-12 col-sm-12 col-lg-12 col-md-12">
                         <div className="mb-3">
-                          <label className="form-label" htmlFor="motivo_usuario">
+                          <label
+                            className="form-label"
+                            htmlFor="motivo_usuario"
+                          >
                             Motivo de Solicitud
                           </label>
-                          <textarea style={{ minHeight: "200px", maxHeight: "200px" }} required value={solicitud.motivo_usuario} onChange={handleChange} name="motivo_usuario" placeholder="Motivo de la solicitud" className="form-control form-control-border border-width-2" />
+                          <textarea
+                            style={{ minHeight: "200px", maxHeight: "200px" }}
+                            id="motivo_usuario"
+                            required
+                            value={solicitud.motivo_usuario}
+                            onChange={handleChange}
+                            name="motivo_usuario"
+                            placeholder="Motivo de la solicitud"
+                            className="form-control form-control-border border-width-2"
+                          />
                         </div>
                       </div>
                     </>
@@ -246,9 +378,30 @@ const ModalHistorial: React.FC<Props> = (props) => {
               </div>
             </div>
             <div className="modal-footer">
-              <button ref={(node) => (refButton.current = node)} type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={cleanInputs}>
+              <button
+                ref={(node) => (refButton.current = node)}
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+                onClick={cleanInputs}
+              >
                 Cerrar
               </button>
+              {solicitud.estado_solicitud === "EN USO" &&
+              solicitud.habilitado === "1" ? (
+                <>
+                  <a
+                    href={`https://drive.google.com/file/d/${solicitud.id_documento}/view?usp=sharing`}
+                    target="__blank"
+                    className="btn btn-primary"
+                  >
+                    <FaEye className="fs-4 me-1" color="#fff" />
+                    Ver Expediente Digital
+                  </a>
+                </>
+              ) : (
+                <></>
+              )}
               {solicitud.id_solicitud ? (
                 <></>
               ) : (

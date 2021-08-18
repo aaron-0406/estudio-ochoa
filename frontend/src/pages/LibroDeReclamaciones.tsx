@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, RefObject } from "react";
 
 // Toast
 import { toast, ToastContainer } from "react-toastify";
@@ -11,6 +11,9 @@ import { sendReclaim } from "../services/ReclamoServices";
 
 // Interfaces
 import Reclamo from "../interfaces/Reclamo";
+
+// Encrypt
+import Expr from "../encrypt/exprRegular";
 
 const LibroDeReclamaciones: React.FC = () => {
   useEffect(() => {
@@ -33,17 +36,47 @@ const LibroDeReclamaciones: React.FC = () => {
     visto: 1,
   };
 
+  // States
   const [reclamo, setReclamo] = useState(initialState);
+
+  // References
+  const refName = useRef<HTMLSpanElement>(null);
+  const refSurname = useRef<HTMLSpanElement>(null);
+  const refEmail = useRef<HTMLSpanElement>(null);
+  const refAdress = useRef<HTMLSpanElement>(null);
+  const refIdentification = useRef<HTMLSpanElement>(null);
+  const refProvince = useRef<HTMLSpanElement>(null);
+  const refTelephone = useRef<HTMLSpanElement>(null);
+  const refDistrict = useRef<HTMLSpanElement>(null);
+  const refReason = useRef<HTMLSpanElement>(null);
+  const refService = useRef<HTMLSpanElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await sendReclaim(reclamo);
-    if (res.data.success) {
-      toast.success(res.data.success);
-      setReclamo(initialState);
-      return;
+
+    if (
+      Expr.nameSurname.test(reclamo.nombre_reclamo) &&
+      Expr.nameSurname.test(reclamo.apellido_reclamo) &&
+      Expr.email.test(reclamo.correo_reclamo) &&
+      Expr.digit.test(reclamo.direccion_reclamo) &&
+      Expr.ruc.test(reclamo.identificacion_reclamo) &&
+      Expr.nameSurname.test(reclamo.provincia_reclamo) &&
+      Expr.telephone.test(reclamo.telefono_reclamo) &&
+      Expr.nameSurname.test(reclamo.distrito_reclamo) &&
+      Expr.nameSurname.test(reclamo.motivo_reclamo) &&
+      Expr.nameSurname.test(reclamo.producto_reclamo) &&
+      reclamo.mensaje_reclamo
+    ) {
+      const res = await sendReclaim(reclamo);
+      if (res.data.success) {
+        toast.success(res.data.success);
+        setReclamo(initialState);
+        return;
+      }
+      if (res.data.error) return toast.error(res.data.error);
+    } else {
+      toast.error('Campos invalidos');
     }
-    if (res.data.error) return toast.error(res.data.error);
   };
 
   const handleChange = (
@@ -51,6 +84,52 @@ const LibroDeReclamaciones: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setReclamo({ ...reclamo, [name]: value });
+    switch (name) {
+      case "nombre_reclamo":
+        validation(Expr.nameSurname, e.target, refName);
+        break;
+      case "apellido_reclamo":
+        validation(Expr.nameSurname, e.target, refSurname);
+        break;
+      case "correo_reclamo":
+        validation(Expr.email, e.target, refEmail);
+        break;
+      case "direccion_reclamo":
+        validation(Expr.digit, e.target, refAdress);
+        break;
+      case "identificacion_reclamo":
+        validation(Expr.ruc, e.target, refIdentification);
+        break;
+      case "provincia_reclamo":
+        validation(Expr.nameSurname, e.target, refProvince);
+        break;
+      case "telefono_reclamo":
+        validation(Expr.telephone, e.target, refTelephone);
+        break;
+      case "distrito_reclamo":
+        validation(Expr.nameSurname, e.target, refDistrict);
+        break;
+      case "motivo_reclamo":
+        validation(Expr.nameSurname, e.target, refReason);
+        break;
+      case "producto_reclamo":
+        validation(Expr.nameSurname, e.target, refService);
+        break;
+    }
+  };
+
+  const validation = (
+    expr: RegExp,
+    e: EventTarget & (HTMLInputElement | HTMLTextAreaElement),
+    ref: RefObject<HTMLSpanElement>
+  ) => {
+    if (expr.test(e.value)) {
+      e.classList.remove("is-invalid");
+      ref.current?.classList.add("d-none");
+      return;
+    }
+    e.classList.add("is-invalid");
+    ref.current?.classList.remove("d-none");
   };
 
   return (
@@ -99,6 +178,9 @@ const LibroDeReclamaciones: React.FC = () => {
               className="form-control"
               id="inputNombre"
             />
+            <span ref={refName} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="inputApellidos" className="form-label">
@@ -112,6 +194,9 @@ const LibroDeReclamaciones: React.FC = () => {
               className="form-control"
               id="inputApellidos"
             />
+            <span ref={refSurname} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="inputEmail" className="form-label">
@@ -125,6 +210,9 @@ const LibroDeReclamaciones: React.FC = () => {
               className="form-control"
               id="inputEmail"
             />
+            <span ref={refEmail} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="inputDireccion" className="form-label">
@@ -138,6 +226,9 @@ const LibroDeReclamaciones: React.FC = () => {
               className="form-control"
               id="inputDireccion"
             />
+            <span ref={refAdress} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="inputDni" className="form-label">
@@ -151,6 +242,9 @@ const LibroDeReclamaciones: React.FC = () => {
               value={reclamo.identificacion_reclamo}
               id="inputDni"
             />
+            <span ref={refIdentification} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="inputProvincia" className="form-label">
@@ -164,6 +258,9 @@ const LibroDeReclamaciones: React.FC = () => {
               value={reclamo.provincia_reclamo}
               id="inputProvincia"
             />
+            <span ref={refProvince} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="inputTelefono" className="form-label">
@@ -177,6 +274,9 @@ const LibroDeReclamaciones: React.FC = () => {
               value={reclamo.telefono_reclamo}
               id="inputTelefono"
             />
+            <span ref={refTelephone} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="inputDistrito" className="form-label">
@@ -190,6 +290,9 @@ const LibroDeReclamaciones: React.FC = () => {
               value={reclamo.distrito_reclamo}
               id="inputDistrito"
             />
+            <span ref={refDistrict} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
 
           <p
@@ -211,6 +314,9 @@ const LibroDeReclamaciones: React.FC = () => {
               value={reclamo.motivo_reclamo}
               id="inputMotivo"
             />
+            <span ref={refReason} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="inputServicio" className="form-label">
@@ -224,6 +330,9 @@ const LibroDeReclamaciones: React.FC = () => {
               value={reclamo.producto_reclamo}
               id="inputServicio"
             />
+            <span ref={refService} className="text-danger d-none">
+              Caracteres incorrectos
+            </span>
           </div>
           <div className="col-12">
             <label htmlFor="inputMensaje" className="form-label">

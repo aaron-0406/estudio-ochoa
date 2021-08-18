@@ -71,7 +71,7 @@ const Inventario: React.FC = () => {
                   <ResumenInventario trigguer={trigguer} />
                 </div>
                 <div className="w-100 d-flex justify-content-end">
-                  <Buscador placeholder="Buscar Expediente" funcion={buscar} />
+                  <Buscador tooltip="Buscar por código de expediente o nombre del cliente" placeholder="Buscar Expediente" funcion={buscar} />
                 </div>
                 <div className="table-responsive mt-4">
                   <ListaExpediente setTrigguer={setTrigguer} trigguer={trigguer} expedienteModal={expedienteModal} setExpedienteModal={setExpedienteModal} filtro={filtro} />

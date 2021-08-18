@@ -96,7 +96,7 @@ const Historial: React.FC = () => {
                     </div>
                   </div>
                   <div className="mt-3 mt-lg-0">
-                    <Buscador placeholder="Buscar Solicitud" funcion={buscar} />
+                    <Buscador tooltip="Buscar por código de expediente" placeholder="Buscar Solicitud" funcion={buscar} />
                   </div>
                 </div>
                 <div className="table-responsive mt-4">

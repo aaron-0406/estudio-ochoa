@@ -47,7 +47,7 @@ const Reclamos: React.FC = () => {
               </div>
               <div className="card-body">
                 <div className="w-100 d-flex justify-content-end">
-                  <Buscador placeholder="Buscar Mensaje" funcion={buscar} />
+                  <Buscador tooltip="Buscar por nombre o correo" placeholder="Buscar Mensaje" funcion={buscar} />
                 </div>
                 <div className="table-responsive mt-4">
                   <ListaReclamos trigguer={trigguer} setTrigguer={setTrigguer} filtro={filtro} reclamoModal={reclamoModal} setReclamoModal={setReclamoModal} />
