@@ -100,7 +100,7 @@ const EquipoJulio = () => {
         <div className="row">
           <div className="col-12 col-md-6">
             <EquipoDatos titulo="Estudios y grados académicos" array={array1} />
-            <EquipoDatos titulo="Experiencia Profesional" array={array3} />
+            <EquipoDatos titulo="Experiencia Docente" array={array3} />
           </div>
           <div className="col-12 col-md-6">
             <EquipoDatos titulo="Experiencia Profesional" array={array2} />
