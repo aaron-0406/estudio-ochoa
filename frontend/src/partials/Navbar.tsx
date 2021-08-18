@@ -20,9 +20,12 @@ import logo from "../images/logo.png";
 
 const Navbar: React.FC = () => {
   const { usuario } = useUsuario();
+  // States
   const [ariaExpanded, setAriaExpanded] = useState(false);
 
+  // References
   const navbar_search = useRef<HTMLDivElement>(null);
+
   const mostrar_buscador = () => {
     if (navbar_search.current) {
       if (navbar_search.current.style.display === "block") {
@@ -35,6 +38,7 @@ const Navbar: React.FC = () => {
       //input[0].focus();
     }
   };
+
   return (
     <>
       <div className="hello-navbar container-fluid shadow p-1 bg-white rounded">

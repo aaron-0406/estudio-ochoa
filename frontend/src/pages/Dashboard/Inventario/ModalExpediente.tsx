@@ -241,6 +241,8 @@ const ModalExpediente: React.FC<Props> = (props) => {
     <div
       className="modal fade"
       id="createExpediente"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
       tabIndex={-1}
       aria-labelledby="createExpediente"
       aria-hidden="true"
