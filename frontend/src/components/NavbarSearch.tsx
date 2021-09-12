@@ -9,7 +9,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 interface Props {
   referencia: React.RefObject<HTMLDivElement>;
 }
-
+//Hola que tal
 const NavbarSearch: React.FC<Props> = (props) => {
   const inputSearch = useRef<HTMLInputElement>(null);
   const box_search = useRef<HTMLUListElement>(null);
