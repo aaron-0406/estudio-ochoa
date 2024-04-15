@@ -12,10 +12,6 @@
 /frontend/coverage
 
 # production
-/frontend/build
-/backend/src/build
-/backend/src/uploads
-/backend/src/config.js
 
 # misc
 /frontend/.DS_Store

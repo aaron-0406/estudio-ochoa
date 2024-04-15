@@ -5,7 +5,7 @@ const session = require("express-session");
 const cors = require("cors");
 const MySQLStore = require("express-mysql-session");
 const llaves = require("./config");
-const { database } = require("./keys");
+const { database } = require("./config");
 const passport = require("passport");
 
 //initializations
@@ -13,7 +13,7 @@ const app = express();
 require("./lib/passport");
 
 //settings
-app.set("port", process.env.PORT || 50000);
+app.set("port", process.env.PORT_APP || 6000);
 
 //public
 app.use(express.static(path.join(__dirname, "/build")));
