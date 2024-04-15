@@ -12,6 +12,7 @@
 /frontend/coverage
 
 # production
+/backend/.env
 
 # misc
 /frontend/.DS_Store

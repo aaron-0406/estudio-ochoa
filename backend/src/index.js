@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, "/build")));
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: llaves.API, //Asi el frontend puede hacer peticiones
+    origin: "http://estudioochoamaldonado.com", //Asi el frontend puede hacer peticiones
     credentials: true,
   })
 );
